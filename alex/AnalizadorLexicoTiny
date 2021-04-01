@@ -1,0 +1,132 @@
+package alex;
+
+%%
+%cup
+%line
+%class AnalizadorLexicoTiny
+%unicode
+%public
+%char
+
+%{
+  private ALexOperations ops;
+  public String lexema() {return yytext();}
+  public int fila() {return yyline+1;}
+%}
+
+%eofval{
+  return ops.unidadEof();
+%eofval}
+
+%init{
+  ops = new ALexOperations(this);
+%init}
+
+letra  = ([A-Z]|[a-z])
+digitoPositivo = [1-9]
+digito = ({digitoPositivo}|0)
+parteEntera = {digitoPositivo}{digito}*
+parteDecimal = {digito}* {digitoPositivo}
+separador = [ \t\r\b\n]
+comentario = #[^\n]* 
+int = int
+boolean = boolean
+if = if
+else = else
+return = return
+while = while
+switch = switch
+case = case
+default = default
+const = const
+true = True
+false = False
+struct = struct
+new = new
+void = void
+
+identificador = {letra}({letra}|{digito}|_)*
+numeroEntero = [\+,\-]?({parteEntera}|0)
+
+operadorSuma = \+
+operadorResta = \-
+operadorMultiplicacion = \*
+operadorPotencia = \*\*
+operadorDivision = /
+operadorModulo = %
+
+operadorAnd = &
+operadorOr = \|
+operadorNot = !
+operadorIgual = \=\=
+operadorLT = <
+operadorGT = >
+operadorLE = <=
+operadorGE = >=
+
+llaveApertura = \{
+llaveCierre = \}
+parentesisApertura = \(
+parentesisCierre = \)
+corcheteApertura = \[
+corcheteCierre = \]
+
+igual = \=
+coma  = ,
+puntoyComa = \;
+punto = \.
+puntero = \¡
+
+%%
+{separador}               {}
+{comentario}              {}
+
+{int}                     {return ops.unidadInt();}
+{boolean}                 {return ops.unidadBoolean();}
+{if}                      {return ops.unidadIf();}
+{else}                    {return ops.unidadElse();}
+{return}                  {return ops.unidadReturn();}
+{while}                   {return ops.unidadWhile();}
+{switch}                  {return ops.unidadSwitch();}
+{case}                    {return ops.unidadCase();}
+{default}                 {return ops.unidadDefault();}
+{const}                   {return ops.unidadConst();}
+{true}                    {return ops.unidadTrue();}
+{false}                   {return ops.unidadFalse();}
+{struct}				          {return ops.unidadStruct();}
+{new}					            {return ops.unidadNew();}
+{void}                    {return ops.unidadVoid();}
+
+{identificador}           {return ops.unidadId();}
+
+{numeroEntero}            {return ops.unidadEnt();}
+
+{operadorSuma}            {return ops.unidadSuma();}
+{operadorResta}           {return ops.unidadResta();}
+{operadorMultiplicacion}  {return ops.unidadMul();}
+{operadorPotencia}        {return ops.unidadPot();}
+{operadorDivision}        {return ops.unidadDiv();}
+{operadorModulo}		      {return ops.unidadMod();}
+
+{operadorAnd}             {return ops.unidadAnd();}
+{operadorOr}              {return ops.unidadOr();}
+{operadorNot}             {return ops.unidadNot();}
+{operadorIgual}           {return ops.unidadEqual();}
+{operadorLT}              {return ops.unidadLT();}
+{operadorGT}              {return ops.unidadGT();}
+{operadorLE}              {return ops.unidadLE();}
+{operadorGE}              {return ops.unidadGE();}
+
+{llaveApertura}           {return ops.unidadLA();}
+{llaveCierre}     	      {return ops.unidadLC();}
+{corcheteApertura}        {return ops.unidadCA();}
+{corcheteCierre}          {return ops.unidadCC();}
+{parentesisApertura}      {return ops.unidadPA();}
+{parentesisCierre}        {return ops.unidadPC();}
+{igual}                   {return ops.unidadIgual();} 
+{coma}                    {return ops.unidadComa();}
+{puntoyComa}              {return ops.unidadPuntoComa();}
+{punto}				        	  {return ops.unidadPunto();}
+{puntero}	        			  {return ops.unidadPuntero();}
+
+[^]                       {ops.error();}  
