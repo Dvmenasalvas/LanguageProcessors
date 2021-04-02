@@ -107,22 +107,23 @@ public class ALexOperations {
    public UnidadLexica unidadGE() {
       return new UnidadLexica(alex.fila(), ClaseLexica.GE, "<=");
    }
-   public UnidadLexica unidadLA() {
+
+   public UnidadLexica unidadLLaveAp() {
       return new UnidadLexica(alex.fila(),ClaseLexica.LLAP,"{"); 
    } 
-   public UnidadLexica unidadLC() {
+   public UnidadLexica unidadLLaveCierre() {
       return new UnidadLexica(alex.fila(),ClaseLexica.LLCIERRE,"}"); 
    } 
-   public UnidadLexica unidadCA() {
-      return new UnidadLexica(alex.fila(),ClaseLexica.LLAP,"["); 
+   public UnidadLexica unidadCorAp() {
+      return new UnidadLexica(alex.fila(),ClaseLexica.CAP,"["); 
    } 
-   public UnidadLexica unidadCC() {
-      return new UnidadLexica(alex.fila(),ClaseLexica.LLCIERRE,"]"); 
+   public UnidadLexica unidadCorCierre() {
+      return new UnidadLexica(alex.fila(),ClaseLexica.CC,"]"); 
    } 
-   public UnidadLexica unidadPA() {
+   public UnidadLexica unidadPAp() {
       return new UnidadLexica(alex.fila(),ClaseLexica.PAP,"("); 
-   } 
-   public UnidadLexica unidadPC() {
+   }
+   public UnidadLexica unidadPCierre() {
       return new UnidadLexica(alex.fila(),ClaseLexica.PCIERRE,")"); 
    } 
    public UnidadLexica unidadIgual() {

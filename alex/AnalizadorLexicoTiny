@@ -116,18 +116,18 @@ puntero = \¡
 {operadorAnd}             {return ops.unidadAnd();}
 {operadorOr}              {return ops.unidadOr();}
 {operadorNot}             {return ops.unidadNot();}
-{operadorIgual}           {return ops.unidadEqual();}
+{operadorIgual}           {return ops.unidadComparadorIgualdad();}
 {operadorLT}              {return ops.unidadLT();}
 {operadorGT}              {return ops.unidadGT();}
 {operadorLE}              {return ops.unidadLE();}
 {operadorGE}              {return ops.unidadGE();}
 
-{llaveApertura}           {return ops.unidadLA();}
-{llaveCierre}     	      {return ops.unidadLC();}
-{corcheteApertura}        {return ops.unidadCA();}
-{corcheteCierre}          {return ops.unidadCC();}
-{parentesisApertura}      {return ops.unidadPA();}
-{parentesisCierre}        {return ops.unidadPC();}
+{llaveApertura}           {return ops.unidadLLaveAp();}
+{llaveCierre}     	      {return ops.unidadLLaveCierre();}
+{corcheteApertura}        {return ops.unidadCorAp();}
+{corcheteCierre}          {return ops.unidadCorCierre();}
+{parentesisApertura}      {return ops.unidadPAp();}
+{parentesisCierre}        {return ops.unidadPCierre();}
 {igual}                   {return ops.unidadIgual();} 
 {coma}                    {return ops.unidadComa();}
 {puntoyComa}              {return ops.unidadPuntoComa();}
