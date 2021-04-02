@@ -63,17 +63,17 @@ public class ALexOperations {
    public UnidadLexica unidadLLaveCierre() {
       return new UnidadLexica(alex.fila(),ClaseLexica.LLCIERRE,"}"); 
    } 
-   public UnidadLexica unidadPAp() {
-      return new UnidadLexica(alex.fila(),ClaseLexica.PAP,"("); 
-   } 
-   public UnidadLexica unidadPCierre() {
-      return new UnidadLexica(alex.fila(),ClaseLexica.PCIERRE,")"); 
-   } 
    public UnidadLexica unidadCorAp() {
       return new UnidadLexica(alex.fila(),ClaseLexica.CAP,"["); 
    } 
    public UnidadLexica unidadCorCierre() {
       return new UnidadLexica(alex.fila(),ClaseLexica.CCIERRE,"]"); 
+   } 
+   public UnidadLexica unidadPAp() {
+      return new UnidadLexica(alex.fila(),ClaseLexica.PAP,"("); 
+   } 
+   public UnidadLexica unidadPCierre() {
+      return new UnidadLexica(alex.fila(),ClaseLexica.PCIERRE,")"); 
    } 
    public UnidadLexica unidadIgual() {
       return new UnidadLexica(alex.fila(),ClaseLexica.IGUAL,"="); 

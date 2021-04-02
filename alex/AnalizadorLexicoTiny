@@ -117,7 +117,7 @@ puntero = \¡
 {operadorAnd}             {return ops.unidadAnd();}
 {operadorOr}              {return ops.unidadOr();}
 {operadorNot}             {return ops.unidadNot();}
-{operadorIgual}           {return ops.unidadEqual();}
+{operadorIgual}           {return ops.unidadComparadorIgualdad();}
 {operadorLT}              {return ops.unidadLT();}
 {operadorGT}              {return ops.unidadGT();}
 {operadorLE}              {return ops.unidadLE();}
