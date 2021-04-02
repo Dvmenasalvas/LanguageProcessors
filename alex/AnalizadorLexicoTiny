@@ -33,7 +33,8 @@ digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
 parteEntera = {digitoPositivo}{digito}*
 parteDecimal = {digito}* {digitoPositivo}
-separador = [ \t\r\b\n]
+separador = [ \t\r\b]
+saltoDeLinea = \n
 comentario = #[^\n]* 
 int = int
 boolean = boolean
@@ -86,6 +87,7 @@ puntero = \¡
 %%
 {separador}               {}
 {comentario}              {}
+{saltoDeLinea}            {yychar=-1;}
 
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}
