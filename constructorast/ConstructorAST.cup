@@ -1,0 +1,45 @@
+package constructorast;
+
+import java_cup.runtime.*;
+import alex.AnalizadorLexicoExp;
+import alex.UnidadLexica;
+import errors.GestionErroresExp;
+import ast.E;
+import ast.ASExp;
+
+scan with {: return getScanner().next_token(); :};
+action code {:
+   private ASExp as = new ASExp();
+:};
+parser code {: 
+   private GestionErroresExp errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresExp();
+   AnalizadorLexicoExp alex = (AnalizadorLexicoExp)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+
+terminal  MAS, POR, PAP, PCIERRE;
+terminal String NUM;
+
+non terminal  E Exp, Term, Fact;
+
+Exp ::= Exp: aDeexp1 MAS Term: aDeterm 
+   {: RESULT=as.suma(aDeexp1,aDeterm); :};
+Exp ::= Term: aDeterm
+   {: RESULT=aDeterm; :};
+Term ::= Term: aDeterm1 POR Fact: aDefact 
+   {: RESULT=as.mul(aDeterm1,aDefact); :};
+Term ::= Fact: aDefact
+   {: RESULT=aDefact; :};   
+Fact ::= NUM: lexDeNum           
+   {: RESULT = as.num(lexDeNum); :};
+Fact ::= PAP Exp: aDeexp PCIERRE
+   {: RESULT = aDeexp; :};
+
+
