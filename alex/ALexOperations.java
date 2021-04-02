@@ -11,12 +11,6 @@ public class ALexOperations {
    public UnidadLexica unidadId() {
       return new UnidadLexica(alex.fila(),ClaseLexica.IDEN,alex.lexema()); 
    } 
-   public UnidadLexica unidadEvalua() {
-      return new UnidadLexica(alex.fila(),ClaseLexica.EVALUA,"evalua"); 
-   } 
-   public UnidadLexica unidadDonde() {
-      return new UnidadLexica(alex.fila(),ClaseLexica.DONDE,"donde"); 
-   } 
    public UnidadLexica unidadEnt() {
       return new UnidadLexica(alex.fila(),ClaseLexica.ENT,alex.lexema()); 
    } 
