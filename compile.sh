@@ -1,6 +1,5 @@
 #! /bin/bash
-cd asint
-java java_cup.Main -parser AnalizadorSintacticoTiny -symbols ClaseLexica -nopositions Tiny.cup
-cd ..
-java JLex.Main alex/AnalizadorLexicoTiny
-javac */*.java
+java -cp "jlex.jar" JLex.Main src/alex/AnalizadorLexico
+cd src/constructorast 
+java -cp "../../cup.jar" java_cup.Main -parser ConstructAST -symbols ClaseLexica -nopositions ConstructorAST.cup
+cd ../..
