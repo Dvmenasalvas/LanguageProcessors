@@ -8,6 +8,7 @@ import ast.E.E;
 import ast.E.Ent;
 import ast.E.Falso;
 import ast.E.Iden;
+import ast.E.LlamadaFuncion;
 import ast.E.Not;
 import ast.E.Nuevo;
 import ast.E.Pot;
