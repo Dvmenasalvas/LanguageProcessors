@@ -1,4 +1,4 @@
-package ast;
+package ast.E;
 
 public class Resta extends EBin {
    public Resta(E opnd1, E opnd2, int fila,int columna) {

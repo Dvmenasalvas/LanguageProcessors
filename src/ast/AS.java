@@ -2,6 +2,19 @@ package ast;
 
 import java.util.List;
 
+import ast.E.Or;
+import ast.E.And;
+import ast.E.IgualIgual;
+import ast.E.Mayor;
+import ast.E.Menor;
+import ast.E.MayorIgual;
+import ast.E.MenorIgual;
+import ast.E.Distinto;
+import ast.E.Suma;
+import ast.E.Resta;
+import ast.E.Mul;
+import ast.E.Div;
+import ast.E.Mod;
 import ast.E.Corchete;
 import ast.E.Dolar;
 import ast.E.E;
@@ -41,11 +54,11 @@ public class AS {
   public E resta(E e1, E e2, int fila, int columna)
     {return new Resta(e1, e2, fila, columna);}
   public E multiplicacion(E e1, E e2, int fila, int columna)
-    {return new Multiplicacion(e1, e2, fila, columna);}
+    {return new Mul(e1, e2, fila, columna);}
   public E division(E e1, E e2, int fila, int columna)
-    {return new Division(e1, e2, fila, columna);}
+    {return new Div(e1, e2, fila, columna);}
   public E modulo(E e1, E e2, int fila, int columna)
-    {return new Modulo(e1, e2, fila, columna);}
+    {return new Mod(e1, e2, fila, columna);}
   public E pot(E e1, E e2, int fila, int columna) 
     {return new Pot(e1, e2, fila,columna);}
   

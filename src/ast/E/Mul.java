@@ -1,4 +1,4 @@
-package ast;
+package ast.E;
 
 public class Mul extends EBin {
    public Mul(E opnd1, E opnd2, int fila, int columna) {

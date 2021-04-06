@@ -1,4 +1,4 @@
-package ast;
+package ast.E;
 
 public class Mod extends EBin {
    public Mod(E opnd1, E opnd2, int fila, int columna) {
