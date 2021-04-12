@@ -1,6 +1,5 @@
 package ast.E;
 
-import ast.E.TipoE;
 
 public class Corchete extends EBin {
    public Corchete(E e1, E e2,int fila,int columna) {

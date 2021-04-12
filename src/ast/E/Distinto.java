@@ -1,6 +1,5 @@
 package ast.E;
 
-import ast.E.TipoE;
 
 public class Distinto extends EBin {
    public Distinto(E opnd1, E opnd2,int fila,int columna) {
