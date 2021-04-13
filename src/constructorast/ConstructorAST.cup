@@ -38,7 +38,7 @@ CONST, STRUCT, VOID;
 
 //1.2)No terminales
 non terminal TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY; 
-non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, E5, E6, E7, E8, E9;
+non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 non terminal List<E> LIST_ARG, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
 non terminal List<I> S;
 
@@ -111,58 +111,58 @@ Exp3 ::= Exp4:op1
 
 //3.3.2) Multiplicacion, division y modulo
 //*
-Exp4 ::= Exp4:op1 POR:por E5:op2
+Exp4 ::= Exp4:op1 POR:por Exp5:op2
    {:RESULT=as.mul(op1, op2, por.getFila(), por.getColumna()); :};
 
 // /
-Exp4 ::= Exp4:op1 DIV:div E5:op2
-   {:RESULT=as.div(op1, op2, div.getFila(), div.getColumna()); :};
+Exp4 ::= Exp4:op1 DIV:div Exp5:op2
+   {:RESULT=as.div(op1, op2, por.getFila(), por.getColumna()); :};
 
-Exp4 ::= Exp4 :op1 MOD:mod E5:op2
+Exp4 ::= Exp4 :op1 MOD:mod Exp5:op2
    {:RESULT=as.mod(op1, op2, mod.getFila(), mod.getColumna()); :};
 
 
 //3.3.3) Potencia
-E5 ::= E5:e1 POT:pot E6:e2
+Exp5 ::= Exp5:e1 POT:pot Exp6:e2
 {:RESULT=as.pot(e1, e2, pot.getFila(), pot.getColumna());:};
-E5 ::= E6:e1
+Exp5 ::= Exp6:e1
 {:RESULT=e1;:};
 
 //3.4) Negación
-E6 ::= NOT:not E6:e1
+Exp6 ::= NOT:not Exp6:e1
 {:RESULT=as.not(e1, not.getFila(), not.getColumna());:)};
-E6 ::= E7:e1
+Exp6 ::= Exp7:e1
 {:RESULT=e1;:};
 
 //3.5) Corchete, punto, asterisco y new 
-E7 ::= E7:e1 COR_A:ca Exp0:e2 COR_C
+Exp7 ::= Exp7:e1 COR_A:ca Exp0:e2 COR_C
 {:RESULT=as.corchete(e1, e2, ca.getFila(), ca.getColumna());:};
 //No se para que es el punto
-E7  ::= PUNTERO:punt E9:op1
+Exp7  ::= PUNTERO:punt E9:op1
 {:RESULT = as.dolar(op1, puntero.getFila(), puntero.getColumna());:};
-E7	::= NEW:nuevo TIPO:tipo COR_A Exp0:tam COR_C
+Exp7	::= NEW:nuevo TIPO:tipo COR_A Exp0:tam COR_C
 {:RESULT = as.nuevo(tipo, tam, nuevo.getFila(), nuevo.getColumna());:};
-E7	::= NEW:nuevo TIPO:tipo COR_A COR_C
+Exp7	::= NEW:nuevo TIPO:tipo COR_A COR_C
 {:RESULT = as.nuevo(
    tipo, as.ent("1", nuevo.getFila(), nuevo.getColumna()), 
    nuevo.getFila(), nuevo.getColumna());:};
-E7  ::= E8:op1
+Exp7  ::= Exp8:op1
 {:RESULT=op1;:};
 
 //3.6) Terminales 
-E8  ::= ENT:e1
+Exp8  ::= ENT:e1
 {:RESULT=as.ent(e1.getLexema(), e1.getFila(), e1.getColumna());:};
-E8  ::= IDEN:e1
+Exp8  ::= IDEN:e1
 {:RESULT=as.iden(e1.getLexema(), e1.getFila(), e1.getColumna());:};
-E8  ::= PAREN_A Exp0:e1 PAREN_C
+Exp8  ::= PAREN_A Exp0:e1 PAREN_C
 {:RESULT=e1;:};
-E8  ::= TRUE:tru
+Exp8  ::= TRUE:tru
 {:RESULT=as.verdadero(tru.getFila(), tru.getColumna());:};
-E8  ::= FALSE:fal
+Exp8  ::= FALSE:fal
 {:RESULT=as.falso(fal.getFila(), fal.getColumna());:};
 
 //3.7)Llamada a funcion como expresion
-E8  ::= IDEN:id PAREN_A LIST_ARG:args PAREN_C:pc
+Exp8  ::= IDEN:id PAREN_A LIST_ARG:args PAREN_C:pc
 {:RESULT=as.llamadaFuncion(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, pc.getFila(), pc.getColumna());:};
 //Sin argumentos
 LIST_ARG ::=
