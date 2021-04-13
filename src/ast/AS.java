@@ -53,11 +53,11 @@ public class AS {
     {return new Suma(e1, e2, fila, columna);}
   public E resta(E e1, E e2, int fila, int columna)
     {return new Resta(e1, e2, fila, columna);}
-  public E multiplicacion(E e1, E e2, int fila, int columna)
+  public E mul(E e1, E e2, int fila, int columna)
     {return new Mul(e1, e2, fila, columna);}
-  public E division(E e1, E e2, int fila, int columna)
+  public E div(E e1, E e2, int fila, int columna)
     {return new Div(e1, e2, fila, columna);}
-  public E modulo(E e1, E e2, int fila, int columna)
+  public E mod(E e1, E e2, int fila, int columna)
     {return new Mod(e1, e2, fila, columna);}
   public E pot(E e1, E e2, int fila, int columna) 
     {return new Pot(e1, e2, fila,columna);}
