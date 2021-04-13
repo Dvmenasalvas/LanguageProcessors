@@ -2,31 +2,8 @@ package ast;
 
 import java.util.List;
 
-import ast.E.Or;
-import ast.E.And;
-import ast.E.IgualIgual;
-import ast.E.Mayor;
-import ast.E.Menor;
-import ast.E.MayorIgual;
-import ast.E.MenorIgual;
-import ast.E.Distinto;
-import ast.E.Suma;
-import ast.E.Resta;
-import ast.E.Mul;
-import ast.E.Div;
-import ast.E.Mod;
-import ast.E.Corchete;
-import ast.E.Dolar;
-import ast.E.E;
-import ast.E.Ent;
-import ast.E.Falso;
-import ast.E.Iden;
-import ast.E.LlamadaFuncion;
-import ast.E.Not;
-import ast.E.Nuevo;
-import ast.E.Pot;
-import ast.E.Verdadero;
-import ast.T.Tipo;
+import ast.E.*;
+import ast.T.*;
 
 public class AS {
   //EXPRESIONES
