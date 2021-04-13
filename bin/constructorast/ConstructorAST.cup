@@ -116,7 +116,7 @@ Exp4 ::= Exp4:op1 POR:por Exp5:op2
 
 // /
 Exp4 ::= Exp4:op1 DIV:div Exp5:op2
-   {:RESULT=as.div(op1, op2, por.getFila(), por.getColumna()); :};
+   {:RESULT=as.div(op1, op2, div.getFila(), div.getColumna()); :};
 
 Exp4 ::= Exp4 :op1 MOD:mod Exp5:op2
    {:RESULT=as.mod(op1, op2, mod.getFila(), mod.getColumna()); :};
@@ -138,7 +138,7 @@ Exp6 ::= Exp7:e1
 Exp7 ::= Exp7:e1 COR_A:ca Exp0:e2 COR_C
 {:RESULT=as.corchete(e1, e2, ca.getFila(), ca.getColumna());:};
 //No se para que es el punto
-Exp7  ::= PUNTERO:punt E9:op1
+Exp7  ::= PUNTERO:punt Exp9:op1
 {:RESULT = as.dolar(op1, puntero.getFila(), puntero.getColumna());:};
 Exp7	::= NEW:nuevo TIPO:tipo COR_A Exp0:tam COR_C
 {:RESULT = as.nuevo(tipo, tam, nuevo.getFila(), nuevo.getColumna());:};
