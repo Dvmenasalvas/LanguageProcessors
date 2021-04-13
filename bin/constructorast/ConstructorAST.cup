@@ -29,7 +29,7 @@ init with {:
 
 //1)Terminales y no terminales
 //1.1)Terminales
-terminal OR, AND, IGUALIGUAL, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, DISTINTO, IGUAL,
+terminal TokenValue OR, AND, IGUALIGUAL, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, DISTINTO, IGUAL,
 MAS, MENOS, POR, DIV, MOD, POT, NOT, COR_A, COR_C, PUNTERO, NEW,
 TIPO, ENT, IDEN, PAREN_A, PAREN_C, LLAVE_A, LLAVE_C,
 TRUE, FALSE, PUNTO, COMA, PUNTOCOMA, 
@@ -37,7 +37,7 @@ INT, BOOLEAN, IF, ELSE, RETURN, WHILE, SWITCH, CASE, DEFAULT,
 CONST, STRUCT, VOID;
 
 //1.2)No terminales
-non terminal TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY; 
+non terminal Tipo TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY; 
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 non terminal List<E> LIST_ARG, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
 non terminal List<I> S;
@@ -138,7 +138,7 @@ Exp6 ::= Exp7:e1
 Exp7 ::= Exp7:e1 COR_A:ca Exp0:e2 COR_C
 {:RESULT=as.corchete(e1, e2, ca.getFila(), ca.getColumna());:};
 //No se para que es el punto
-Exp7  ::= PUNTERO:punt E9:op1
+Exp7  ::= PUNTERO:punt Exp9:op1
 {:RESULT = as.dolar(op1, puntero.getFila(), puntero.getColumna());:};
 Exp7	::= NEW:nuevo TIPO:tipo COR_A Exp0:tam COR_C
 {:RESULT = as.nuevo(tipo, tam, nuevo.getFila(), nuevo.getColumna());:};
