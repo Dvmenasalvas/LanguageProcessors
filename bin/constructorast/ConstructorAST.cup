@@ -33,7 +33,7 @@ init with {:
 terminal TokenValue OR, AND, IGUALIGUAL, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, DISTINTO, IGUAL,
 MAS, MENOS, POR, DIV, MOD, POT, NOT, COR_A, COR_C, PUNTERO, NEW,
 ENT, IDEN, PAREN_A, PAREN_C, LLAVE_A, LLAVE_C,
-TRUE, FALSE, PUNTO, COMA, PUNTOCOMA, 
+TRUE, FALSE, COMA, PUNTOCOMA, 
 INT, BOOLEAN, IF, ELSE, RETURN, WHILE, SWITCH, CASE, DEFAULT,
 CONST, STRUCT, VOID;
 
@@ -45,7 +45,10 @@ non terminal List<I> S;
 
 //2) Inicio
 /*
-
+S   ::= INST:inst S:lista_inst
+{:lista_inst.add(0,inst); RESULT = lista_inst;:};
+S   ::= 
+{:RESULT= new ArrayList<I>();:};
 */
 
 //3) Gramatica de expresiones (ordenada por precedencia de operadores de menos a más)
@@ -135,10 +138,10 @@ Exp6 ::= NOT:not Exp6:e1
 Exp6 ::= Exp7:e1
 {:RESULT=e1;:};
 
-//3.5) Corchete, punto, asterisco y new 
+//3.5) Corchete, asterisco y new 
 Exp7 ::= Exp7:e1 COR_A:ca Exp0:e2 COR_C
 {:RESULT=as.corchete(e1, e2, ca.getFila(), ca.getColumna());:};
-//No se para que es el punto
+
 Exp7  ::= PUNTERO:punt Exp9:op1
 {:RESULT = as.dolar(op1, punt.getFila(), punt.getColumna());:};
 Exp7	::= NEW:nuevo TIPO:tipo COR_A Exp0:tam COR_C
