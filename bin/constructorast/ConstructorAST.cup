@@ -178,3 +178,24 @@ ARG ::= COMA Exp0:e1 ARG:e2
 {:e2.add(0, e1); RESULT=e2;:};
 ARG ::= 
 {:RESULT=new ArrayList<E>();:};
+
+
+
+
+//4) Tipos
+
+//4.1) Tipos simples
+TIPO ::= TIPO_BASICO: tipoBasico
+   {:RESULT = tipoBasico; :};
+
+//INT
+TIPO_BASICO ::= INT: tipoBasico
+   {:RESULT = new TipoInt();:};
+
+//BOOL
+TIPO_BASICO ::= BOOLEAN: tipoBasico
+   {:RESULT = new TipoBoolean(); :};
+
+
+
+//4.2) Tipo puntero
