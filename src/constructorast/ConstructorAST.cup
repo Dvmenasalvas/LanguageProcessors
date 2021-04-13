@@ -41,13 +41,6 @@ CONST, STRUCT, VOID;
 non terminal Tipo TIPO, TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY; 
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 non terminal List<E> LIST_ARG, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
-non terminal List<I> S;
-
-//2) Inicio
-S   ::= INST:inst S:lista_inst
-{:lista_inst.add(0,inst); RESULT = lista_inst;:};
-S   ::= 
-{:RESULT= new ArrayList<I>();:};
 
 //3) Gramatica de expresiones (ordenada por precedencia de operadores de menos a más)
 
@@ -192,6 +185,6 @@ TIPO_BASICO ::= BOOLEAN: tipoBasico
    {:RESULT = new TipoBoolean(); :};
 
 //4.3)Tipos arrays 
-TIPO_ARRAY ::= CA:ca Exp0:dimension CC TIPO_ARRAY:tipoArray
+TIPO_ARRAY ::= COR_A:ca Exp0:dimension COR_C TIPO_ARRAY:tipoArray
 {:RESULT = new TipoArray(tipoArray, dimension, ca.getFila(), ca.getColumna());:};
 
