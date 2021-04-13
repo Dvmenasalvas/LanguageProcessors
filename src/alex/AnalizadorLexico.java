@@ -250,20 +250,19 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
 		/* 29 */ YY_NO_ANCHOR,
 		/* 30 */ YY_NO_ANCHOR,
 		/* 31 */ YY_NO_ANCHOR,
-		/* 32 */ YY_NO_ANCHOR,
-		/* 33 */ YY_NO_ANCHOR
+		/* 32 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,65538,
-"3:8,1:2,4,3:2,1,3:18,1,17,3,2,3,14,15,3,25,26,12,10,9,11,28,13,7,6:9,3,27,1" +
-"9,18,20,3:2,5:26,23,3,24,3,8,3,5:26,21,16,22,3:35,29,3:65374,0:2")[0];
+"3:8,1:2,4,3:2,1,3:18,1,17,3,2,3,14,15,3,25,26,12,10,9,11,3,13,7,6:9,3,27,19" +
+",18,20,3:2,5:26,23,3,24,3,8,3,5:26,21,16,22,3:35,28,3:65374,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,34,
-"0,1:2,2,1:2,3,4,5:3,6,1:5,7,8,9,1:14")[0];
+	private int yy_rmap[] = unpackFromString(1,33,
+"0,1:2,2,1:2,3,4,5:3,6,1:5,7,8,9,1:13")[0];
 
-	private int yy_nxt[][] = unpackFromString(10,30,
-"1,2,3,4,5,6,7,33,4,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2" +
-"7,28,-1:31,3:3,-1,3:25,-1:5,6:4,-1:27,7:2,-1:28,7,33,-1:34,29,-1:35,30,-1:2" +
-"9,31,-1:29,32,-1:11");
+	private int yy_nxt[][] = unpackFromString(10,29,
+"1,2,3,4,5,6,7,32,4,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2" +
+"7,-1:30,3:3,-1,3:24,-1:5,6:4,-1:26,7:2,-1:27,7,32,-1:33,28,-1:34,29,-1:28,3" +
+"0,-1:28,31,-1:10");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -415,32 +414,28 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
 					case -27:
 						break;
 					case 27:
-						{return ops.unidadPunto();}
+						{return ops.unidadPuntero();}
 					case -28:
 						break;
 					case 28:
-						{return ops.unidadPuntero();}
+						{return ops.unidadPot();}
 					case -29:
 						break;
 					case 29:
-						{return ops.unidadPot();}
+						{return ops.unidadComparadorIgualdad();}
 					case -30:
 						break;
 					case 30:
-						{return ops.unidadComparadorIgualdad();}
+						{return ops.unidadLE();}
 					case -31:
 						break;
 					case 31:
-						{return ops.unidadLE();}
+						{return ops.unidadGE();}
 					case -32:
 						break;
 					case 32:
-						{return ops.unidadGE();}
-					case -33:
-						break;
-					case 33:
 						{return ops.unidadEnt();}
-					case -34:
+					case -33:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);

@@ -82,7 +82,6 @@ corcheteCierre = \]
 igual = \=
 coma  = ,
 puntoyComa = \;
-punto = \.
 puntero = \¡
 
 %%
@@ -134,7 +133,6 @@ puntero = \¡
 {igual}                   {return ops.unidadIgual();} 
 {coma}                    {return ops.unidadComa();}
 {puntoyComa}              {return ops.unidadPuntoComa();}
-{punto}				        	  {return ops.unidadPunto();}
 {puntero}	        			  {return ops.unidadPuntero();}
 
 [^]                       {ops.error();}  
