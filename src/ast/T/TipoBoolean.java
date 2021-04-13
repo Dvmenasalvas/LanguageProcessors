@@ -1,6 +1,6 @@
 package ast.T;
 
-public class TipoBool extends Tipo{
+public class TipoBoolean extends Tipo{
 
     @Override
     public EnumeradoTipo tipoEnumerado() {
