@@ -136,11 +136,8 @@ public class ALexOperations {
    public UnidadLexica unidadPuntoComa() {
       return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTOCOMA, ";"); 
    } 
-   public UnidadLexica unidadPunto() {
-         return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTO, "."); 
-   } 
    public UnidadLexica unidadPuntero() {
-         return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTO, "¡"); 
+         return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTERO, "¡"); 
    } 
    public void error() {
       GestionErrores.errorLexico(alex.fila(), alex.columna(), alex.lexema());

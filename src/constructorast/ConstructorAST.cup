@@ -177,9 +177,21 @@ ARG ::= COMA Exp0:e1 ARG:e2
 ARG ::= 
 {:RESULT=new ArrayList<E>();:};
 
-
-
 //4) Tipos
+
+//4.1) Tipos simples
+TIPO ::= TIPO_BASICO: tipoBasico
+   {:RESULT = tipoBasico; :};
+
+//INT
+TIPO_BASICO ::= INT: tipoBasico
+   {:RESULT = new TipoInt();:};
+
+//BOOL
+TIPO_BASICO ::= BOOLEAN: tipoBasico
+   {:RESULT = new TipoBoolean(); :};
+
 //4.3)Tipos arrays 
 TIPO_ARRAY ::= CA:ca Exp0:dimension CC TIPO_ARRAY:tipoArray
 {:RESULT = new TipoArray(tipoArray, dimension, ca.getFila(), ca.getColumna());:};
+
