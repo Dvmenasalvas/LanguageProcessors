@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.compile.sh.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alex/ALexOperations.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alex/AnalizadorLexico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alex/TokenValue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alex/UnidadLexica.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/AS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Corchete.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Dolar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/E.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/EBin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Elev.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Ent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Falso.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Iden.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Mul.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Not.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Nuevo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Suma.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/TipoE.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/E/Verdadero.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/Sentencia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/constructorast/ClaseLexica.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/constructorast/ConstructorAST.cup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/constructorast/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors/GestionErroresExp.java" beforeDir="false" />
-    </list>
+    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +31,11 @@
       <option name="presentableId" value="Default" />
       <updated>1617477325251</updated>
       <workItem from="1617477328683" duration="28000" />
+      <workItem from="1617782197724" duration="115000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
