@@ -44,10 +44,7 @@ non terminal List<E> LIST_ARG, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
 non terminal List<I> S;
 
 //2) Inicio
-S   ::= INST:inst S:lista_inst
-{:lista_inst.add(0,inst); RESULT = lista_inst;:};
-S   ::= 
-{:RESULT= new ArrayList<I>();:};
+
 
 //3) Gramatica de expresiones (ordenada por precedencia de operadores de menos a más)
 
