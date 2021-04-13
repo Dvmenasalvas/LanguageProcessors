@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="" />
+    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/test/pruebasVarias.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/practicaFinal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/practicaFinal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pruebasVarias.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/alex/ALexOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/ALexOperations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/alex/AnalizadorLexico" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/AnalizadorLexico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/alex/AnalizadorLexico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/AnalizadorLexico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/E/Div.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/E/Div.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/E/EBin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/E/EBin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/E/Mul.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/E/Mul.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/expresiones.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/expresiones.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,10 +32,32 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="constructorast.Main" />
+      <module name="practicaFinal" />
+      <option name="PROGRAM_PARAMETERS" value="test/expresiones.txt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="constructorast.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -32,10 +69,25 @@
       <updated>1617477325251</updated>
       <workItem from="1617477328683" duration="28000" />
       <workItem from="1617782197724" duration="115000" />
+      <workItem from="1618334126379" duration="2406000" />
+      <workItem from="1618349764415" duration="602000" />
+      <workItem from="1618350416434" duration="2778000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
