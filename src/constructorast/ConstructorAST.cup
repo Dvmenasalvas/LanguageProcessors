@@ -98,7 +98,7 @@ Exp2 ::= Exp3: op
 //3.3.1) Suma y resta
 //+
 Exp3 ::= Exp3:op1 MAS:mas Exp4:op2
-   {:RESULT=as.suma(op1, op2, mas.getFila(), getColumna()); :};
+   {:RESULT=as.suma(op1, op2, mas.getFila(), mas.getColumna()); :};
 
 //-
 Exp3 ::= Exp3:op1 MENOS:menos Exp4:op2
