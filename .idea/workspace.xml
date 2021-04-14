@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/pruebasVarias.txt" afterDir="false" />
+    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="Funcionando hasta potencia incluida">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/practicaFinal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/practicaFinal.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pruebasVarias.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/alex/ALexOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/ALexOperations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/alex/AnalizadorLexico" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/AnalizadorLexico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/alex/AnalizadorLexico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/AnalizadorLexico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/E/Div.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/E/Div.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/E/EBin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/E/EBin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/E/Mul.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/E/Mul.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/expresiones.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/expresiones.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,8 +59,16 @@
       <workItem from="1617782197724" duration="115000" />
       <workItem from="1618334126379" duration="2406000" />
       <workItem from="1618349764415" duration="602000" />
-      <workItem from="1618350416434" duration="2778000" />
+      <workItem from="1618350416434" duration="4927000" />
     </task>
+    <task id="LOCAL-00001" summary="Funcionando hasta potencia incluida">
+      <created>1618353368807</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1618353368807</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -89,5 +85,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Funcionando hasta potencia incluida" />
+    <option name="LAST_COMMIT_MESSAGE" value="Funcionando hasta potencia incluida" />
   </component>
 </project>

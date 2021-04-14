@@ -127,6 +127,11 @@ Exp5 ::= Exp5:e1 POT:pot Exp8:e2
 Exp5 ::= Exp8:e1
 {:RESULT=e1;:};
 
+//3.4) Negación
+Exp6 ::= NOT:not Exp6:e1
+{:RESULT=as.not(e1, not.getFila(), not.getColumna());:};
+Exp6 ::= Exp7:e1
+{:RESULT=e1;:};
 
 //3.6) Terminales
 Exp8  ::= ENT:e1
