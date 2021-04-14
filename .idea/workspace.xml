@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="Outputs y Corchete y Negación" />
+    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="Hasta if funcionando">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ast/I/InstAsignacion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ast/I/InstIf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/instrucciones.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/practicaFinal/alex/AnalizadorLexico" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/practicaFinal/alex/AnalizadorLexico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/practicaFinal/constructorast/ConstructorAST.cup" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/practicaFinal/constructorast/ConstructorAST.cup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/alex/AnalizadorLexico" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/AnalizadorLexico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/alex/AnalizadorLexico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/alex/AnalizadorLexico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/AS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/AS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Pull.Settings">
     <option name="OPTIONS">
@@ -20,6 +41,7 @@
   <component name="ProjectId" id="1qfj1P83FtGFU3LcEeCfjHZFXQk" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,6 +50,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -43,6 +66,17 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -98,6 +132,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Outputs y Corchete y Negación" />
-    <option name="LAST_COMMIT_MESSAGE" value="Outputs y Corchete y Negación" />
+    <MESSAGE value="Hasta if funcionando" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hasta if funcionando" />
   </component>
 </project>

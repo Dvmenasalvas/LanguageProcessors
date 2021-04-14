@@ -6,6 +6,7 @@ import alex.UnidadLexica;
 import alex.TokenValue;
 import errors.GestionErrores;
 import ast.E.*;
+import ast.I.*;
 import ast.T.*;
 import ast.AS;
 
@@ -38,15 +39,27 @@ INT, BOOLEAN, IF, ELSE, RETURN, WHILE, SWITCH, CASE, DEFAULT,
 CONST, STRUCT, VOID;
 
 //1.2)No terminales
-non terminal Tipo TIPO, TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY; 
+//Tipos
+non terminal Tipo TIPO, TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY;
+//Expresiones
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 non terminal List<E> LIST_ARG, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
-non terminal List<E> S;
+//Instrucciones
+non terminal List<I> Start;
+non terminal I Inst, InstIf, InstAsig;
+
 //2) Inicio
-S   ::= Exp0:e PUNTOCOMA S:lista
-{:lista.add(0,e); RESULT = lista;:};
-S   ::=
-{:RESULT= new ArrayList<E>();:};
+//Expresiones
+//S   ::= Exp0:e PUNTOCOMA S:lista
+//{:lista.add(0,e); RESULT = lista;:};
+//S   ::=
+//{:RESULT= new ArrayList<E>();:};
+//Instrucciones
+Start   ::= Inst:inst Start:lista_inst
+{:lista_inst.add(0,inst); RESULT = lista_inst;:};
+Start   ::=
+{:RESULT= new ArrayList<I>();:};
+
 
 //3) Gramatica de expresiones (ordenada por precedencia de operadores de menos a más)
 
@@ -141,9 +154,6 @@ Exp7 ::= Exp7: e1 COR_A:ca Exp8: e2 COR_C:cc
 Exp7  ::= Exp8:op1
     {:RESULT=op1;:};
 
-
-
-
 //3.6) Terminales
 Exp8  ::= ENT:e1
 {:RESULT=as.ent(e1.getLexema(), e1.getFila(), e1.getColumna());:};
@@ -155,6 +165,34 @@ Exp8  ::= TRUE:tru
 {:RESULT=as.verdadero(tru.getFila(), tru.getColumna());:};
 Exp8  ::= FALSE:fal
 {:RESULT=as.falso(fal.getFila(), fal.getColumna());:};
+
+
+//4) Gramatica de instrucciones
+
+//4.1) Instrucciones posibles
+Inst ::= InstIf:op1
+{:RESULT = op1;:};
+Inst ::= InstAsig:op1
+{:RESULT = op1;:};
+
+//4.2) Instruccion asignacion
+InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
+{:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
+
+InstAsig ::= error PUNTOCOMA
+{:System.err.println("Error en la asignacion\n");:};
+
+//4.2) Instruccion If
+InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo LLAVE_C
+{:RESULT = as.instIf(condicion, cuerpo, null, iff.getFila(), iff.getColumna());:};
+InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo_if LLAVE_C ELSE LLAVE_A Start:cuerpo_else LLAVE_C
+{:RESULT = as.instIf(condicion, cuerpo_if, cuerpo_else, iff.getFila(), iff.getColumna());:};
+
+InstIf ::= IF error LLAVE_C
+{:System.err.println("Error en la condicion del if\n");:};
+InstIf ::= IF Exp0 error LLAVE_C
+{:System.err.println("Error en el cuerpo del if o del else\n");:};
+
 
 //4) Tipos
 

@@ -3,10 +3,11 @@ package ast;
 import java.util.List;
 
 import ast.E.*;
+import ast.I.*;
 import ast.T.*;
 
 public class AS {
-  //EXPRESIONES
+  //Expresiones
   public E or(E e1, E e2, int fila, int columna)
     {return new Or(e1, e2, fila, columna);}
   public E and(E e1, E e2, int fila, int columna)
@@ -61,4 +62,9 @@ public class AS {
   {return new Falso(fila,columna);}
   public E iden(String iden, int fila, int columna) 
   {return new Iden(iden, fila,columna);}
+
+  //Instrucciones
+  public I instIf(E condicion, List<I> cuerpo_if, List<I> cuerpo_else, int fila, int columna) {return new InstIf(condicion, cuerpo_if, cuerpo_else,fila,columna);}
+  public I instAsignacion(E iden, E valor,int fila,int columna) {return new InstAsignacion(iden, valor,fila,columna);};
+
 }

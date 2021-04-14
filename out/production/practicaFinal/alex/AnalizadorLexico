@@ -90,8 +90,6 @@ puntero = \¡
 {comentario}              {}
 {saltoDeLinea}            {yychar=-1;}
 
-{identificador}           {return ops.unidadId();}
-{numeroEntero}            {return ops.unidadEnt();}
 
 {int}                     {return ops.unidadInt();}
 {boolean}                 {return ops.unidadBoolean();}
@@ -108,6 +106,9 @@ puntero = \¡
 {struct}				          {return ops.unidadStruct();}
 {new}					            {return ops.unidadNew();}
 {void}                    {return ops.unidadVoid();}
+
+{identificador}           {return ops.unidadId();}
+{numeroEntero}            {return ops.unidadEnt();}
 
 {operadorSuma}            {return ops.unidadSuma();}
 {operadorResta}           {return ops.unidadResta();}
