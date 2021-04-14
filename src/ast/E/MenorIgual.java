@@ -6,4 +6,5 @@ public class MenorIgual extends EBin {
 	     super(opnd1,opnd2,fila,columna); 
    }     
    public TipoE tipo() {return TipoE.MENORIGUAL;}
+    public String toString() {return "("+ opnd1().toString()+" menor o igual que "+ opnd2().toString()+")";}
 }

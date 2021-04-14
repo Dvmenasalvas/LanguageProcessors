@@ -6,5 +6,7 @@ public class And extends EBin {
 	     super(opnd1,opnd2,fila,columna); 
    }     
    public TipoE tipo() {return TipoE.AND;}
-   
+    public String toString() {return "(" + opnd1().toString()+" and "+ opnd2().toString() + ")";}
+
+
 }

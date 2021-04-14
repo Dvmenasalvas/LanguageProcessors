@@ -47,7 +47,7 @@ public class AS {
   public E nuevo(Tipo tipo, E tam,int fila,int columna) 
   {return new Nuevo(tipo, tam,fila,columna);} 
   public E not(E e1,int fila,int columna) 
-  {return new Not(e1,fila,columna);}
+    {return new Not(e1,fila,columna);}
   public E llamadaFuncion(E nombre, List<E> args,int fila,int columna) 
   {return new LlamadaFuncion(nombre, args, fila, columna);}
 

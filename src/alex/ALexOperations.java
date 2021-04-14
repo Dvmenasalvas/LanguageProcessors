@@ -96,6 +96,9 @@ public class ALexOperations {
    public UnidadLexica unidadComparadorIgualdad(){
       return new UnidadLexica(alex.fila(),  alex.columna(), ClaseLexica.IGUALIGUAL, "==");
    }
+   public UnidadLexica unidadDistinto(){
+      return new UnidadLexica(alex.fila(),  alex.columna(), ClaseLexica.DISTINTO, "!=");
+   }
    public UnidadLexica unidadLT() {
       return new UnidadLexica(alex.fila(),  alex.columna(), ClaseLexica.MENOR, "<");
    }

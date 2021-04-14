@@ -65,8 +65,9 @@ operadorModulo = %
 
 operadorAnd = &
 operadorOr = \|
-operadorNot = !
+operadorNot = \!
 operadorIgual = \=\=
+operadorDistinto = \!\=
 operadorLT = <
 operadorGT = >
 operadorLE = <=
@@ -119,6 +120,7 @@ puntero = \¡
 {operadorOr}              {return ops.unidadOr();}
 {operadorNot}             {return ops.unidadNot();}
 {operadorIgual}           {return ops.unidadComparadorIgualdad();}
+{operadorDistinto}        {return ops.unidadDistinto();}
 {operadorLT}              {return ops.unidadLT();}
 {operadorGT}              {return ops.unidadGT();}
 {operadorLE}              {return ops.unidadLE();}

@@ -5,4 +5,6 @@ public class Mod extends EBin {
      super(opnd1,opnd2, fila, columna);  
    }     
    public TipoE tipo() {return TipoE.MOD;}
+    public String toString() {return "mod(" + opnd1().toString()+","+ opnd2().toString() + ")";}
+
 }

@@ -8,5 +8,5 @@ public class Not extends E {
     } 
     
     public TipoE tipo() {return TipoE.NOT;}
-    public String toString() {return "not(" + e1.toString() + ")";}
+    public String toString() {return "not(" + e1 + ")";}
 }
