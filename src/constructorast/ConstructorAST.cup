@@ -45,11 +45,12 @@ non terminal Tipo Tipo, TipoBasico, TipoArray;
 //Expresiones
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 //Instrucciones
-non terminal I Inst, InstIf, InstAsig, InstWhile, InstDeclFun, InstCallVoidFun;
+non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstCallVoidFun;
 //Listas
 non terminal List<I> Start;
 non terminal List<E> ListArg, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
 non terminal List<Pair<Tipo, E>> ListTipoArg, PrimerTipoArg, TipoArgs;
+non terminal List<Case> ListaCase;
 
 //2) Inicio
 //Expresiones
@@ -198,6 +199,8 @@ Inst ::= InstIf:op1
 {:RESULT = op1;:};
 Inst ::= InstAsig:op1
 {:RESULT = op1;:};
+Inst ::= InstSwitch: inst1
+    {:RESULT = inst1; :};
 Inst ::= InstWhile:op1
 {:RESULT = op1;:};
 Inst ::= InstDeclFun:op
@@ -223,6 +226,20 @@ InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo_if LLAVE_C
 InstWhile ::= WHILE:w PAREN_A Exp0:cond PAREN_C LLAVE_A Start:cuerpo LLAVE_C
 {:RESULT = as.instWhile(cond, cuerpo, w.getFila(), w.getColumna());:};
 
+//4.5) Instrucción switch
+InstSwitch ::= SWITCH:swi PAREN_A Exp0: exp PAREN_C LLAVE_A ListaCase: lista_case LLAVE_C
+    {:RESULT = as.instSwitch(exp, lista_case, swi.getFila(), swi.getColumna());:};
+
+ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
+    {:lista_case.add(0, as.createCase(var, cuerpo, cas.getFila(), cas.getColumna()));
+           RESULT = lista_case; :};
+
+
+//Default
+ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
+     {: List<Case> lista_case = new ArrayList<Case>();
+    	 	lista_case.add(0, as.createCase(as.iden("default", def.getFila(), def.getColumna()), cuerpo, def.getFila(), def.getColumna()));
+    	 	RESULT = lista_case; :};
 //Errores
 
 //4.8) Instrucción declaración función
@@ -230,6 +247,10 @@ InstDeclFun ::= Tipo:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:
 {:RESULT = as.instDeclFun(tipo, as.iden(id.getLexema(), id.getFila(), id.getColumna()),arg, cuerpo, ret, id.getFila(), id.getColumna());:};
 InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo LLAVE_C
 {:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
+
+
+
+//4) Tipos
 
 //Errores
 

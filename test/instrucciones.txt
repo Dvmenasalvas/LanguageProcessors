@@ -2,6 +2,11 @@ Dani = True;
 2 = False;
 Manolo = Juan;
 
+if ( True) {
+    Manteca = 3;
+}
+
+
 if (x < 5) {
     x = 6;
 } else {
@@ -18,4 +23,19 @@ while (end != False) {
 int funcionaca (int manteca, boolean jarana) {
     x = tuMadre;
     return y;
+}
+
+switch (true){
+    case 1 {
+        x = turico;
+        y = turico2;
+    }
+    case 3<9 {
+        x = turica;
+    }
+    default {
+        if(true){
+            Manteca = Cacahuete;
+        }
+    }
 }

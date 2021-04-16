@@ -11,7 +11,6 @@ import ast.T.*;
 import ast.AS;
 
 import java.util.List;
-import javafx.util.Pair;
 import java.util.ArrayList;
 
 scan with {: return getScanner().next_token(); :};
@@ -41,15 +40,16 @@ CONST, STRUCT, VOID;
 
 //1.2)No terminales
 //Tipos
-non terminal Tipo Tipo, TipoBasico, TipoArray;
+non terminal Tipo TIPO, TIPO_BASICO, TIPO_PUNTERO, TIPO_ARRAY;
 //Expresiones
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
+non terminal List<E> LIST_ARG, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
+
+
 //Instrucciones
-non terminal I Inst, InstIf, InstAsig, InstWhile, InstDeclFun, InstCallVoidFun;
-//Listas
 non terminal List<I> Start;
-non terminal List<E> ListArg, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
-non terminal List<Pair<Tipo, E>> ListTipoArg, PrimerTipoArg, TipoArgs;
+non terminal I Inst, InstIf, InstAsig, InstSwitch;
+non terminal List<Case> ListaCase;
 
 //2) Inicio
 //Expresiones
@@ -169,27 +169,6 @@ Exp8  ::= TRUE:tru
 Exp8  ::= FALSE:fal
 {:RESULT=as.falso(fal.getFila(), fal.getColumna());:};
 
-//4)Tipos
-Tipo ::= TipoArray:t
-{:RESULT = t;:};
-Tipo ::= TipoBasico:tb
-{:RESULT = tb;:};
-
-
-//4.1) Tipos simples
-TipoBasico ::= INT
-{:RESULT = new TipoInt();:};
-
-TipoBasico ::= BOOLEAN
-{:RESULT = new TipoBoolean();:};
-
-//4.2)Tipo Array
-//TipoArray ::= TipoBasico:tb Dims:dims
-//{:RETURN = new TipoArray(tb, dims, tb
-//Dims ::= COR_A:ca Exp0:dim COR_C Dims:dims
-//{:RETURN = new DimArray(dims.getDimNum() + 1, dims.getDimSize().add(0, dim), ca.getFila(), ca.getColumna());:};
-//Dims ::=
-//{:RETURN = new DimArray(0, new ArrayList<>());:};
 
 //4) Gramatica de instrucciones
 
@@ -198,61 +177,57 @@ Inst ::= InstIf:op1
 {:RESULT = op1;:};
 Inst ::= InstAsig:op1
 {:RESULT = op1;:};
-Inst ::= InstWhile:op1
-{:RESULT = op1;:};
-Inst ::= InstDeclFun:op
-{:RESULT = op;:};
-Inst ::= InstCallVoidFun:op
-{:RESULT = op;:};
+Inst ::= InstSwitch: inst1
+    {:RESULT = inst1; :};
 
 //4.2) Instruccion asignacion
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
 {:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
 
-//Errores
+InstAsig ::= error PUNTOCOMA
+{:System.err.println("Error en la asignacion\n");:};
 
-//4.3) Instruccion If
+//4.2) Instruccion If
 InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo LLAVE_C
 {:RESULT = as.instIf(condicion, cuerpo, null, iff.getFila(), iff.getColumna());:};
 InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo_if LLAVE_C ELSE LLAVE_A Start:cuerpo_else LLAVE_C
 {:RESULT = as.instIf(condicion, cuerpo_if, cuerpo_else, iff.getFila(), iff.getColumna());:};
 
-//Errores
+InstIf ::= IF error LLAVE_C
+{:System.err.println("Error en la condicion del if\n");:};
+InstIf ::= IF Exp0 error LLAVE_C
+{:System.err.println("Error en el cuerpo del if o del else\n");:};
 
-//4.4) Instrucción while
-InstWhile ::= WHILE:w PAREN_A Exp0:cond PAREN_C LLAVE_A Start:cuerpo LLAVE_C
-{:RESULT = as.instWhile(cond, cuerpo, w.getFila(), w.getColumna());:};
 
-//Errores
+//SWITCH
+InstSwitch ::= SWITCH:swi PAREN_A Exp0: exp PAREN_C LLAVE_A ListaCase: lista_case LLAVE_C
+    {:RESULT = as.instSwitch(exp, lista_case, swi.getFila(), swi.getColumna());:};
 
-//4.8) Instrucción declaración función
-InstDeclFun ::= Tipo:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo RETURN Exp0:ret PUNTOCOMA LLAVE_C
-{:RESULT = as.instDeclFun(tipo, as.iden(id.getLexema(), id.getFila(), id.getColumna()),arg, cuerpo, ret, id.getFila(), id.getColumna());:};
-InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo LLAVE_C
-{:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
+ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
+    {:lista_case.add(0, as.createCase(var, cuerpo, cas.getFila(), cas.getColumna()));
+           RESULT = lista_case; :};
 
-//Errores
 
-ListTipoArg ::= PrimerTipoArg:a
-{:RESULT=a;:};
-ListTipoArg ::=
-{:RESULT=new ArrayList<Pair<Tipo, E>>();:};
+//Default
+ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
+     {: List<Case> lista_case = new ArrayList<Case>();
+    	 	lista_case.add(0, as.createCase(as.iden("default", def.getFila(), def.getColumna()), cuerpo, def.getFila(), def.getColumna()));
+    	 	RESULT = lista_case; :};
 
-PrimerTipoArg ::= Tipo:tipo IDEN:nombre  TipoArgs:otrosArgs
-{:
-    otrosArgs.add(0, new Pair<Tipo,E>(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
-    RESULT=otrosArgs;
-:};
 
-TipoArgs ::= COMA Tipo:tipo IDEN:nombre TipoArgs:otrosArgs
-{:
-  otrosArgs.add(0, new Pair<Tipo,E>(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
-  RESULT=otrosArgs;
-:};
 
-TipoArgs ::=
-{:RESULT=new ArrayList<Pair<Tipo, E>>();:};
+//4) Tipos
 
-//4.9) Instrucción llamada a procedimiento
-//InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
-//{:RESULT = as.instCallVoidFun(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
+//4.1) Tipos simples
+TIPO ::= TIPO_BASICO: tipoBasico
+   {:RESULT = tipoBasico; :};
+
+//INT
+TIPO_BASICO ::= INT: tipoBasico
+   {:RESULT = new TipoInt();:};
+
+//BOOL
+TIPO_BASICO ::= BOOLEAN: tipoBasico
+   {:RESULT = new TipoBoolean(); :};
+
+
