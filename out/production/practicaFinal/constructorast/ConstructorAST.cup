@@ -42,15 +42,22 @@ CONST, STRUCT, VOID;
 //1.2)No terminales
 //Tipos
 non terminal Tipo Tipo, TipoBasico, TipoArray;
+
 //Expresiones
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
+
 //Instrucciones
-non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstCallVoidFun;
+non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstCallVoidFun,
+ InstDecl, InstDeclInic, InstDeclConst;
+
 //Listas
 non terminal List<I> Start;
 non terminal List<E> ListArg, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
 non terminal List<Pair<Tipo, E>> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
+
+
+
 
 //2) Inicio
 //Expresiones
@@ -63,6 +70,8 @@ Start   ::= Inst:inst Start:lista_inst
 {:lista_inst.add(0,inst); RESULT = lista_inst;:};
 Start   ::=
 {:RESULT= new ArrayList<I>();:};
+
+
 
 
 //3) Gramatica de expresiones (ordenada por precedencia de operadores de menos a más)
@@ -170,19 +179,28 @@ Exp8  ::= TRUE:tru
 Exp8  ::= FALSE:fal
 {:RESULT=as.falso(fal.getFila(), fal.getColumna());:};
 
-//4)Tipos
-Tipo ::= TipoArray:t
-{:RESULT = t;:};
-Tipo ::= TipoBasico:tb
-{:RESULT = tb;:};
 
+
+//4) Tipos
+
+Tipo ::= TipoBasico:tipo_bas
+    {:RESULT = tipo_bas;:};
+Tipo ::= TipoArray:tipo_ar
+    {:RESULT = tipo_ar;:};
 
 //4.1) Tipos simples
-TipoBasico ::= INT
-{:RESULT = new TipoInt();:};
+TipoBasico ::= INT: in
+    {:RESULT = as.tipoInt(in.getFila(), in.getColumna());:};
+TipoBasico ::= BOOLEAN: boo
+    {:RESULT = as.tipoBoolean(boo.getFila(), boo.getColumna());:};
 
-TipoBasico ::= BOOLEAN
-{:RESULT = new TipoBoolean();:};
+
+//4.2) Tipo Arrays
+TipoArray ::= TipoBasico:tipo_bas COR_A Exp0: dim COR_C TipoArray:tipo_ar
+    {:RESULT = as.tipoArray(tipo_bas, dim, tipo_bas.getFila(), tipo_bas.getColumna());:};
+//TipoArray ::=
+  //  {:RESULT = null;:};
+
 
 //4.2)Tipo Array
 //TipoArray ::= TipoBasico:tb Dims:dims
@@ -207,6 +225,12 @@ Inst ::= InstDeclFun:op
 {:RESULT = op;:};
 Inst ::= InstCallVoidFun:op
 {:RESULT = op;:};
+Inst ::= InstDecl: ins
+    {:RESULT = ins;:};
+Inst ::= InstDeclInic: ins
+    {:RESULT = ins;:};
+Inst ::= InstDeclConst: ins
+    {:RESULT = ins;:};
 
 //4.2) Instruccion asignacion
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
@@ -234,12 +258,29 @@ ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
     {:lista_case.add(0, as.createCase(var, cuerpo, cas.getFila(), cas.getColumna()));
            RESULT = lista_case; :};
 
-
 //Default
 ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
      {: List<Case> lista_case = new ArrayList<Case>();
     	 	lista_case.add(0, as.createCase(as.iden("default", def.getFila(), def.getColumna()), cuerpo, def.getFila(), def.getColumna()));
     	 	RESULT = lista_case; :};
+
+
+// 4.6) Instrucción declaración
+
+//4.6.1) Declaracion sin inicializar
+InstDecl ::= Tipo:tip IDEN:id PUNTOCOMA
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+
+//4.6.2) Declaración con valores iniciales
+InstDeclInic ::= Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+
+//4.6.3) Declaración constantes inicializadas obligatoriamente
+InstDeclConst ::= CONST Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
+    {:RESULT = as.instDeclConst(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+
+
+
 //Errores
 
 //4.8) Instrucción declaración función
@@ -249,8 +290,6 @@ InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerp
 {:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
 
 
-
-//4) Tipos
 
 //Errores
 

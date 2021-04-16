@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="Outputs y Corchete y Negación">
-      <change afterPath="$PROJECT_DIR$/practicaFinal 2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="35f354fc-e5b1-480b-b515-0f6d348dd7e1" name="Default Changelist" comment="Merge arreglao">
+      <change afterPath="$PROJECT_DIR$/src/ast/I/InstDecl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ast/I/InstDeclConst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/practicaFinal/constructorast/ConstructorAST.cup" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/practicaFinal/constructorast/ConstructorAST.cup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/I/Case.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/I/Case.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/I/InstSwitch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/I/InstSwitch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/AS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/AS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/I/I.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/I/I.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/I/Instrucciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/I/Instrucciones.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/T/Tipo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/T/Tipo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/T/TipoArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/T/TipoArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/T/TipoBoolean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/T/TipoBoolean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/T/TipoInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/T/TipoInt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ClaseLexica.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructAST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" beforeDir="false" afterPath="$PROJECT_DIR$/src/constructorast/ConstructorAST.cup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/instrucciones.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/instrucciones.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618419971137</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Merge arreglao">
+      <created>1618570300634</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1618570300634</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +132,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Outputs y Corchete y Negación" />
-    <option name="LAST_COMMIT_MESSAGE" value="Outputs y Corchete y Negación" />
+    <MESSAGE value="Merge arreglao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge arreglao" />
   </component>
 </project>

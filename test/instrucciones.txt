@@ -39,3 +39,9 @@ switch (true){
         }
     }
 }
+
+int x;
+int x = 6;
+
+const boolean var = true;
+
