@@ -66,5 +66,9 @@ public class AS {
   //Instrucciones
   public I instIf(E condicion, List<I> cuerpo_if, List<I> cuerpo_else, int fila, int columna) {return new InstIf(condicion, cuerpo_if, cuerpo_else,fila,columna);}
   public I instAsignacion(E iden, E valor,int fila,int columna) {return new InstAsignacion(iden, valor,fila,columna);};
+  public I instSwitch(E condicion, List<Case> cases,int fila,int columna) {return new InstSwitch(condicion,cases, fila, columna);};
+  public Case createCase(E nombreCase, List<I> cuerpo_case, int fila, int columna) {return new Case(nombreCase, cuerpo_case, fila, columna);};
+
+
 
 }

@@ -12,3 +12,18 @@ if (x < 5) {
 } else {
     x = 5;
 }
+
+switch (true){
+    case 1 {
+        x = turico;
+        y = turico2;
+    }
+    case 3<9 {
+        x = turica;
+    }
+    default {
+        if(true){
+            Manteca = Cacahuete;
+        }
+    }
+}
