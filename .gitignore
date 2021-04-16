@@ -27,3 +27,9 @@ hs_err_pid*
 .idea/
 bin/
 out/
+practicaFinal.iml
+
+#Generated files
+src/alex/AnalizadorLexico.java
+src/constructorast/ClaseLexica.java
+src/constructorast/ConstructAST.java
