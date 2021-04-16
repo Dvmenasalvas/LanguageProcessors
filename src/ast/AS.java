@@ -5,7 +5,6 @@ import java.util.List;
 import ast.E.*;
 import ast.I.*;
 import ast.T.*;
-import javafx.util.Pair;
 
 public class AS {
   //Expresiones
@@ -72,10 +71,10 @@ public class AS {
   }
   public I instSwitch(E condicion, List<Case> cases,int fila,int columna) {return new InstSwitch(condicion,cases, fila, columna);};
   public Case createCase(E nombreCase, List<I> cuerpo_case, int fila, int columna) {return new Case(nombreCase, cuerpo_case, fila, columna);};
-  public I instDeclFun(Tipo tipo, E nombre, List<Pair<Tipo, E>> args, List<I> cuerpo, E ret, int fila, int columna) {
+  public I instDeclFun(Tipo tipo, E nombre, List<TipoArgumento> args, List<I> cuerpo, E ret, int fila, int columna) {
     return new InstDeclFun(tipo, nombre, args, cuerpo, ret, fila, columna);
   }
-  public I instCallVoidFun(E nombre, List<Pair<Tipo, E>> args, int fila, int columna){
+  public I instCallVoidFun(E nombre, List<TipoArgumento> args, int fila, int columna){
     return new InstCallVoidFun(nombre, args, fila, columna);
   }
 

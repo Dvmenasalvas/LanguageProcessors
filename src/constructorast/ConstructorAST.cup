@@ -11,7 +11,6 @@ import ast.T.*;
 import ast.AS;
 
 import java.util.List;
-import javafx.util.Pair;
 import java.util.ArrayList;
 
 scan with {: return getScanner().next_token(); :};
@@ -53,7 +52,7 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstC
 //Listas
 non terminal List<I> Start;
 non terminal List<E> ListArg, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
-non terminal List<Pair<Tipo, E>> ListTipoArg, PrimerTipoArg, TipoArgs;
+non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
 
@@ -296,22 +295,22 @@ InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerp
 ListTipoArg ::= PrimerTipoArg:a
 {:RESULT=a;:};
 ListTipoArg ::=
-{:RESULT=new ArrayList<Pair<Tipo, E>>();:};
+{:RESULT=new ArrayList<TipoArgumento>();:};
 
 PrimerTipoArg ::= Tipo:tipo IDEN:nombre  TipoArgs:otrosArgs
 {:
-    otrosArgs.add(0, new Pair<Tipo,E>(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
+    otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
     RESULT=otrosArgs;
 :};
 
 TipoArgs ::= COMA Tipo:tipo IDEN:nombre TipoArgs:otrosArgs
 {:
-  otrosArgs.add(0, new Pair<Tipo,E>(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
+  otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
   RESULT=otrosArgs;
 :};
 
 TipoArgs ::=
-{:RESULT=new ArrayList<Pair<Tipo, E>>();:};
+{:RESULT=new ArrayList<TipoArgumento>();:};
 
 //4.9) Instrucción llamada a procedimiento
 //InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
