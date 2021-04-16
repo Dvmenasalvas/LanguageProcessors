@@ -10,6 +10,7 @@ public class TokenValue {
 		this.fila = fila;
 		this.columna = columna;
 	}
+
 	public String getLexema() {
 		return lexema;
 	}
@@ -19,5 +20,14 @@ public class TokenValue {
 	public int getColumna() {
 		return columna;
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return "TokenValue{" +
+				"lexema='" + lexema + '\'' +
+				", fila=" + fila +
+				", columna=" + columna +
+				'}';
+	}
 }

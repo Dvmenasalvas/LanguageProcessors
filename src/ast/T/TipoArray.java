@@ -4,12 +4,12 @@ import ast.E.E;
 
 public class TipoArray extends Tipo{
 	private Tipo tipoBase;
-	private E dimension;
+	private DimArray dim;
 	private int fila;
 	private int columna;
-	public TipoArray(Tipo tipoBase, E dimension,int fila,int columna) {
+	public TipoArray(Tipo tipoBase, DimArray dim,int fila,int columna) {
 		this.tipoBase = tipoBase;
-		this.dimension = dimension;
+		this.dim = dim;
 	    this.fila = fila;
 	    this.columna = columna;
 	}
@@ -21,17 +21,10 @@ public class TipoArray extends Tipo{
 		return tipoBase;
 	}
 	
-	public void setTipoBase(Tipo tipoBase) {
-		this.tipoBase = tipoBase;
+	public DimArray getDimension() {
+		return dim;
 	}
-	
-	public E getDimension() {
-		return dimension;
-	}
-	public void setDimension(E dimension) {
-		this.dimension = dimension;
-	}
-	
+
 	@Override
 	public String toString() {
 		return tipoBase.toString() + "[]";

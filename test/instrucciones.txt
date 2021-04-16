@@ -2,13 +2,20 @@ Dani = True;
 2 = False;
 Manolo = Juan;
 
-if ( True) {
-    Manteca = 3;
-}
-
-
 if (x < 5) {
     x = 6;
 } else {
     x = 5;
+}
+
+while (end != False) {
+    i = i - 1;
+    if (i == 0){
+        end = False;
+    }
+}
+
+int funcionaca (int manteca, boolean jarana) {
+    x = tuMadre;
+    return y;
 }
