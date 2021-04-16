@@ -16,8 +16,8 @@ public class InstSwitch extends I{
     }
 
     @Override
-    public TipoI tipoInstruccion() {
-        return TipoI.SWITCH;
+    public Instrucciones tipoInstruccion() {
+        return Instrucciones.SWITCH;
     }
 
     public E getCondicion() {

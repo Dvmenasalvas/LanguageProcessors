@@ -1,5 +1,5 @@
 package ast.I;
 
 public enum Instrucciones {
-	IF, WHILE, SWITCH, ASIG, DECL, STRUCT, DECLFUN, CALLPROC
+	IF, WHILE, SWITCH, CASE, ASIG, DECL, STRUCT, DECLFUN, CALLPROC
 }
