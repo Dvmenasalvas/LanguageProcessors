@@ -1,8 +1,0 @@
-DANI:
--Intento poner todos los nombres en español para no ir cambiando de uno a otro.
--Los toString los estaba cambiando, pero seguramente lo hayan hecho de esa manera por algo. No los toco hasta que nos enteremos...
--Cada vez que se devuelve un tipo uso tipo(), no tipoExpresion() ni nada asi
--Algunas de tus clases(suma y mul) ya existen pq estaban en la PR3, usalas de base si quieres o empieza de cero.
--Lo que ellos llaman op1, op2 (operandos) yo lo llamo e1, e2 (expresiones). Me pensaba q era operaciones en vez de operandos y me liaba. 
--No se para que es el punto, lo he dejado sin hacer.
--El operador menos no lo tienen hecho los chavales no se exactamente pq. Lo dejo para más adelante.
