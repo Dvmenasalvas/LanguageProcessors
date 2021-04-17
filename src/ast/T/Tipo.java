@@ -8,12 +8,8 @@ public abstract class Tipo extends Sentencia {
 		super(fila, columna);
 	}
 
-	public abstract EnumeradoTipo tipoTipos();
 	public EnumeradoSentencia tipoSentencia() {
 		return EnumeradoSentencia.TIPO;
 	}
 
-	public String num() {
-		throw new UnsupportedOperationException("tipo");
-	}
 }

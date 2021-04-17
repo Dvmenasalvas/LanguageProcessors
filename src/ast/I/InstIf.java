@@ -30,17 +30,6 @@ public class InstIf extends I {
         return aux;
     }
 
-    public E getCondicion() {
-        return condicion;
-    }
-
-    public List<I> getCuerpoIf() {
-        return cuerpo_if;
-    }
-
-    public List<I> getCuerpoElse() {
-        return cuerpo_else;
-    }
 
 
 }

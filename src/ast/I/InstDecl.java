@@ -1,6 +1,7 @@
 package ast.I;
 
 import ast.E.E;
+import ast.T.Tipo;
 import ast.T.TipoArray;
 
 import java.util.List;
@@ -36,4 +37,5 @@ public class InstDecl extends I{
     public TipoArray getTipo() {
         return tipoVariable;
     }
+
 }

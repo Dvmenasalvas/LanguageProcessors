@@ -14,6 +14,7 @@ public class Iden extends E {
         this.nombre = e1;
         this.dimShape = dimShape;
    }    
+
    public TipoE tipo() {return TipoE.IDEN;}
 
     @Override

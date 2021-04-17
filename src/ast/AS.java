@@ -69,7 +69,7 @@ public class AS {
     return new InstDeclFun(tipo, nombre, args, cuerpo, ret, fila, columna);
   }
   public I instCallVoidFun(E nombre, List<E> args, int fila, int columna){
-    return new InstCallVoidFun(nombre, args, fila, columna);
+    return new InstLlamadaVoid(nombre, args, fila, columna);
   }
 
   public I instDecl(TipoArray tipo, E iden, List<E> expr,Boolean constante, int fila, int columna) {return new InstDecl(tipo, iden, expr, constante, fila, columna);}

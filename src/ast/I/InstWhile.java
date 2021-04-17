@@ -14,13 +14,6 @@ public class InstWhile extends I{
         this.cuerpo = cuerpo;
     }
 
-    public E getCondicion() {
-        return condicion;
-    }
-
-    public List<I> getCuerpo() {
-        return cuerpo;
-    }
 
     @Override
     public String toString() {

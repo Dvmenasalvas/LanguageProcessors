@@ -51,6 +51,8 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDe
  InstDecl, InstDeclConst;
 
 //Listas
+non terminal List<I> Start;
+non terminal List<E> ListArg, ConArg, Arg;
 non terminal List<I> Start, ListDecl;
 non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ListVal;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
@@ -192,7 +194,13 @@ Tipo ::= STRUCT IDEN:stu
 
 //4.2)Tipo Array
 TipoArray ::= Tipo:tb Dims:dims
-{:RESULT = as.tipoArray(tb, dims,tb.getFila(), tb.getColumna());:};
+{:
+int size = 0;
+if (dims != null) {
+    size = dims.size();
+}
+RESULT =  as.tipoArray(tb, size, dims,tb.getFila(), tb.getColumna());:};
+
 Dims ::=
 {:RESULT = null;:};
 Dims ::= COR_A:ca Exp0:dim COR_C:cc Dims:dims
