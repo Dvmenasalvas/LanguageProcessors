@@ -17,11 +17,5 @@ public class InstAsignacion extends I {
     public String toString() {
         return  "{{_Asig__}" + identificador.toString() + valor.toString() + "}";
     }
-    public E getIdentificador() {
-        return identificador;
-    }
 
-    public E getValor() {
-        return valor;
-    }
 }

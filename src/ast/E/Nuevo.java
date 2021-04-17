@@ -18,10 +18,7 @@ public class Nuevo extends E{
 	public Tipo getTipo() {
 		return tipo;
 	}
-	
-	public E getTam() {
-		return tam;
-	}
+
 
 	public String toString() {
 		if(tam != null) return "nuevo(" + tipo.toString() + "[" + tam.toString().substring(1, tam.toString().length()-1) + "])";

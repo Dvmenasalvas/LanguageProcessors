@@ -1,5 +1,6 @@
 package ast.E;
 
+import ast.EnumeradoSentencia;
 import ast.Sentencia;
 
 public abstract class E extends Sentencia{
@@ -8,6 +9,8 @@ public abstract class E extends Sentencia{
    }
    public abstract TipoE tipo(); 
    public E opnd1() {throw new UnsupportedOperationException("opnd1");} 
-   public E opnd2() {throw new UnsupportedOperationException("opnd2");} 
-   public String num() {throw new UnsupportedOperationException("num");}
+   public E opnd2() {throw new UnsupportedOperationException("opnd2");}
+   public EnumeradoSentencia tipoSentencia() {
+      return EnumeradoSentencia.TIPO;
+   }
 }

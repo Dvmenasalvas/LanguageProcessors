@@ -23,7 +23,4 @@ public class InstDeclConst extends I {
         return tipoVariable;
     }
 
-    public E getIdentificador() {
-        return identificador;
-    }
 }

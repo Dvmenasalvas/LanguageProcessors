@@ -12,17 +12,7 @@ public class Case extends I{
         this.fila = fila;
         this.columna = columna;
     }
-    public E getNombreCase() {
-        return nombreCase;
-    }
 
-
-    public void setNombreCase(E nombreCase) {
-        this.nombreCase = nombreCase;
-    }
-    public List<I> getCuerpoCase() {
-        return cuerpo_case;
-    }
 
     public String toString() {
         String aux = "case( nombre: " + nombreCase + ", instrucciones: ";

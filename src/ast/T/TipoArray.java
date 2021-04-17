@@ -8,6 +8,7 @@ import java.util.List;
 public class TipoArray extends Tipo{
 	private Tipo tipoBase;
 	private int dimNum;
+	private List<E> dimShape;
 
 	@Override
 	public String toString() {
@@ -18,7 +19,7 @@ public class TipoArray extends Tipo{
 				'}';
 	}
 
-	private List<E> dimShape;
+
 
 	public TipoArray( Tipo tipoBase, int dimNum, List<E> dimShape,
 					  int fila, int columna) {
@@ -28,17 +29,6 @@ public class TipoArray extends Tipo{
 		this.dimShape = dimShape;
 	}
 
-	public Tipo getTipoBase() {
-		return tipoBase;
-	}
-
-	public List<E> getDimShape() {
-		return dimShape;
-	}
-
-	public int getDimNum() {
-		return dimNum;
-	}
 
 	@Override
 	public EnumeradoTipo tipoTipos() {

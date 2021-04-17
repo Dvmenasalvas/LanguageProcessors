@@ -6,7 +6,7 @@ import ast.T.TipoArgumento;
 
 import java.util.List;
 
-public class InstCallVoidFun extends I{
+public class InstLlamadaVoid extends I{
     private E nombre;
     private List<E> argumentos;
 
@@ -18,7 +18,7 @@ public class InstCallVoidFun extends I{
                 '}';
     }
 
-    public InstCallVoidFun(E nombre, List<E> argumentos, int fila, int columna) {
+    public InstLlamadaVoid(E nombre, List<E> argumentos, int fila, int columna) {
         super(fila, columna);
         this.nombre = nombre;
         this.argumentos = argumentos;
@@ -26,6 +26,7 @@ public class InstCallVoidFun extends I{
 
     @Override
     public Instrucciones tipoInstruccion() {
-        return null;
+        return Instrucciones.LLAMDADAPROC;
     }
+
 }

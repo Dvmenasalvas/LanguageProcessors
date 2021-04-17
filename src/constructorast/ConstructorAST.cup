@@ -32,7 +32,7 @@ init with {:
 //1)Terminales y no terminales
 //1.1)Terminales
 terminal TokenValue OR, AND, IGUALIGUAL, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL, DISTINTO, IGUAL,
-MAS, MENOS, POR, DIV, MOD, POT, NOT, COR_A, COR_C, PUNTERO, NEW,
+MAS, MENOS, POR, DIV, MOD, POT, NOT, COR_A, COR_C,
 ENT, IDEN, PAREN_A, PAREN_C, LLAVE_A, LLAVE_C,
 TRUE, FALSE, COMA, PUNTOCOMA, 
 INT, BOOLEAN, IF, ELSE, RETURN, WHILE, SWITCH, CASE, DEFAULT,
@@ -53,7 +53,7 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstC
 
 //Listas
 non terminal List<I> Start;
-non terminal List<E> ListArg, ConArg, Arg, LIST_VAL, INIT_LIST_VAL;
+non terminal List<E> ListArg, ConArg, Arg;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -204,7 +204,7 @@ int size = 0;
 if (dims != null) {
     size = dims.size();
 }
-RESULT = new TipoArray(tb, size, dims,tb.getFila(), tb.getColumna());:};
+RESULT =  as.tipoArray(tb, size, dims,tb.getFila(), tb.getColumna());:};
 Dims ::=
 {:RESULT = null;:};
 Dims ::= COR_A:ca Exp0:dim COR_C:cc Dims:dims

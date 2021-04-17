@@ -10,9 +10,7 @@ public class Dolar extends E{
 	public TipoE tipo() {
 		return TipoE.DOLAR;
 	}
-	public E e1() {
-		return e1;
-	} 
+
 	
    public String toString() {
 		  return "{{_Dolar_}" + opnd1().toString() + "}";

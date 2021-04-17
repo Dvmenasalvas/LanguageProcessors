@@ -9,8 +9,7 @@ public abstract class I extends Sentencia{
     }
     public abstract Instrucciones tipoInstruccion();
    public I opnd1() {throw new UnsupportedOperationException("opnd1");} 
-   public I opnd2() {throw new UnsupportedOperationException("opnd2");} 
-   public String num() {throw new UnsupportedOperationException("num");}
+   public I opnd2() {throw new UnsupportedOperationException("opnd2");}
    public EnumeradoSentencia tipoSentencia() {
 	   return EnumeradoSentencia.INSTRUCCION;
    }

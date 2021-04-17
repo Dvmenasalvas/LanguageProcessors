@@ -33,8 +33,5 @@ public class InstDecl extends I{
     public TipoArray getTipo() {
         return tipoVariable;
     }
-    public E getIdentificador() {
-        return identificador;
-    }
-    public E getExpresion() {return expresion;}
+
 }
