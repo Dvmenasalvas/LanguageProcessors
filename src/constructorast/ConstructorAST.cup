@@ -233,6 +233,10 @@ Inst ::= InstDeclConst: ins
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
 {:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
 
+InstAsig ::= error PUNTOCOMA
+    {:System.err.println("Error en la asignación");:};
+
+
 //Errores
 
 //4.3) Instruccion If
@@ -242,10 +246,21 @@ InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo_if LLAVE_C
 {:RESULT = as.instIf(condicion, cuerpo_if, cuerpo_else, iff.getFila(), iff.getColumna());:};
 
 //Errores
+InstIf ::= IF error LLAVE_C
+{:System.err.println("Error en la condicion del if");:};
+InstIf ::= IF Exp0 error LLAVE_C
+{:System.err.println("Error en el cuerpo del if o del else");:};
 
 //4.4) Instrucción while
 InstWhile ::= WHILE:w PAREN_A Exp0:cond PAREN_C LLAVE_A Start:cuerpo LLAVE_C
 {:RESULT = as.instWhile(cond, cuerpo, w.getFila(), w.getColumna());:};
+
+//Errores
+InstWhile ::= WHILE error LLAVE_C
+{:System.err.println("Error en la condicion del while");:};
+InstWhile ::= WHILE Exp0 error LLAVE_C
+{:System.err.println("Error en el cuerpo del while");:};
+
 
 //4.5) Instrucción switch
 InstSwitch ::= SWITCH:swi PAREN_A Exp0: exp PAREN_C LLAVE_A ListaCase: lista_case LLAVE_C
@@ -260,6 +275,17 @@ ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
      {: List<Case> lista_case = new ArrayList<Case>();
     	 	lista_case.add(0, as.createCase(as.iden("default", def.getFila(), def.getColumna()), cuerpo, def.getFila(), def.getColumna()));
     	 	RESULT = lista_case; :};
+
+//Errores
+InstSwitch :: SWITCH error LLAVE_C
+{:System.err.println("Error en la eleccion de la variable del switch");:};
+ListaCase ::= CASE error LLAVE_C ListaCase
+{:System.err.println("Error en la expresion del case del switch");:};
+ListaCase ::= CASE Exp0 error LLAVE_C
+{:System.err.println("Error en el cuerpo del case del switch");:};
+ListaCase ::= DEFAULT error LLAVE_C
+{:System.err.println("Error en el cuerpo del default del switch");:};
+
 
 
 // 4.6) Instrucción declaración
@@ -276,9 +302,16 @@ InstDecl ::= Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
 InstDeclConst ::= CONST Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
     {:RESULT = as.instDeclConst(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
 
-
-
 //Errores
+InstDecl ::= Tipo error PUNTOCOMA
+{:System.err.println("Error en la declaracion. Identificador erroneo\n");:};
+InstDecl ::= Tipo IDEN error PUNTOCOMA
+{:System.err.println("Error la declaracion. Valor inicial erroneo\n");:};
+InstDecl ::= CONST Tipo error PUNTOCOMA
+{:System.err.println("Error en la declaracion. Identificador erroneo\n");:};
+InstDecl ::= CONST Tipo IDEN error PUNTOCOMA
+{:System.err.println("Error en la declaracion. Valor inicial erroneo\n");:};
+
 
 //4.8) Instrucción declaración función
 InstDeclFun ::= Tipo:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo RETURN Exp0:ret PUNTOCOMA LLAVE_C
