@@ -6,5 +6,5 @@ public class Verdadero extends E {
    }
    
    public TipoE tipo() {return TipoE.VERDADERO;}
-   public String toString() {return "{true}";}
+   public String toString() {return "true";}
 }

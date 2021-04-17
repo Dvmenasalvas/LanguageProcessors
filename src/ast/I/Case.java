@@ -13,17 +13,13 @@ public class Case extends I{
         this.columna = columna;
     }
 
-
+    @Override
     public String toString() {
-        String aux = "case( nombre: " + nombreCase + ", instrucciones: ";
-
-        for(I ins : cuerpo_case) aux += ins.toString();
-        aux += "}";
-
-        return aux;
-
+        return "Case{" +
+                "nombreCase=" + nombreCase +
+                ", cuerpo_case=" + cuerpo_case +
+                '}';
     }
-
 
     @Override
     public EnumeradoInstrucciones tipoInstruccion() {

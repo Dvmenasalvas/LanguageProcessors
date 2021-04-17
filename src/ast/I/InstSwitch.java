@@ -19,4 +19,11 @@ public class InstSwitch extends I{
     }
 
 
+    @Override
+    public String toString() {
+        return "InstSwitch{" +
+                "condicion=" + condicion +
+                ", cases=" + cases +
+                '}';
+    }
 }

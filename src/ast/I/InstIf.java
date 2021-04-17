@@ -16,20 +16,13 @@ public class InstIf extends I {
     }
 
     public EnumeradoInstrucciones tipoInstruccion() {return EnumeradoInstrucciones.IF;}
+
+    @Override
     public String toString() {
-        String aux = "{{__If___}{{_Cond__}" + condicion + "}{{_Cuer__}";
-        for(I ins : cuerpo_if) aux += ins;
-        aux += "}";
-        if(cuerpo_else != null) {
-            aux += "{{_Else__}";
-            for(I ins : cuerpo_else) aux += ins;
-            aux += "}";
-        }
-        aux += "}";
-
-        return aux;
+        return "InstIf{" +
+                "condicion=" + condicion +
+                ", cuerpo_if=" + cuerpo_if +
+                ", cuerpo_else=" + cuerpo_else +
+                '}';
     }
-
-
-
 }

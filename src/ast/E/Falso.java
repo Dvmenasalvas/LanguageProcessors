@@ -6,5 +6,5 @@ public class Falso extends E {
    }
    
    public TipoE tipo() {return TipoE.FALSO;}
-   public String toString() {return "{false}";}
+   public String toString() {return "false";}
 }
