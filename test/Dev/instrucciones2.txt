@@ -8,3 +8,5 @@ struct oroMolio {
     int y;
     boolean[5][3] tema;
 };
+
+int[4] z = {1, 5, 3, 5};

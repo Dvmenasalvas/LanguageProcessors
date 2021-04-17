@@ -3,13 +3,15 @@ package ast.I;
 import ast.E.E;
 import ast.T.TipoArray;
 
+import java.util.List;
+
 public class InstDecl extends I{
     private TipoArray tipoVariable;
     private E identificador;
-    private E expresion;
+    private List<E> expresion;
     private Boolean constante;
 
-    public InstDecl(TipoArray tipo, E iden, E expr, Boolean constante, int fila, int columna ) {
+    public InstDecl(TipoArray tipo, E iden, List<E> expr, Boolean constante, int fila, int columna ) {
         super(fila, columna);
         this.tipoVariable = tipo;
         this.identificador = iden;
@@ -34,8 +36,4 @@ public class InstDecl extends I{
     public TipoArray getTipo() {
         return tipoVariable;
     }
-    public E getIdentificador() {
-        return identificador;
-    }
-    public E getExpresion() {return expresion;}
 }

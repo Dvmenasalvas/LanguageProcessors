@@ -58,9 +58,6 @@ public class ALexOperations {
    public UnidadLexica unidadStruct() {
       return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.STRUCT, "struct");
    }  
-   public UnidadLexica unidadNew() {
-      return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.NEW, "new");
-   }
    public UnidadLexica unidadVoid() {
       return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.VOID, "void");
    }
@@ -138,10 +135,11 @@ public class ALexOperations {
    } 
    public UnidadLexica unidadPuntoComa() {
       return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTOCOMA, ";"); 
-   } 
-   public UnidadLexica unidadPuntero() {
-         return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PUNTERO, "¡"); 
-   } 
+   }
+   public UnidadLexica unidadPunto() {
+      return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.PUNTO, ".");
+   }
+
    public void error() {
       GestionErrores.errorLexico(alex.fila(), alex.columna(), alex.lexema());
     }
