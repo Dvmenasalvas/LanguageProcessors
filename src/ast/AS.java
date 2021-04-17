@@ -78,13 +78,13 @@ public class AS {
     return new InstCallVoidFun(nombre, args, fila, columna);
   }
 
-  public I instDecl(Tipo tipo, E iden, E expr, int fila, int columna) {return new InstDecl(tipo, iden, expr, fila, columna);}
-  public I instDeclConst(Tipo tipo, E iden, int fila, int columna) {return new InstDeclConst(tipo, iden, fila, columna);}
+  public I instDecl(TipoArray tipo, E iden, E expr, int fila, int columna) {return new InstDecl(tipo, iden, expr, fila, columna);}
+  public I instDeclConst(TipoArray tipo, E iden, int fila, int columna) {return new InstDeclConst(tipo, iden, fila, columna);}
 
 
 
   //Tipo
   public Tipo tipoInt(int fila, int columna) {return new TipoInt(fila, columna);}
   public Tipo tipoBoolean(int fila, int columna) {return new TipoBoolean(fila, columna);}
-  public Tipo tipoArray(Tipo tipo_base, E dim, int fila, int columna) {return new TipoArray(tipo_base, dim, fila, columna);}
+  public Tipo tipoArray(Tipo tipo_base, int dimNum, List<E> dimShape,  int fila, int columna) {return new TipoArray(tipo_base, dimNum, dimShape,  fila, columna);}
 }

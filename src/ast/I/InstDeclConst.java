@@ -2,12 +2,13 @@ package ast.I;
 
 import ast.E.E;
 import ast.T.Tipo;
+import ast.T.TipoArray;
 
 public class InstDeclConst extends I {
-    private Tipo tipoVariable;
+    private TipoArray tipoVariable;
     private E identificador;
 
-    public InstDeclConst(Tipo tipo, E iden, int fila, int columna) {
+    public InstDeclConst(TipoArray tipo, E iden, int fila, int columna) {
         super(fila, columna);
         this.tipoVariable = tipo;
         this.identificador = iden;
