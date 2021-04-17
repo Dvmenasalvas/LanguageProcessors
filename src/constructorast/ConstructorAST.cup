@@ -47,7 +47,7 @@ non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 
 //Instrucciones
 non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstCallVoidFun,
- InstDecl, InstDeclInic, InstDeclConst;
+ InstDecl, InstDeclConst;
 
 //Listas
 non terminal List<I> Start;
@@ -226,8 +226,6 @@ Inst ::= InstCallVoidFun:op
 {:RESULT = op;:};
 Inst ::= InstDecl: ins
     {:RESULT = ins;:};
-Inst ::= InstDeclInic: ins
-    {:RESULT = ins;:};
 Inst ::= InstDeclConst: ins
     {:RESULT = ins;:};
 
@@ -268,11 +266,11 @@ ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
 
 //4.6.1) Declaracion sin inicializar
 InstDecl ::= Tipo:tip IDEN:id PUNTOCOMA
-    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), null, tip.getFila(), tip.getColumna()); :};
 
 //4.6.2) Declaración con valores iniciales
-InstDeclInic ::= Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
-    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+InstDecl ::= Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), exp, tip.getFila(), tip.getColumna()); :};
 
 //4.6.3) Declaración constantes inicializadas obligatoriamente
 InstDeclConst ::= CONST Tipo:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA

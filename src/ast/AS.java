@@ -78,7 +78,7 @@ public class AS {
     return new InstCallVoidFun(nombre, args, fila, columna);
   }
 
-  public I instDecl(Tipo tipo, E iden, int fila, int columna) {return new InstDecl(tipo, iden, fila, columna);}
+  public I instDecl(Tipo tipo, E iden, E expr, int fila, int columna) {return new InstDecl(tipo, iden, expr, fila, columna);}
   public I instDeclConst(Tipo tipo, E iden, int fila, int columna) {return new InstDeclConst(tipo, iden, fila, columna);}
 
 
