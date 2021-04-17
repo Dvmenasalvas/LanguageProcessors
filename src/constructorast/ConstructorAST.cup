@@ -157,7 +157,7 @@ Exp5 ::= Exp6:e1
 //3.4) Negación
 Exp6 ::= NOT:not Exp6:e1
     {:RESULT=as.not(e1, not.getFila(), not.getColumna()); :};
-Exp6 ::= Exp7:e1
+Exp6 ::= Exp8:e1
     {:RESULT=e1;:};
 
 //3.5) Terminales
