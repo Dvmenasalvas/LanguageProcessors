@@ -51,8 +51,6 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDe
  InstDecl, InstDeclConst;
 
 //Listas
-non terminal List<I> Start;
-non terminal List<E> ListArg, ConArg, Arg;
 non terminal List<I> Start, ListDecl;
 non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ListVal;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;

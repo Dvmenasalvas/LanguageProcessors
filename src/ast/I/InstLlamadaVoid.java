@@ -24,7 +24,7 @@ public class InstLlamadaVoid extends I{
     }
 
     @Override
-    public Instrucciones tipoInstruccion() {
-        return Instrucciones.LLAMDADAPROC;
+    public EnumeradoInstrucciones tipoInstruccion() {
+        return EnumeradoInstrucciones.LLAMDADAPROC;
     }
 }

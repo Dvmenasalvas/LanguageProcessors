@@ -11,5 +11,6 @@ public abstract class Tipo extends Sentencia {
 	public EnumeradoSentencia tipoSentencia() {
 		return EnumeradoSentencia.TIPO;
 	}
+	public abstract EnumeradoTipo tipoTipos();
 
 }
