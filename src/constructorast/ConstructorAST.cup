@@ -48,12 +48,12 @@ non terminal List<E> Dims;
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 
 //Instrucciones
-non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstCallVoidFun,
+non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDeclFun, InstCallVoidFun,
  InstDecl, InstDeclConst;
 
 //Listas
 non terminal List<I> Start;
-non terminal List<E> ListArg, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
+non terminal List<E> ListArg;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -290,15 +290,15 @@ ListaCase ::= DEFAULT error LLAVE_C
 // 4.6) Instrucción declaración
 //4.6.1) Declaracion sin inicializar
 InstDecl ::= TipoArray:tip IDEN:id PUNTOCOMA
-    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), null, tip.getFila(), tip.getColumna()); :};
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), null, false, tip.getFila(), tip.getColumna()); :};
 
 //4.6.2) Declaración con valores iniciales
 InstDecl ::= TipoArray:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
-    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), exp, tip.getFila(), tip.getColumna()); :};
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), exp, false,tip.getFila(), tip.getColumna()); :};
 
 //4.6.3) Declaración constantes inicializadas obligatoriamente
 InstDeclConst ::= CONST TipoArray:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
-    {:RESULT = as.instDeclConst(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()),exp, true,  tip.getFila(), tip.getColumna()); :};
 
 //Errores
 InstDecl ::= TipoArray error PUNTOCOMA
@@ -309,6 +309,9 @@ InstDeclConst ::= CONST TipoArray error PUNTOCOMA
 {:System.err.println("Error en la declaracion. Identificador erroneo");:};
 InstDeclConst ::= CONST TipoArray IDEN error PUNTOCOMA
 {:System.err.println("Error en la declaracion. Valor inicial erroneo");:};
+
+
+
 
 
 //4.8) Instrucción declaración función

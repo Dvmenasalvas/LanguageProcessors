@@ -8,12 +8,14 @@ public class InstDecl extends I{
     private TipoArray tipoVariable;
     private E identificador;
     private E expresion;
+    private Boolean constante;
 
-    public InstDecl(TipoArray tipo, E iden, E expr, int fila, int columna) {
+    public InstDecl(TipoArray tipo, E iden, E expr, Boolean constante, int fila, int columna ) {
         super(fila, columna);
         this.tipoVariable = tipo;
         this.identificador = iden;
         this.expresion = expr;
+        this.constante = constante;
     }
 
     @Override
