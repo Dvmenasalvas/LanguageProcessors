@@ -317,6 +317,7 @@ InstDeclConst ::= CONST TipoArray error PUNTOCOMA
 InstDeclConst ::= CONST TipoArray IDEN error PUNTOCOMA
 {:System.err.println("Error en la declaracion. Valor inicial erroneo");:};
 
+//Solo soporta una dimension
 ValoresDecl ::= Exp0:val
 {: List<E> list = new ArrayList<E>(); list.add(0, val); RESULT = list;:};
 ValoresDecl   ::= LLAVE_A LLAVE_C
