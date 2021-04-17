@@ -18,12 +18,11 @@ public class InstIf extends I {
     public Instrucciones tipoInstruccion() {return Instrucciones.IF;}
     public String toString() {
         String aux = "{{__If___}{{_Cond__}" + condicion + "}{{_Cuer__}";
-
-        for(I ins : cuerpo_if) aux += ins.toString();
+        for(I ins : cuerpo_if) aux += ins;
         aux += "}";
         if(cuerpo_else != null) {
             aux += "{{_Else__}";
-            for(I ins : cuerpo_else) aux += ins.toString();
+            for(I ins : cuerpo_else) aux += ins;
             aux += "}";
         }
         aux += "}";
