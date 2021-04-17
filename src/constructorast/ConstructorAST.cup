@@ -238,8 +238,6 @@ InstAsig ::= error PUNTOCOMA
     {:System.err.println("Error en la asignación");:};
 
 
-//Errores
-
 //4.3) Instruccion If
 InstIf ::= IF:iff PAREN_A Exp0:condicion PAREN_C LLAVE_A Start:cuerpo LLAVE_C
 {:RESULT = as.instIf(condicion, cuerpo, null, iff.getFila(), iff.getColumna());:};
