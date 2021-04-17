@@ -28,17 +28,17 @@ while (end == False) {
 }
 
 #Switch
-switch (true){
+switch (entero){
     case 1 {
-        x = turico;
-        y = turico2;
+        x = 1;
+        y = 2;
     }
-    case 3<9 {
-        x = turica;
+    case 3 {
+        x = 3;
     }
     default {
-        if(true){
-            Manteca = Cacahuete;
+        if(cond){
+            x = 4*y;
         }
     }
 }
