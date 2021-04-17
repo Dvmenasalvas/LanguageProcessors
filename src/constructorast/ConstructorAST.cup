@@ -36,24 +36,25 @@ MAS, MENOS, POR, DIV, MOD, POT, NOT, COR_A, COR_C,
 ENT, IDEN, PAREN_A, PAREN_C, LLAVE_A, LLAVE_C,
 TRUE, FALSE, COMA, PUNTOCOMA, 
 INT, BOOLEAN, IF, ELSE, RETURN, WHILE, SWITCH, CASE, DEFAULT,
-CONST, STRUCT, VOID;
+CONST, STRUCT, VOID, PUNTO;
 
 //1.2)No terminales
 //Tipos
 non terminal Tipo Tipo;
 non terminal TipoArray TipoArray;
-non terminal List<E> Dims;
 
 //Expresiones
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 
 //Instrucciones
-non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstCallVoidFun,
+non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDeclFun, InstCallVoidFun,
  InstDecl, InstDeclConst;
 
 //Listas
 non terminal List<I> Start;
 non terminal List<E> ListArg, ConArg, Arg;
+non terminal List<I> Start, ListDecl;
+non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ListVal;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -171,8 +172,9 @@ Exp7  ::= Exp8:op1
 //3.6) Terminales
 Exp8  ::= ENT:e1
 {:RESULT=as.ent(e1.getLexema(), e1.getFila(), e1.getColumna());:};
+//Falta identificadores con dimension
 Exp8  ::= IDEN:e1
-{:RESULT=as.iden(e1.getLexema(), e1.getFila(), e1.getColumna());:};
+{:RESULT=as.iden(e1.getLexema(), null, e1.getFila(), e1.getColumna());:};
 Exp8  ::= PAREN_A Exp0:e1 PAREN_C
 {:RESULT=e1;:};
 Exp8  ::= TRUE:tru
@@ -186,16 +188,18 @@ Exp8 ::= Exp9:op1
 
 //3.7) Llamadas a la función como expresión
 Exp9  ::= IDEN:id PAREN_A ListArg:args PAREN_C:pc
-    {:RESULT = as.llamadaFuncion(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
+    {:RESULT = as.llamadaFuncion(as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
 
 
 //4) Tipos
 
-//4.1) Tipos básicos
+//4.1) Tipos unitarios
 Tipo ::= INT: in
     {:RESULT = as.tipoInt(in.getFila(), in.getColumna());:};
 Tipo ::= BOOLEAN: boo
     {:RESULT = as.tipoBoolean(boo.getFila(), boo.getColumna());:};
+Tipo ::= STRUCT IDEN:stu
+{:RESULT = as.tipoStruct(as.iden(stu.getLexema(), null, stu.getFila(), stu.getColumna()), stu.getFila(), stu.getColumna());:};
 
 //4.2)Tipo Array
 TipoArray ::= Tipo:tb Dims:dims
@@ -205,11 +209,13 @@ if (dims != null) {
     size = dims.size();
 }
 RESULT =  as.tipoArray(tb, size, dims,tb.getFila(), tb.getColumna());:};
+
 Dims ::=
 {:RESULT = null;:};
 Dims ::= COR_A:ca Exp0:dim COR_C:cc Dims:dims
 {:
 List<E> result = new ArrayList<>();
+result.add(0,dim);
 if (dims != null) {
     dims.add(0,dim);
     result = dims;
@@ -236,6 +242,8 @@ Inst ::= InstDecl: ins
     {:RESULT = ins;:};
 Inst ::= InstDeclConst: ins
     {:RESULT = ins;:};
+Inst ::= InstStruct:stu
+{:RESULT = stu;:};
 
 //4.2) Instruccion asignacion
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
@@ -279,7 +287,7 @@ ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
 //Default
 ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
      {: List<Case> lista_case = new ArrayList<Case>();
-    	 	lista_case.add(0, as.createCase(as.iden("default", def.getFila(), def.getColumna()), cuerpo, def.getFila(), def.getColumna()));
+    	 	lista_case.add(0, as.createCase(as.iden("default", null,def.getFila(), def.getColumna()), cuerpo, def.getFila(), def.getColumna()));
     	 	RESULT = lista_case; :};
 
 //Errores
@@ -297,15 +305,15 @@ ListaCase ::= DEFAULT error LLAVE_C
 // 4.6) Instrucción declaración
 //4.6.1) Declaracion sin inicializar
 InstDecl ::= TipoArray:tip IDEN:id PUNTOCOMA
-    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), null, tip.getFila(), tip.getColumna()); :};
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), null, false, tip.getFila(), tip.getColumna()); :};
 
 //4.6.2) Declaración con valores iniciales
-InstDecl ::= TipoArray:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
-    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), exp, tip.getFila(), tip.getColumna()); :};
+InstDecl ::= TipoArray:tip IDEN:id IGUAL ValoresDecl:vd PUNTOCOMA
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), vd, false, tip.getFila(), tip.getColumna()); :};
 
 //4.6.3) Declaración constantes inicializadas obligatoriamente
-InstDeclConst ::= CONST TipoArray:tip IDEN:id IGUAL Exp0: exp PUNTOCOMA
-    {:RESULT = as.instDeclConst(tip, as.iden(id.getLexema(), id.getFila(), id.getColumna()), tip.getFila(), tip.getColumna()); :};
+InstDeclConst ::= CONST TipoArray:tip IDEN:id IGUAL ValoresDecl:vd PUNTOCOMA
+    {:RESULT = as.instDecl(tip, as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), vd, true,  tip.getFila(), tip.getColumna()); :};
 
 //Errores
 InstDecl ::= TipoArray error PUNTOCOMA
@@ -317,12 +325,40 @@ InstDeclConst ::= CONST TipoArray error PUNTOCOMA
 InstDeclConst ::= CONST TipoArray IDEN error PUNTOCOMA
 {:System.err.println("Error en la declaracion. Valor inicial erroneo");:};
 
+//Solo soporta una dimension
+ValoresDecl ::= Exp0:val
+{: List<E> list = new ArrayList<E>(); list.add(0, val); RESULT = list;:};
+ValoresDecl   ::= LLAVE_A LLAVE_C
+{: List<E> list = new ArrayList<E>(); RESULT = list;:};
+ValoresDecl   ::= LLAVE_A ListVal:list LLAVE_C
+{:RESULT = list;:};
+
+ListVal  ::= Exp0:val
+{:List<E> list = new ArrayList<E>(); list.add(0, val); RESULT = list;:};
+ListVal  ::= Exp0:val COMA ListVal:list
+{:list.add(0, val); RESULT = list;:};
+
+
+//4.7) Instruccion struct
+InstStruct ::= STRUCT:struct IDEN:nombre LLAVE_A ListDecl:lista LLAVE_C PUNTOCOMA
+{:RESULT = as.instStruct(as.iden(nombre.getLexema(), null, nombre.getFila(), nombre.getColumna()), lista, struct.getFila(), struct.getColumna());:};
+
+InstStruct ::= STRUCT error PUNTOCOMA
+{:System.err.println("Error en la declaracion del struct. Campo erroneo.\n");:};
+InstStruct ::= STRUCT LLAVE_A ListDecl LLAVE_C error PUNTOCOMA
+{:System.err.println("Error en la declaracion del struct. Identificador erroneo.\n");:};
+
+ListDecl ::= InstDecl:decl ListDecl:lista
+{:lista.add(0, decl); RESULT = lista;:};
+ListDecl ::=
+{:RESULT = new ArrayList<I>();:};
+
 
 //4.8) Instrucción declaración función
 InstDeclFun ::= TipoArray:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo RETURN Exp0:ret PUNTOCOMA LLAVE_C
-    {:RESULT = as.instDeclFun(tipo, as.iden(id.getLexema(), id.getFila(), id.getColumna()),arg, cuerpo, ret, id.getFila(), id.getColumna());:};
+    {:RESULT = as.instDeclFun(tipo, as.iden(id.getLexema(), null, id.getFila(), id.getColumna()),arg, cuerpo, ret, id.getFila(), id.getColumna());:};
 InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo LLAVE_C
-    {:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
+    {:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
 
 //Errores
 
@@ -333,13 +369,13 @@ ListTipoArg ::=
 
 PrimerTipoArg ::= TipoArray:tipo IDEN:nombre  TipoArgs:otrosArgs
 {:
-    otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
+    otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), null, nombre.getFila(), nombre.getColumna())));
     RESULT=otrosArgs;
 :};
 
 TipoArgs ::= COMA TipoArray:tipo IDEN:nombre TipoArgs:otrosArgs
 {:
-  otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
+  otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), null, nombre.getFila(), nombre.getColumna())));
   RESULT=otrosArgs;
 :};
 
@@ -348,7 +384,7 @@ TipoArgs ::=
 
 //4.9) Instrucción llamada a procedimiento
 InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
-    {:RESULT = as.instCallVoidFun(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
+    {:RESULT = as.instCallVoidFun(as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
 
 //Lista de argumentos para las llamadas a funciones
 //Sin argumentos

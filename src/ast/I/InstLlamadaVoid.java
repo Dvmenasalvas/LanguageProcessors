@@ -1,7 +1,6 @@
 package ast.I;
 
 import ast.E.E;
-import ast.T.Tipo;
 import ast.T.TipoArgumento;
 
 import java.util.List;
@@ -28,5 +27,4 @@ public class InstLlamadaVoid extends I{
     public Instrucciones tipoInstruccion() {
         return Instrucciones.LLAMDADAPROC;
     }
-
 }

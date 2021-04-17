@@ -15,7 +15,7 @@ public class InstIf extends I {
         this.cuerpo_else = cuerpo_else;
     }
 
-    public Instrucciones tipoInstruccion() {return Instrucciones.IF;}
+    public EnumeradoInstrucciones tipoInstruccion() {return EnumeradoInstrucciones.IF;}
     public String toString() {
         String aux = "{{__If___}{{_Cond__}" + condicion + "}{{_Cuer__}";
         for(I ins : cuerpo_if) aux += ins;

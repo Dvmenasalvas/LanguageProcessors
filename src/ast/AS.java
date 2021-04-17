@@ -43,11 +43,7 @@ public class AS {
   //Corchetes, punteros, new, not, llamadaFuncion
   public E corchete(E e1, E e2,int fila,int columna) 
   {return new Corchete(e1,e2,fila,columna);}
-  public E dolar(E e1,int fila,int columna) 
-  {return new Dolar(e1,fila,columna);}
-  public E nuevo(Tipo tipo, E tam,int fila,int columna) 
-  {return new Nuevo(tipo, tam,fila,columna);} 
-  public E not(E e1,int fila,int columna) 
+  public E not(E e1,int fila,int columna)
     {return new Not(e1,fila,columna);}
   public E llamadaFuncion(E nombre, List<E> args,int fila,int columna) 
   {return new LlamadaFuncion(nombre, args, fila, columna);}
@@ -60,8 +56,8 @@ public class AS {
   {return new Verdadero(fila,columna);}
   public E falso(int fila, int columna) 
   {return new Falso(fila,columna);}
-  public E iden(String iden, int fila, int columna) 
-  {return new Iden(iden, fila,columna);}
+  public E iden(String iden, List<Integer> dimShape, int fila, int columna)
+  {return new Iden(iden, dimShape, fila,columna);}
 
   //Instrucciones
   public I instIf(E condicion, List<I> cuerpo_if, List<I> cuerpo_else, int fila, int columna) {return new InstIf(condicion, cuerpo_if, cuerpo_else,fila,columna);}
@@ -78,12 +74,13 @@ public class AS {
     return new InstLlamadaVoid(nombre, args, fila, columna);
   }
 
-  public I instDecl(TipoArray tipo, E iden, E expr, int fila, int columna) {return new InstDecl(tipo, iden, expr, fila, columna);}
-  public I instDeclConst(TipoArray tipo, E iden, int fila, int columna) {return new InstDeclConst(tipo, iden, fila, columna);}
+  public I instDecl(TipoArray tipo, E iden, List<E> expr,Boolean constante, int fila, int columna) {return new InstDecl(tipo, iden, expr, constante, fila, columna);}
+  public I instStruct(E nombre, List<I> lista, int fila, int columna) {return new InstStruct(nombre, lista, fila, columna);}
 
 
   //Tipo
   public Tipo tipoInt(int fila, int columna) {return new TipoInt(fila, columna);}
   public Tipo tipoBoolean(int fila, int columna) {return new TipoBoolean(fila, columna);}
-  public Tipo tipoArray(Tipo tipo_base, int dimNum, List<E> dimShape,  int fila, int columna) {return new TipoArray(tipo_base, dimNum, dimShape,  fila, columna);}
+  public TipoArray tipoArray(Tipo tipo_base, List<E> dimShape,  int fila, int columna) {return new TipoArray(tipo_base, dimShape,  fila, columna);}
+  public Tipo tipoStruct(E nombre,  int fila, int columna) {return new TipoStruct(nombre, fila, columna);}
 }

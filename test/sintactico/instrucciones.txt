@@ -1,0 +1,74 @@
+#Declaraciones y tipos
+int x = 4;
+int[2][2][1] y;
+int[4] z = {1, 2, 3, 4};
+boolean cond = True | False;
+const boolean var = true;
+
+
+#If
+if ( condicion) {
+    x = 3;
+}
+
+if (x < 5 | y > 7) {
+    x = 6;
+} else {
+    x = 5;
+}
+
+#While
+end = True;
+i = 5;
+while (end == False) {
+    i = i - 1;
+    if (i == 0){
+        end = True;
+    }
+}
+
+#Switch
+switch (entero){
+    case 1 {
+        x = 1;
+        y = 2;
+    }
+    case 3 {
+        x = 3;
+    }
+    default {
+        if(cond){
+            x = 4*y;
+        }
+    }
+}
+
+#Funciones
+int miFuncion (int x, boolean condicion) {
+    int y = 0;
+    if (condicion) {
+       y = x;
+    }
+    return y;
+}
+
+int[5] miFuncion2 (int ini, int fin, int relleno) {
+    int[5] x = {ini, relleno, relleno, relleno, fin};
+    return x;
+}
+
+void miFuncion3 (int x, int y){
+    int z = x + y;
+}
+
+miFuncion3(3, 4);
+
+int[5] x = miFuncion(1, 2, 3);
+
+#Struct
+struct miStruct {
+    int x = 2;
+    boolean hoyLlueve = False;
+    int y;
+    boolean[5][3] boolMatriz;
+};

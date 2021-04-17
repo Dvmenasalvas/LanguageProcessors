@@ -20,12 +20,14 @@ public class TipoArray extends Tipo{
 	}
 
 
+	private List<E> dimShape;
 
-	public TipoArray( Tipo tipoBase, int dimNum, List<E> dimShape,
+
+
+	public TipoArray( Tipo tipoBase, List<E> dimShape,
 					  int fila, int columna) {
 		super(fila, columna);
 		this.tipoBase = tipoBase;
-		this.dimNum = dimNum;
 		this.dimShape = dimShape;
 	}
 
@@ -33,5 +35,12 @@ public class TipoArray extends Tipo{
 	@Override
 	public EnumeradoTipo tipoTipos() {
 		return EnumeradoTipo.ARRAY;
+	}
+	@Override
+	public String toString() {
+		return "TipoArray{" +
+				"tipoBase=" + tipoBase +
+				", dimShape=" + dimShape +
+				'}';
 	}
 }

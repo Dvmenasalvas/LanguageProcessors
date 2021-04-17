@@ -35,7 +35,7 @@ public class InstDeclFun extends I{
     }
 
     @Override
-    public Instrucciones tipoInstruccion() {
-        return Instrucciones.DECLFUN;
+    public EnumeradoInstrucciones tipoInstruccion() {
+        return EnumeradoInstrucciones.DECLFUN;
     }
 }

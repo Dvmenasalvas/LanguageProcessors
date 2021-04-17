@@ -14,8 +14,8 @@ public class InstSwitch extends I{
     }
 
     @Override
-    public Instrucciones tipoInstruccion() {
-        return Instrucciones.SWITCH;
+    public EnumeradoInstrucciones tipoInstruccion() {
+        return EnumeradoInstrucciones.SWITCH;
     }
 
 
