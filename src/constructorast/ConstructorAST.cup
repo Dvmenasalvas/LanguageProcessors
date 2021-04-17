@@ -160,14 +160,7 @@ Exp6 ::= NOT:not Exp6:e1
 Exp6 ::= Exp7:e1
     {:RESULT=e1;:};
 
-
-//3.5) Corchete
-Exp7 ::= Exp7: e1 COR_A:ca Exp8: e2 COR_C:cc
-    {:RESULT=as.corchete(e1, e2, ca.getFila(), ca.getColumna()); :};
-Exp7  ::= Exp8:op1
-    {:RESULT=op1;:};
-
-//3.6) Terminales
+//3.5) Terminales
 Exp8  ::= ENT:e1
 {:RESULT=as.ent(e1.getLexema(), e1.getFila(), e1.getColumna());:};
 //Falta identificadores con dimension
@@ -182,9 +175,7 @@ Exp8  ::= FALSE:fal
 Exp8 ::= Exp9:op1
     {:RESULT = op1;:};
 
-
-
-//3.7) Llamadas a la función como expresión
+//3.6) Llamadas a la función como expresión
 Exp9  ::= IDEN:id PAREN_A ListArg:args PAREN_C:pc
     {:RESULT = as.llamadaFuncion(as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
 
