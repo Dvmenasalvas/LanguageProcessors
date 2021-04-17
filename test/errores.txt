@@ -1,0 +1,61 @@
+#Error asignación
+trunco = x = dh;
+
+
+#Error if
+
+if(!jj+5){
+    tomalo;
+}
+
+if(true){
+    asjh5!+3;
+}
+
+
+while(!jj+5){
+    tomalo;
+}
+
+while(true){
+    asjh5!+3;
+}
+
+
+switch(!jj+5){
+    case 1 {
+        pam;
+    }
+    default {
+        siuuu;
+    }
+}
+
+switch(x){
+    case 278&sdfj {
+        pam;
+    }
+    default {
+        siuuu;
+    }
+}
+
+switch(c){
+    case 1 {
+        pa5784m = !;
+    }
+    default {
+        siuuu;
+    }
+}
+
+
+switch(c){
+    case 1 {
+        tu cuerpo y el mio;
+    }
+    default {
+        llenando el va! = 2183i;
+    }
+}
+
