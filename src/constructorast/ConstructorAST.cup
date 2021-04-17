@@ -53,7 +53,7 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstDeclFun, InstC
 
 //Listas
 non terminal List<I> Start;
-non terminal List<E> ListArg, CON_ARG, ARG, LIST_VAL, INIT_LIST_VAL;
+non terminal List<E> ListArg, ConArg, Arg, LIST_VAL, INIT_LIST_VAL;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -179,7 +179,14 @@ Exp8  ::= TRUE:tru
 {:RESULT=as.verdadero(tru.getFila(), tru.getColumna());:};
 Exp8  ::= FALSE:fal
 {:RESULT=as.falso(fal.getFila(), fal.getColumna());:};
+Exp8 ::= Exp9:op1
+    {:RESULT = op1;:};
 
+
+
+//3.7) Llamadas a la función como expresión
+Exp9  ::= IDEN:id PAREN_A ListArg:args PAREN_C:pc
+    {:RESULT = as.llamadaFuncion(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
 
 
 //4) Tipos
@@ -312,33 +319,48 @@ InstDeclConst ::= CONST TipoArray IDEN error PUNTOCOMA
 
 
 //4.8) Instrucción declaración función
-//InstDeclFun ::= TipoArray:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo RETURN Exp0:ret PUNTOCOMA LLAVE_C
-//{:RESULT = as.instDeclFun(tipo, as.iden(id.getLexema(), id.getFila(), id.getColumna()),arg, cuerpo, ret, id.getFila(), id.getColumna());:};
-//InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo LLAVE_C
-//{:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
+InstDeclFun ::= TipoArray:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo RETURN Exp0:ret PUNTOCOMA LLAVE_C
+    {:RESULT = as.instDeclFun(tipo, as.iden(id.getLexema(), id.getFila(), id.getColumna()),arg, cuerpo, ret, id.getFila(), id.getColumna());:};
+InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo LLAVE_C
+    {:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
 
 //Errores
 
-//ListTipoArg ::= PrimerTipoArg:a
-//{:RESULT=a;:};
-//ListTipoArg ::=
-//{:RESULT=new ArrayList<TipoArgumento>();:};
+ListTipoArg ::= PrimerTipoArg:a
+{:RESULT=a;:};
+ListTipoArg ::=
+{:RESULT=new ArrayList<TipoArgumento>();:};
 
-//PrimerTipoArg ::= Tipo:tipo IDEN:nombre  TipoArgs:otrosArgs
-//{:
-//    otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
-//    RESULT=otrosArgs;
-//:};
+PrimerTipoArg ::= TipoArray:tipo IDEN:nombre  TipoArgs:otrosArgs
+{:
+    otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
+    RESULT=otrosArgs;
+:};
 
-//TipoArgs ::= COMA Tipo:tipo IDEN:nombre TipoArgs:otrosArgs
-//{:
-//  otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
-//  RESULT=otrosArgs;
-//:};
+TipoArgs ::= COMA TipoArray:tipo IDEN:nombre TipoArgs:otrosArgs
+{:
+  otrosArgs.add(0, new TipoArgumento(tipo, as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna())));
+  RESULT=otrosArgs;
+:};
 
-//TipoArgs ::=
-//{:RESULT=new ArrayList<TipoArgumento>();:};
+TipoArgs ::=
+{:RESULT=new ArrayList<TipoArgumento>();:};
 
 //4.9) Instrucción llamada a procedimiento
-//InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
-//{:RESULT = as.instCallVoidFun(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
+InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
+    {:RESULT = as.instCallVoidFun(as.iden(id.getLexema(), id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
+
+//Lista de argumentos para las llamadas a funciones
+//Sin argumentos
+ListArg ::=
+    {:RESULT=new ArrayList<E>();:};
+
+//Con argumentos
+ListArg ::= ConArg:arg
+    {:RESULT=arg;:};
+ConArg  ::= Exp0:exp Arg:ar
+    {:ar.add(0, exp); RESULT=ar;:};
+Arg      ::= COMA Exp0:exp Arg:ar
+    {:ar.add(0, exp); RESULT=ar;:};
+Arg		 ::=
+    {:RESULT=new ArrayList<E>();:};

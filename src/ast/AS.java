@@ -74,13 +74,12 @@ public class AS {
   public I instDeclFun(Tipo tipo, E nombre, List<TipoArgumento> args, List<I> cuerpo, E ret, int fila, int columna) {
     return new InstDeclFun(tipo, nombre, args, cuerpo, ret, fila, columna);
   }
-  public I instCallVoidFun(E nombre, List<TipoArgumento> args, int fila, int columna){
+  public I instCallVoidFun(E nombre, List<E> args, int fila, int columna){
     return new InstCallVoidFun(nombre, args, fila, columna);
   }
 
   public I instDecl(TipoArray tipo, E iden, E expr, int fila, int columna) {return new InstDecl(tipo, iden, expr, fila, columna);}
   public I instDeclConst(TipoArray tipo, E iden, int fila, int columna) {return new InstDeclConst(tipo, iden, fila, columna);}
-
 
 
   //Tipo
