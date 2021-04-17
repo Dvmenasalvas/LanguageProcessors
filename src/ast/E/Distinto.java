@@ -6,6 +6,9 @@ public class Distinto extends EBin {
 	     super(opnd1,opnd2,fila,columna); 
    }     
    public TipoE tipo() {return TipoE.DISTINTO;}
-    public String toString() {return "distinto(" + opnd1().toString()+","+ opnd2().toString() + ")";}
 
+    @Override
+    public String toString() {
+        return "Distinto{}";
+    }
 }

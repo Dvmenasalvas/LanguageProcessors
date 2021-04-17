@@ -40,9 +40,7 @@ public class AS {
   public E pot(E e1, E e2, int fila, int columna) 
     {return new Pot(e1, e2, fila,columna);}
   
-  //Corchetes, punteros, new, not, llamadaFuncion
-  public E corchete(E e1, E e2,int fila,int columna) 
-  {return new Corchete(e1,e2,fila,columna);}
+  //Not, llamadaFuncion
   public E not(E e1,int fila,int columna)
     {return new Not(e1,fila,columna);}
   public E llamadaFuncion(E nombre, List<E> args,int fila,int columna) 
