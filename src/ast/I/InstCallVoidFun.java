@@ -1,7 +1,6 @@
 package ast.I;
 
 import ast.E.E;
-import ast.T.Tipo;
 import ast.T.TipoArgumento;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class InstCallVoidFun extends I{
     }
 
     @Override
-    public Instrucciones tipoInstruccion() {
+    public EnumeradoInstrucciones tipoInstruccion() {
         return null;
     }
 }

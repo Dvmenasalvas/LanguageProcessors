@@ -36,7 +36,7 @@ public class Case extends I{
 
 
     @Override
-    public Instrucciones tipoInstruccion() {
-        return Instrucciones.CASE;
+    public EnumeradoInstrucciones tipoInstruccion() {
+        return EnumeradoInstrucciones.CASE;
     }
 }

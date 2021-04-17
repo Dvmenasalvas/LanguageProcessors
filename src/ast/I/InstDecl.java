@@ -1,7 +1,6 @@
 package ast.I;
 
 import ast.E.E;
-import ast.T.Tipo;
 import ast.T.TipoArray;
 
 public class InstDecl extends I{
@@ -19,8 +18,8 @@ public class InstDecl extends I{
     }
 
     @Override
-    public Instrucciones tipoInstruccion() {
-        return Instrucciones.DECL;
+    public EnumeradoInstrucciones tipoInstruccion() {
+        return EnumeradoInstrucciones.DECL;
     }
 
     @Override

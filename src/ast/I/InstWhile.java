@@ -31,7 +31,7 @@ public class InstWhile extends I{
     }
 
     @Override
-    public Instrucciones tipoInstruccion() {
-        return Instrucciones.WHILE;
+    public EnumeradoInstrucciones tipoInstruccion() {
+        return EnumeradoInstrucciones.WHILE;
     }
 }

@@ -42,7 +42,6 @@ CONST, STRUCT, VOID;
 //Tipos
 non terminal Tipo Tipo;
 non terminal TipoArray TipoArray;
-non terminal List<E> Dims;
 
 //Expresiones
 non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
@@ -52,8 +51,8 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDe
  InstDecl, InstDeclConst;
 
 //Listas
-non terminal List<I> Start;
-non terminal List<E> ListArg;
+non terminal List<I> Start, ListDecl;
+non terminal List<E> ListArg, Dims;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -229,6 +228,8 @@ Inst ::= InstDecl: ins
     {:RESULT = ins;:};
 Inst ::= InstDeclConst: ins
     {:RESULT = ins;:};
+Inst ::= InstStruct:stu
+{:RESULT = stu;:};
 
 //4.2) Instruccion asignacion
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
@@ -311,7 +312,19 @@ InstDeclConst ::= CONST TipoArray IDEN error PUNTOCOMA
 {:System.err.println("Error en la declaracion. Valor inicial erroneo");:};
 
 
+//4.7) Instruccion struct
+InstStruct ::= STRUCT:struct IDEN:nombre LLAVE_A ListDecl:lista LLAVE_C PUNTOCOMA
+{:RESULT = as.instStruct(as.iden(nombre.getLexema(), nombre.getFila(), nombre.getColumna()), lista, struct.getFila(), struct.getColumna());:};
 
+InstStruct ::= STRUCT error PUNTOCOMA
+{:System.err.println("Error en la declaracion del struct. Campo erroneo.\n");:};
+INST_STRUCT ::= STRUCT LLAVE_A ListDecl LLAVE_C error PUNTOCOMA
+{:System.err.println("Error en la declaracion del struct. Identificador erroneo.\n");:};
+
+ListDecl ::= InstDecl:decl ListDecl:lista
+{:lista.add(0, decl); RESULT = lista;:};
+ListDecl ::=
+{:RESULT = new ArrayList<I>();:};
 
 
 //4.8) Instrucción declaración función

@@ -12,7 +12,7 @@ public class InstAsignacion extends I {
         this.valor = valor;
     }
 
-    public Instrucciones tipoInstruccion() {return Instrucciones.ASIG;}
+    public EnumeradoInstrucciones tipoInstruccion() {return EnumeradoInstrucciones.ASIG;}
 
     public String toString() {
         return  "{{_Asig__}" + identificador.toString() + valor.toString() + "}";

@@ -1,7 +1,6 @@
 package ast.T;
 
 import ast.E.E;
-import ast.I.Instrucciones;
 
 import java.util.List;
 

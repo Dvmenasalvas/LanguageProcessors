@@ -1,7 +1,6 @@
 package ast.T;
 
 import ast.EnumeradoSentencia;
-import ast.I.Instrucciones;
 import ast.Sentencia;
 
 public abstract class Tipo extends Sentencia {
