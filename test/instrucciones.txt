@@ -25,6 +25,19 @@ int funcionaca (int manteca, boolean jarana) {
     return y;
 }
 
+int[5] funcionaca2 (int[1][1] manteca, boolean jarana) {
+    x = tuMadre;
+    return y;
+}
+
+void funcionaca3 (boolean loTenemos, int valor){
+    tuntu = 732;
+}
+
+funcionaca3(gg, 4);
+
+int[5] x = funcionaca2(y, true);
+
 switch (true){
     case 1 {
         x = turico;
@@ -44,4 +57,5 @@ int x;
 int x = 6;
 
 const boolean var = true;
+
 
