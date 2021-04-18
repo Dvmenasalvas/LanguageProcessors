@@ -6,7 +6,6 @@ import ast.Sentencia;
 import ast.T.Tipo;
 
 public class LlamadaFuncion extends E {
-	private Tipo tipoReturn;
 	private E nombreFuncion;
 	private List<E> argumentos;
 	public LlamadaFuncion(E nombreFuncion, List<E> argumentos,int fila,int columna) {
@@ -18,13 +17,12 @@ public class LlamadaFuncion extends E {
     public TipoE tipo() {
         return TipoE.FUNCION;
     }
-	public String toString() {
-		String aux = "{{_Call__}{" + nombreFuncion + "}{{_Args__}";
-		for(E argumento : argumentos) aux += argumento.toString();		
-		aux += "}}";
-		return aux;
-	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "LlamadaFuncion{" +
+				"nombreFuncion=" + nombreFuncion +
+				", argumentos=" + argumentos +
+				'}';
+	}
 }

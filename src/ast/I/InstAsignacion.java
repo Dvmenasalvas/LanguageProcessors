@@ -14,8 +14,11 @@ public class InstAsignacion extends I {
 
     public EnumeradoInstrucciones tipoInstruccion() {return EnumeradoInstrucciones.ASIG;}
 
+    @Override
     public String toString() {
-        return  "{{_Asig__}" + identificador.toString() + valor.toString() + "}";
+        return "InstAsignacion{" +
+                "identificador=" + identificador +
+                ", valor=" + valor +
+                '}';
     }
-
 }
