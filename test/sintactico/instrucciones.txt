@@ -72,3 +72,6 @@ struct miStruct {
     int y;
     boolean[5][3] boolMatriz;
 };
+
+
+print(true);

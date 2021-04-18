@@ -61,6 +61,13 @@ public class ALexOperations {
    public UnidadLexica unidadVoid() {
       return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.VOID, "void");
    }
+   public UnidadLexica unidadPrint() {
+      return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.PRINT, "print");
+   }
+   public UnidadLexica unidadRead() {
+      return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.READ, "read");
+   }
+
 
 
    public UnidadLexica unidadSuma() {

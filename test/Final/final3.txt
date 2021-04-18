@@ -1,0 +1,18 @@
+#Prueba 3
+#Fragmento de código en el que se declara un array, se recorre y para cada valor del mismo
+# se llama a una función que devuelve el valor absoluto de cada posición y suma ese valor.
+int abs (int x){
+	int out = 0;
+	if (x < 0){
+		out = out - x;
+	}
+	return out;
+}
+
+int[5] v = {1, 5, 3, 6, 5};
+int suma = 0;
+int i = 0;
+while (i < 5) {
+	suma = suma + abs(v[i]);
+	i = i + 1;
+}

@@ -52,6 +52,8 @@ false = False
 struct = struct
 new = new
 void = void
+print = print
+read = read
 
 identificador = {letra}({letra}|{digito}|_)*
 numeroEntero = [\+,\-]?({parteEntera}|0)
@@ -105,6 +107,8 @@ puntoyComa = \;
 {false}                   {return ops.unidadFalse();}
 {struct}				          {return ops.unidadStruct();}
 {void}                    {return ops.unidadVoid();}
+{print}                   {return ops.unidadPrint();}
+{read}                    {return ops.unidadRead();}
 
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}
