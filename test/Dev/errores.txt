@@ -1,27 +1,33 @@
 #Error asignación
-trunco = x = dh;
+variable1 = true = 1;
 
 
-#Error if
-
+#Errores if
+#Error condición
 if(!jj+5){
-    tomalo;
+    cuerpo_if;
 }
 
+#Error cuerpo if (funciona mal)
 if(true){
-    asjh5!+3
+    int x ++;
 }
 
 
+#Errores while
+#Error condición
 while(!jj+5){
-    tomalo;
+    cuerpo_while;
 }
 
+#Error cuerpo while (funciona mal)
 while(true){
-    asjh5!+3;
+    int x ++;
 }
 
 
+#Errores switch
+#Error variable switch
 switch(!jj+5){
     case 1 {
         pam;
@@ -31,8 +37,9 @@ switch(!jj+5){
     }
 }
 
+#Error case
 switch(x){
-    case 278&sdfj {
+    case error+++ {
         pam;
     }
     default {
@@ -40,6 +47,7 @@ switch(x){
     }
 }
 
+#Error cuerpo case (funciona mal)
 switch(c){
     case 1 {
         pa5784m = !;
@@ -49,7 +57,7 @@ switch(c){
     }
 }
 
-
+#Error cuerpo default (funciona mal)
 switch(c){
     case 1 {
         tu cuerpo y el mio;
@@ -57,5 +65,25 @@ switch(c){
     default {
         llenando el va! = 2183i;
     }
+}
+
+
+# Error de un if dentro del case de un switch
+switch(variable){
+case 1 {
+	    if(error+++){
+	    }
+	}
+
+default {
+	int i = i + 1;
+	}
+}
+
+
+
+#Error parametros función
+int funcion(int num, 9 boolean cond){
+    return 6;
 }
 

@@ -349,7 +349,6 @@ InstDeclFun ::= TipoArray:tipo IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A S
 InstDeclFun ::= VOID IDEN:id PAREN_A ListTipoArg:arg PAREN_C LLAVE_A Start:cuerpo LLAVE_C
     {:RESULT = as.instDeclFun(null, as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), arg, cuerpo, null, id.getFila(), id.getColumna());:};
 
-//Errores
 
 ListTipoArg ::= PrimerTipoArg:a
 {:RESULT=a;:};
@@ -370,6 +369,18 @@ TipoArgs ::= COMA TipoArray:tipo IDEN:nombre TipoArgs:otrosArgs
 
 TipoArgs ::=
 {:RESULT=new ArrayList<TipoArgumento>();:};
+
+
+
+//Errores
+InstDeclFun ::= TipoArray error LLAVE_C
+    {:System.err.println("Error en la declaracion de la funcion. Identificador erroneo\n");:};
+InstDeclFun ::= TipoArray IDEN error LLAVE_C
+    {:System.err.println("Error en la declaracion de la funcion. Parametros erroneos\n");:};
+InstDeclFun ::= TipoArray IDEN PAREN_A ListTipoArg PAREN_C error LLAVE_C
+    {:System.err.println("Error en la declaracion de la funcion. Cuerpo erroneo\n");:};
+
+
 
 //4.9) Instrucción llamada a procedimiento
 InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
