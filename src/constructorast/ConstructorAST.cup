@@ -213,11 +213,8 @@ Tipo ::= STRUCT IDEN:stu
 //4.2)Tipo Array
 TipoArray ::= Tipo:tb Dims:dims
 {:
-int size = 0;
-if (dims != null) {
-    size = dims.size();
-}
-RESULT =  as.tipoArray(tb, size, dims,tb.getFila(), tb.getColumna());:};
+
+RESULT =  as.tipoArray(tb, dims,tb.getFila(), tb.getColumna());:};
 
 Dims ::=
 {:RESULT = null;:};

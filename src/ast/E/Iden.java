@@ -19,9 +19,18 @@ public class Iden extends E {
 
     @Override
     public String toString() {
-        return "Iden{" +
-                "nombre='" + nombre + '\'' +
-                ", dimShape=" + dimShape +
-                '}';
+        return "{"+ nombre + dimShapePrint(dimShape) + '}';
+    }
+
+    public String dimShapePrint(List<E> dimShape){
+	    String aux = "";
+
+	    if (dimShape != null) {
+            for (int i = 0; i < dimShape.size(); i++) {
+                aux = aux + "[" + dimShape.get(i).toString() + "]";
+            }
+        }
+
+	    return aux;
     }
 }

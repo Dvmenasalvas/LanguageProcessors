@@ -12,4 +12,5 @@ public class And extends EBin {
     }
 
     public TipoE tipo() {return TipoE.AND;}
+
 }

@@ -14,6 +14,6 @@ public abstract class EBin extends E {
 
     @Override
     public String toString() {
-        return nombreOp() +  "(" + opnd1 + "," + opnd2 + ')';
+        return "{" + "{" + nombreOp() + "}" + opnd1 + opnd2 + '}';
     }
 }

@@ -15,4 +15,9 @@ public class TipoArgumento {
         return tipo;
     }
 
+    @Override
+    public String toString() {
+
+        return tipo.toString() + argumento.toString();
+    }
 }

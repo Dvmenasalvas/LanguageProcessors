@@ -7,24 +7,28 @@ import java.util.List;
 
 public class TipoArray extends Tipo{
 	private Tipo tipoBase;
-	private int dimNum;
 	private List<E> dimShape;
 
-	public TipoArray( Tipo tipoBase, int dimNum, List<E> dimShape, int fila, int columna) {
+	public TipoArray( Tipo tipoBase, List<E> dimShape, int fila, int columna) {
 		super(fila, columna);
 		this.tipoBase = tipoBase;
 		this.dimShape = dimShape;
-		this.dimNum = dimNum;
 	}
 
 
 	@Override
 	public String toString() {
-		return "TipoArray{" +
-				"tipoBase=" + tipoBase +
-				", dimNum=" + dimNum +
-				", dimShape=" + dimShape +
-				'}';
+		return tipoBase + dimShapePrint(dimShape);
+	}
+
+	public String dimShapePrint(List<E> dimShape) {
+		String aux = "";
+		if (dimShape != null) {
+			for (int i = 0; i < dimShape.size(); i++) {
+				aux = aux + "[" + dimShape.get(i).toString() + "]";
+			}
+		}
+		return aux;
 	}
 
 	public EnumeradoTipo tipoTipos() {

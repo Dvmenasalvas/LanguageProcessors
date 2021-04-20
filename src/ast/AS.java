@@ -82,6 +82,6 @@ public class AS {
   //Tipo
   public Tipo tipoInt(int fila, int columna) {return new TipoInt(fila, columna);}
   public Tipo tipoBoolean(int fila, int columna) {return new TipoBoolean(fila, columna);}
-  public TipoArray tipoArray(Tipo tipo_base, int dimNum, List<E> dimShape,  int fila, int columna) {return new TipoArray(tipo_base, dimNum, dimShape,  fila, columna);}
+  public TipoArray tipoArray(Tipo tipo_base, List<E> dimShape,  int fila, int columna) {return new TipoArray(tipo_base, dimShape,  fila, columna);}
   public Tipo tipoStruct(E nombre,  int fila, int columna) {return new TipoStruct(nombre, fila, columna);}
 }
