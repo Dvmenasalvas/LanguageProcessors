@@ -21,10 +21,10 @@ public class InstSwitch extends I{
 
     @Override
     public String toString() {
-        String aux = "{{Switch}{{ Cond}" + condicion + "}";
+        String aux = "{{Switch}{{Cond}" + condicion + "}";
 
         for (Case single_case : cases) {
-            single_case.toString();
+            aux += "{" + single_case + "}";
         }
         aux += "}";
 

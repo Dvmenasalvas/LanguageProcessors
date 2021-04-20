@@ -14,13 +14,13 @@ struct myStruct persona;
 
 switch (x) {
     case 1 {
-        print(Mayor);
+        print(x1);
     }
     case 2 {
-        print(Menor);
+        print(x2);
     }
     default{
-        persona.nombre = Pablo;
+        persona.nombre = FernandoAlonso;
         persona.b = false;
     }
 }
