@@ -17,10 +17,12 @@ public class InstWhile extends I{
 
     @Override
     public String toString() {
-        return "InstWhile{" +
-                "condicion=" + condicion +
-                ", cuerpo=" + cuerpo +
-                '}';
+        String aux = "{{_While_}{{_Cond__}" + condicion + "}{{_Cuer__}";
+
+        for(I ins : cuerpo) aux += ins.toString();
+        aux += "}}";
+
+        return aux;
     }
 
     @Override

@@ -27,11 +27,20 @@ public class InstDecl extends I{
 
     @Override
     public String toString() {
-        return "InstDecl{" +
-                "tipoVariable=" + tipoVariable +
-                ", identificador=" + identificador +
-                ", expresion=" + expresion +
-                '}';
+        String out = "{{_Decl__}";
+        if(constante) out += "{Const}";
+        out += "{" + tipoVariable + "}" + identificador;
+
+        if(expresion != null) {
+            out += "{{__Ini__}";
+            for(E v : expresion) {
+                out += v;
+            }
+            out += "}";
+        }
+
+        out += "}";
+        return out;
     }
 
     public TipoArray getTipo() {

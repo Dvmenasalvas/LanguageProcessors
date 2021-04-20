@@ -16,9 +16,6 @@ public class InstAsignacion extends I {
 
     @Override
     public String toString() {
-        return "InstAsignacion{" +
-                "identificador=" + identificador +
-                ", valor=" + valor +
-                '}';
+        return  "{{$Asignacion}" + identificador.toString() + valor.toString() + "}";
     }
 }
