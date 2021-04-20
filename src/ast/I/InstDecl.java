@@ -32,7 +32,7 @@ public class InstDecl extends I{
         out += "{" + tipoVariable + "}" + identificador;
 
         if(expresion != null) {
-            out += "{{E: Ini}";
+            out += "{{Inicializacion}";
             for(E v : expresion) {
                 out += v;
             }

@@ -47,7 +47,7 @@ public class Main {
         for(int i = 0; i < tam; i++) { //Para cada hijo
             aux = splitFromParent(hijos.get(i)); //Obtenemos los hijos del hijo
             if(aux.isEmpty()) { //Si no tiene -> es una hoja -> la imprimimos
-                total += nivel_siguiente + "__" + hijos.get(i) + "\n";
+                total += nivel_siguiente +  hijos.get(i) + "\n";
             }
             else { //Si tiene -> es un subarbol -> recursion
                 if(i == tam-1) {
@@ -74,7 +74,7 @@ public class Main {
 	     System.out.println(programa);
          System.out.println("Arbol sintático:");
          String tree = programa.toString().substring(1, programa.toString().length()-1);
-         System.out.println(printTree("_PROGR_", splitFromParent(tree), "", true));
+         System.out.println(printTree("PROGRAMA", splitFromParent(tree), "", true));
 
      }
  }

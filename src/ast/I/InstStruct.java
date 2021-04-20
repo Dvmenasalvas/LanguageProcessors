@@ -21,8 +21,8 @@ public class InstStruct extends I{
 
     @Override
     public String toString() {
-        String aux = nombre.toString();
-        for(I ins : declaraciones) aux += ins.toString();
-        return aux;
+        String aux = "{{I: Declaracion}" + nombre;
+        for(I ins : declaraciones) aux += ins;
+        return aux + "}";
     }
 }

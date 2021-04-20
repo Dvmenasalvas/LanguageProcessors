@@ -17,7 +17,7 @@ public class InstWhile extends I{
 
     @Override
     public String toString() {
-        String aux = "{{While}{{Condicion}" + condicion + "}{{Cuerpo}";
+        String aux = "{{I: While}{{Condicion}" + condicion + "}{{Cuerpo}";
 
         for(I ins : cuerpo) aux += ins.toString();
         aux += "}}";

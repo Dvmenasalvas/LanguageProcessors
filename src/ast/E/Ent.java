@@ -7,5 +7,5 @@ public class Ent extends E {
     this.v = v;   
   }
   public TipoE tipo() {return TipoE.ENT;}   
-  public String toString() {return  "{" + v + "}";}
+  public String toString() {return  "{" + "E: " +  v + "}";}
 }

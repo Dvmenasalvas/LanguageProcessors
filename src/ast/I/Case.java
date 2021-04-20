@@ -16,7 +16,7 @@ public class Case extends I{
     @Override
     public String toString() {
         String aux = nombreCase.toString();
-        for(I ins : cuerpo_case) aux += ins.toString();
+        for(I ins : cuerpo_case) aux += ins;
         return aux;
     }
 
