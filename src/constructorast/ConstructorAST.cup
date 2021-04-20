@@ -36,7 +36,7 @@ MAS, MENOS, POR, DIV, MOD, POT, NOT, COR_A, COR_C,
 ENT, IDEN, PAREN_A, PAREN_C, LLAVE_A, LLAVE_C,
 TRUE, FALSE, COMA, PUNTOCOMA, 
 INT, BOOLEAN, IF, ELSE, RETURN, WHILE, SWITCH, CASE, DEFAULT,
-CONST, STRUCT, VOID, PUNTO;
+CONST, STRUCT, VOID, PUNTO, PRINT, READ;
 
 //1.2)No terminales
 //Tipos
@@ -48,11 +48,11 @@ non terminal E Exp0, Exp1, Exp2, Exp3, Exp4, Exp5, Exp6, Exp7, Exp8, Exp9;
 
 //Instrucciones
 non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDeclFun, InstCallVoidFun,
- InstDecl, InstDeclConst;
+ InstDecl, InstDeclConst, InstPrint;
 
 //Listas
 non terminal List<I> Start, ListDecl;
-non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ListVal;
+non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ListVal, Corchetes1, Corchetes;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -157,8 +157,28 @@ Exp5 ::= Exp6:e1
 //3.4) Negación
 Exp6 ::= NOT:not Exp6:e1
     {:RESULT=as.not(e1, not.getFila(), not.getColumna()); :};
-Exp6 ::= Exp8:e1
+Exp6 ::= Exp7:e1
     {:RESULT=e1;:};
+
+
+//3.5) Operador Punto
+Exp7 ::= IDEN:id PUNTO:pun IDEN:id2
+    {:RESULT= as.accederStruct(as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), as.iden(id2.getLexema(), null, id2.getFila(), id2.getColumna()), pun.getFila(), pun.getColumna());:};
+
+
+//3.6) Operador Corchete
+Exp7 ::= IDEN: id Corchetes1:cor
+    {:RESULT = as.iden(id.getLexema(),cor, id.getFila(), id.getColumna());:};
+Corchetes1 ::= COR_A:ca Exp0:exp COR_C Corchetes:cor
+    {:cor.add(0, exp); RESULT=cor;:};
+Corchetes ::= COR_A Exp0:exp COR_C Corchetes:cor
+    {:cor.add(0, exp); RESULT=cor;:};
+Corchetes ::=
+    {:RESULT=new ArrayList<E>();:};
+
+
+Exp7 ::= Exp8: exp
+    {:RESULT = exp;:};
 
 //3.5) Terminales
 Exp8  ::= ENT:e1
@@ -233,6 +253,8 @@ Inst ::= InstDeclConst: ins
     {:RESULT = ins;:};
 Inst ::= InstStruct:stu
 {:RESULT = stu;:};
+Inst ::= InstPrint:ins
+    {:RESULT = ins;:};
 
 //4.2) Instruccion asignacion
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
@@ -269,7 +291,7 @@ InstWhile ::= WHILE Exp0 error LLAVE_C
 InstSwitch ::= SWITCH:swi PAREN_A Exp0: exp PAREN_C LLAVE_A ListaCase: lista_case LLAVE_C
     {:RESULT = as.instSwitch(exp, lista_case, swi.getFila(), swi.getColumna());:};
 
-ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
+ListaCase::= CASE:cas PAREN_A Exp0:var PAREN_C LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
     {:lista_case.add(0, as.createCase(var, cuerpo, cas.getFila(), cas.getColumna()));
            RESULT = lista_case; :};
 
@@ -400,3 +422,10 @@ Arg      ::= COMA Exp0:exp Arg:ar
     {:ar.add(0, exp); RESULT=ar;:};
 Arg		 ::=
     {:RESULT=new ArrayList<E>();:};
+
+// 4.10) Instruccion Print
+InstPrint ::= PRINT PAREN_A Exp0:exp PAREN_C PUNTOCOMA
+  {:System.out.println(exp);
+    RESULT = null;:};
+
+

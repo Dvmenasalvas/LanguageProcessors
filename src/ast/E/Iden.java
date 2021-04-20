@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Iden extends E {
 	private String nombre;
-	private List<Integer> dimShape;
+	private List<E> dimShape;
 
-	public Iden(String e1, List<Integer> dimShape,int fila,int columna) {
+	public Iden(String e1, List<E> dimShape,int fila,int columna) {
         super(fila,columna);
         this.nombre = e1;
         this.dimShape = dimShape;

@@ -1,0 +1,19 @@
+#Prueba 1
+#Fragmento de código en que hay un while que llama a un procedimiento que imprime por pantalla
+void imprimir(int x){
+    print(x);
+}
+
+int i = 0;
+while(i < 10){
+    imprimir(i);
+    i = i + 1;
+}
+
+
+
+
+
+
+
+
