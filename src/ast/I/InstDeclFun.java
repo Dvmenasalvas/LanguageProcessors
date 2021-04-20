@@ -25,13 +25,24 @@ public class InstDeclFun extends I{
 
     @Override
     public String toString() {
-        return "InstDeclFun{" +
-                "tipo=" + tipo +
-                ", nombre=" + nombre +
-                ", argumentos=" + argumentos +
-                ", cuerpo=" + cuerpo +
-                ", retorno=" + retorno +
-                '}';
+        String out;
+        if(tipo != null) out = "{{_DeclF_}{" + tipo + "}" + nombre + "{{_Args__}";
+        else out = "{{_DeclF_}" + "{Void}" + nombre + "{{_Args__}";
+
+        int i = 0;
+        for(TipoArgumento arg : argumentos) {
+            out += "{{_Arg" + i + "__}{" + arg.getTipo() + "}";
+            out += arg.getArgumento();
+            out += "}";
+            i++;
+        }
+
+        out += "}{{_Cuer__}";
+        for(I ins : cuerpo) out += ins.toString();
+        if(retorno != null) out += "{{__Ret__}" + retorno + "}";
+        out += "}}";
+
+        return out;
     }
 
     @Override

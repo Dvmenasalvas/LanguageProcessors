@@ -9,19 +9,20 @@ public class InstLlamadaVoid extends I{
     private E nombre;
     private List<E> argumentos;
 
-    @Override
-    public String toString() {
-        return "InstCallVoidFun{" +
-                "nombre=" + nombre +
-                ", argumentos=" + argumentos +
-                '}';
-    }
-
     public InstLlamadaVoid(E nombre, List<E> argumentos, int fila, int columna) {
         super(fila, columna);
         this.nombre = nombre;
         this.argumentos = argumentos;
     }
+
+    @Override
+    public String toString() {
+        String aux = "{{_Call__}{" + nombre + "}{{_Args__}";
+        if(argumentos!=null)for(E argumento : argumentos) aux += argumento.toString();
+        aux += "}}";
+        return aux;
+    }
+
 
     @Override
     public EnumeradoInstrucciones tipoInstruccion() {
