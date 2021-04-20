@@ -38,7 +38,9 @@ public class InstDeclFun extends I{
         }
 
         out += "}{{_Cuer__}";
-        for(I ins : cuerpo) out += ins.toString();
+        if(cuerpo != null){
+            for(I ins : cuerpo) out += ins;
+        }
         if(retorno != null) out += "{{__Ret__}" + retorno + "}";
         out += "}}";
 
