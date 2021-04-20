@@ -26,22 +26,22 @@ public class InstDeclFun extends I{
     @Override
     public String toString() {
         String out;
-        if(tipo != null) out = "{{_DeclF_}{" + tipo + "}" + nombre + "{{_Args__}";
-        else out = "{{_DeclF_}" + "{Void}" + nombre + "{{_Args__}";
+        if(tipo != null) out = "{{I: DeclaracionFuncion}{" + tipo + "}" + nombre + "{{Argumentos}";
+        else out = "{{I: DeclaracionFuncion}" + "{Void}" + nombre + "{{Argumentos}";
 
         int i = 0;
         for(TipoArgumento arg : argumentos) {
-            out += "{{_Arg" + i + "__}{" + arg.getTipo() + "}";
+            out += "{{Argumento" + i + "}{" + arg.getTipo() + "}";
             out += arg.getArgumento();
             out += "}";
             i++;
         }
 
-        out += "}{{_Cuer__}";
+        out += "}{{Cuerpo}";
         if(cuerpo != null){
             for(I ins : cuerpo) out += ins;
         }
-        if(retorno != null) out += "{{__Ret__}" + retorno + "}";
+        if(retorno != null) out += "{{Return}" + retorno + "}";
         out += "}}";
 
         return out;

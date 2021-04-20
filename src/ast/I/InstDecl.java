@@ -27,12 +27,12 @@ public class InstDecl extends I{
 
     @Override
     public String toString() {
-        String out = "{{_Decl__}";
+        String out = "{{I: Declaracion}";
         if(constante) out += "{Const}";
         out += "{" + tipoVariable + "}" + identificador;
 
         if(expresion != null) {
-            out += "{{__Ini__}";
+            out += "{{E: Ini}";
             for(E v : expresion) {
                 out += v;
             }

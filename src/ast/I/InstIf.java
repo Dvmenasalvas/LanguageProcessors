@@ -19,12 +19,12 @@ public class InstIf extends I {
 
     @Override
     public String toString() {
-        String out = "{{__If___}{{_Condicion__}" + condicion + "}{{_Cuerpo__}";
+        String out = "{{I: If}{{Condicion}" + condicion + "}{{Cuerpo}";
 
         for(I ins : cuerpo_if) out += ins.toString();
         out += "}";
         if(cuerpo_else != null) {
-            out += "{{_Else__}";
+            out += "{{Else}";
             for(I ins : cuerpo_else) out += ins.toString();
             out += "}";
         }

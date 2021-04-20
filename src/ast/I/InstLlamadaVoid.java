@@ -17,7 +17,7 @@ public class InstLlamadaVoid extends I{
 
     @Override
     public String toString() {
-        String aux = "{{_Call__}{" + nombre + "}{{_Args__}";
+        String aux = "{{LlamadaFuncion}{" + nombre + "}{{Argumentos}";
         if(argumentos!=null)for(E argumento : argumentos) aux += argumento.toString();
         aux += "}}";
         return aux;
