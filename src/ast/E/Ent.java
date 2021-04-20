@@ -1,11 +1,17 @@
 package ast.E;
 
-public class Ent extends E {
-  private String v;
+public class Ent extends EFinal {
+  private String valor;
   public Ent(String v, int fila, int columna) {
     super(fila,columna);
-    this.v = v;   
+    this.valor = v;
   }
-  public TipoE tipo() {return TipoE.ENT;}   
-  public String toString() {return  "{" + "E: " +  v + "}";}
+  public TipoE tipo() {return TipoE.ENT;}
+
+  public String toString() {return  "{" + "E: " + valor + "}";}
+
+  @Override
+  public String valor() {
+      return valor;
+  }
 }

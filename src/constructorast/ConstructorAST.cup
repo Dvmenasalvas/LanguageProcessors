@@ -408,9 +408,6 @@ InstCallVoidFun ::= IDEN:id PAREN_A ListArg:args PAREN_C PUNTOCOMA
     {:RESULT = as.instCallVoidFun(as.iden(id.getLexema(), null, id.getFila(), id.getColumna()), args, id.getFila(), id.getColumna());:};
 
 //Lista de argumentos para las llamadas a funciones
-//Sin argumentos
-ListArg ::=
-    {:RESULT=new ArrayList<E>();:};
 
 //Con argumentos
 ListArg ::= ConArg:arg
@@ -420,6 +417,10 @@ ConArg  ::= Exp0:exp Arg:ar
 Arg      ::= COMA Exp0:exp Arg:ar
     {:ar.add(0, exp); RESULT=ar;:};
 Arg		 ::=
+    {:RESULT=new ArrayList<E>();:};
+
+//Sin argumentos
+ListArg ::=
     {:RESULT=new ArrayList<E>();:};
 
 // 4.10) Instruccion Print

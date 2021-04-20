@@ -1,6 +1,7 @@
 package ast.T;
 
 import ast.E.E;
+import ast.E.Ent;
 import ast.I.EnumeradoInstrucciones;
 
 import java.util.List;
@@ -18,14 +19,15 @@ public class TipoArray extends Tipo{
 
 	@Override
 	public String toString() {
-		return tipoBase.toString() + dimShapePrint(dimShape);
+		return "{"+ tipoBase + dimShapePrint(dimShape) + "}";
 	}
 
 	public String dimShapePrint(List<E> dimShape) {
 		String aux = "";
 		if (dimShape != null) {
-			for (int i = 0; i < dimShape.size(); i++) {
-				aux = aux + "[" + dimShape.get(i).toString() + "]";
+			for (E dim : dimShape) {
+				Ent dimEnt = (Ent) dim;
+				aux += "[" + dimEnt.valor() + "]";
 			}
 		}
 		return aux;

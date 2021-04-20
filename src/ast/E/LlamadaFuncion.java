@@ -20,8 +20,10 @@ public class LlamadaFuncion extends E {
 
 	@Override
 	public String toString() {
-		String aux = "{{" + "E: " + nombreFuncion + "}{";
-		for(E argumento : argumentos) aux += argumento.toString();
+		String aux = "{{" + "Llamada a funcion" + "}" + nombreFuncion + "{{Argumentos}";
+		for(E argumento : argumentos) {
+			aux += argumento;
+		}
 		aux += "}}";
 		return aux;
 	}

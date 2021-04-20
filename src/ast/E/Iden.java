@@ -5,7 +5,7 @@ import ast.T.Tipo;
 
 import java.util.List;
 
-public class Iden extends E {
+public class Iden extends EFinal {
 	private String nombre;
 	private List<E> dimShape;
 
@@ -26,11 +26,17 @@ public class Iden extends E {
 	    String aux = "";
 
 	    if (dimShape != null) {
-            for (int i = 0; i < dimShape.size(); i++) {
-                aux = aux + "[" + dimShape.get(i).toString() + "]";
+            for (E dim : dimShape) {
+                EFinal eFinal = (EFinal) dim;
+                aux += "[" + eFinal.valor() + "]";
             }
         }
 
 	    return aux;
+    }
+
+    @Override
+    public String valor() {
+	    return nombre;
     }
 }
