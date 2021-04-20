@@ -13,10 +13,10 @@ int x = 10;
 struct myStruct persona;
 
 switch (x) {
-    case (1){
+    case 1 {
         print(Mayor);
     }
-    case (2){
+    case 2 {
         print(Menor);
     }
     default{

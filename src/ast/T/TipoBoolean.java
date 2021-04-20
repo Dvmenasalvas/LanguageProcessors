@@ -15,7 +15,7 @@ public class TipoBoolean extends Tipo{
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return "Bool";
+        return "T: Bool";
     }
     
 }

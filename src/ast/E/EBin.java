@@ -1,5 +1,7 @@
 package ast.E;
 
+import ast.EnumeradoSentencia;
+
 public abstract class EBin extends E {
    private E opnd1;
    private E opnd2;
@@ -15,5 +17,8 @@ public abstract class EBin extends E {
     @Override
     public String toString() {
         return "{" + "{" + "EBin: " + nombreOp() + "}" + opnd1 + opnd2 + '}';
+    }
+    public EnumeradoSentencia tipoSentencia() {
+        return EnumeradoSentencia.EXPRESION_BINARIA;
     }
 }

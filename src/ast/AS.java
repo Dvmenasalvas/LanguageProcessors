@@ -74,6 +74,7 @@ public class AS {
   public I instCallVoidFun(E nombre, List<E> args, int fila, int columna){
     return new InstLlamadaVoid(nombre, args, fila, columna);
   }
+  public I instPrint(E exp, int fila, int columna){return new InstPrint(exp, fila, columna);}
 
   public I instDecl(TipoArray tipo, E iden, List<E> expr,Boolean constante, int fila, int columna) {return new InstDecl(tipo, iden, expr, constante, fila, columna);}
   public I instStruct(E nombre, List<I> lista, int fila, int columna) {return new InstStruct(nombre, lista, fila, columna);}

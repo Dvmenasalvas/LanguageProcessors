@@ -18,7 +18,7 @@ public class TipoArray extends Tipo{
 
 	@Override
 	public String toString() {
-		return tipoBase + dimShapePrint(dimShape);
+		return tipoBase.toString() + dimShapePrint(dimShape);
 	}
 
 	public String dimShapePrint(List<E> dimShape) {
