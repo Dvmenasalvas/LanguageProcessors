@@ -28,6 +28,9 @@ hs_err_pid*
 bin/
 out/
 practicaFinal.iml
+.project
+.DS_Store
+.classpath
 
 #Generated files
 src/alex/AnalizadorLexico.java
