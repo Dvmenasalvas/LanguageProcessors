@@ -76,7 +76,6 @@ public class Main {
 	 if(GestionErrores.numeroErroresSintacticos == 0){
 	     System.out.println("Análisis lexico/sintáctico realizado sin errores.");
          System.out.println("Arbol sintático:");
-         System.out.println(programa);
 
          String tree = programa.toString().substring(1, programa.toString().length()-1);
          System.out.println(printTree("PROGRAMA", splitThree(tree), "", true));
