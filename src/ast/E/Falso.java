@@ -5,6 +5,6 @@ public class Falso extends E {
       super(fila,columna);
    }
    
-   public TipoE tipo() {return TipoE.FALSO;}
+   public TipoE tipoExpresion() {return TipoE.FALSO;}
    public String toString() {return "{E: false}";}
 }

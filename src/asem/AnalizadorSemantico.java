@@ -2,7 +2,7 @@ package asem;
 
 import ast.E.*;
 import ast.I.*;
-import ast.T.*;
+import ast.Sentencia;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -27,7 +27,27 @@ public class AnalizadorSemantico {
         return tiposCorrectos.get();
     }
 
-    private void vincula(I instruccion) {
+    private void vincula(Sentencia sentencia) {
+        switch(sentencia.tipoSentencia()){
+            case INSTRUCCION:
+                break;
+            case EXPRESION_BINARIA:
+                EBin expBin = (EBin) sentencia;
 
+                vincula(expBin.opnd1());
+                vincula(expBin.opnd2());
+                break;
+            case EXPRESION:
+                E expresion = (E) sentencia;
+
+                switch(expresion.tipoExpresion()){
+                    case FUNCION:
+                        break;
+                    case IDEN:
+                        break;
+                    case NOT:
+                        break;
+                }
+        }
     }
 }

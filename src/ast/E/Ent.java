@@ -6,7 +6,7 @@ public class Ent extends EFinal {
     super(fila,columna);
     this.valor = v;
   }
-  public TipoE tipo() {return TipoE.ENT;}
+  public TipoE tipoExpresion() {return TipoE.ENT;}
 
   public String toString() {return  "{" + "E: " + valor + "}";}
 

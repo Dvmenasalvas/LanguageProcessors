@@ -10,5 +10,5 @@ public class Mul extends EBin {
         return "multiplicacion";
     }
 
-    public TipoE tipo() {return TipoE.MUL;}
+    public TipoE tipoExpresion() {return TipoE.MUL;}
 }

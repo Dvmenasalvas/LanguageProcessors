@@ -11,6 +11,6 @@ public class Or extends EBin {
         return "or";
     }
 
-    public TipoE tipo() {return TipoE.OR;}
+    public TipoE tipoExpresion() {return TipoE.OR;}
 
 }

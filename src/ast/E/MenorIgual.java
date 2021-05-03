@@ -11,5 +11,5 @@ public class MenorIgual extends EBin {
         return "menorIgual";
     }
 
-    public TipoE tipo() {return TipoE.MENORIGUAL;}
+    public TipoE tipoExpresion() {return TipoE.MENORIGUAL;}
 }

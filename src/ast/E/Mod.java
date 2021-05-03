@@ -10,5 +10,5 @@ public class Mod extends EBin {
         return "modulo";
     }
 
-    public TipoE tipo() {return TipoE.MOD;}
+    public TipoE tipoExpresion() {return TipoE.MOD;}
 }

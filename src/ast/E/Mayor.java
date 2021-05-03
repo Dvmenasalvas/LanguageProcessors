@@ -11,6 +11,6 @@ public class Mayor extends EBin {
         return "mayor";
     }
 
-    public TipoE tipo() {return TipoE.MAYOR;}
+    public TipoE tipoExpresion() {return TipoE.MAYOR;}
 
 }

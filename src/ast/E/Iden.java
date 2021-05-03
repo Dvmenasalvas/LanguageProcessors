@@ -15,7 +15,7 @@ public class Iden extends EFinal {
         this.dimShape = dimShape;
    }    
 
-   public TipoE tipo() {return TipoE.IDEN;}
+   public TipoE tipoExpresion() {return TipoE.IDEN;}
 
     @Override
     public String toString() {

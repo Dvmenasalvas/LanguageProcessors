@@ -11,6 +11,6 @@ public class And extends EBin {
         return "and";
     }
 
-    public TipoE tipo() {return TipoE.AND;}
+    public TipoE tipoExpresion() {return TipoE.AND;}
 
 }

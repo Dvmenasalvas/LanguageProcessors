@@ -14,7 +14,7 @@ public class LlamadaFuncion extends E {
 	    this.argumentos = argumentos;
 	}     
     @Override
-    public TipoE tipo() {
+    public TipoE tipoExpresion() {
         return TipoE.FUNCION;
     }
 
