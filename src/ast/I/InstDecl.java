@@ -12,6 +12,8 @@ public class InstDecl extends I{
     private List<E> expresion;
     private boolean constante;
 
+
+
     public InstDecl(TipoArray tipo, E iden, List<E> expr, Boolean constante, int fila, int columna ) {
         super(fila, columna);
         this.tipoVariable = tipo;
@@ -22,6 +24,9 @@ public class InstDecl extends I{
 
     public E getIdentificador() {
         return identificador;
+    }
+    public List<E> getExpresion() {
+        return expresion;
     }
 
     public boolean isConstante() {

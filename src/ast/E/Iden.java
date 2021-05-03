@@ -10,6 +10,7 @@ public class Iden extends EFinal {
 	private List<E> dimShape;
 	private Tipo tipoVariable;
 	private Sentencia referencia;
+	private Boolean constante = false;
 
 	public Iden(String e1, List<E> dimShape,int fila,int columna) {
         super(fila,columna);
@@ -35,6 +36,10 @@ public class Iden extends EFinal {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void setConstante(Boolean constante) {
+        this.constante = constante;
     }
 
     public TipoE tipoExpresion() {return TipoE.IDEN;}

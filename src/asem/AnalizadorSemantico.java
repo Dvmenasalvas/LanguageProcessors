@@ -41,9 +41,39 @@ public class AnalizadorSemantico {
                         vincula(iden);
                         vincula(asignacion.getValor());
                         break;
+
+                    case LLAMDADAPROC:
+                        InstLlamadaVoid llamadaVoid = (InstLlamadaVoid) sentencia;
+                        Iden id  =(Iden)llamadaVoid.getNombre();
+                        Sentencia referenciaDeclaracion =
+                                tabla.getSentenciaDeclaracion(
+                                        ((Iden)llamadaVoid.getNombre()).getNombre());
+                        if(referenciaDeclaracion!=null) {
+                            llamadaVoid.setReferencia(referenciaDeclaracion);
+                            llamadaVoid.getArgumentos().forEach(x -> vincula(x));
+                        }else {
+                            GestionErrores.errorSemantico("El procedimiento " +
+                                    llamadaVoid.getNombre() +
+                                    " no ha sido declarado. Solo se puede llamar a funciones declaradas anteriormente",
+                                    sentencia.getFila(),sentencia.getColumna());
+                        }
+                        break;
+
+                    case DECL:
+                        InstDecl declaracion = (InstDecl) sentencia;
+                        Iden identificadorV = (Iden)declaracion.getIdentificador();
+                        identificadorV.setConstante(declaracion.isConstante());
+                        identificadorV.setReferencia(declaracion);
+                        identificadorV.setTipoVariable(declaracion.getTipo());
+                        vincula(declaracion.getTipo());
+                        tabla.insertaId(identificadorV.getNombre(), declaracion);
+                        List<E> valorInicial = declaracion.getExpresion();
+                        if(valorInicial != null) valorInicial.forEach(x -> vincula(x));
+                        break;
                     default:
                         break;
                 }
+                break;
             case EXPRESION_BINARIA:
                 EBin expBin = (EBin) sentencia;
                 expBin.getOpnd1().setAsignacion(expBin.isAsignacion());
@@ -130,7 +160,7 @@ public class AnalizadorSemantico {
                     case ARRAY:
                         TipoArray tipoArray = (TipoArray) tipo;
                         vincula(tipoArray.getTipoBase());
-                        tipoArray.getDimShape().forEach(x -> vincula(x));
+                        if(tipoArray.getDimShape() != null) tipoArray.getDimShape().forEach(x -> vincula(x));
 
                         break;
                     default:
