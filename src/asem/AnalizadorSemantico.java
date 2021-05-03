@@ -165,7 +165,7 @@ public class AnalizadorSemantico {
                                     ((Iden) llamada.getNombreFuncion()).getNombre() +
                                     " no existente.",sentencia.getFila(),sentencia.getColumna());
                         }else {
-                            llamada.setReferencia(referenciaFuncion);
+                            llamada.setReferenciaDeclaracion(referenciaFuncion);
                             llamada.setTipoReturn(((InstDeclFun) referenciaFuncion).getTipo());
                             llamada.getArgumentos().forEach(x -> vincula(x));
                         }

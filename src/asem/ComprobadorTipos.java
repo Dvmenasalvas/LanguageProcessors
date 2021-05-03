@@ -6,6 +6,7 @@ import ast.T.*;
 import ast.Sentencia;
 import errors.GestionErrores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -153,6 +154,128 @@ public class ComprobadorTipos {
         return true;
     }
     public Tipo tipoExpresion(Sentencia sentencia){
-        return null;
+        switch (sentencia.tipoSentencia()){
+            case EXPRESION:
+                E expresion = (E) sentencia;
+                switch(expresion.tipoExpresion()) {
+                    case FALSO:
+                    case VERDADERO:
+                        return new TipoBoolean(expresion.getFila(), expresion.getColumna());
+                    case ENT:
+                        return new TipoInt(expresion.getFila(), expresion.getColumna());
+                    case FUNCION:
+                        LlamadaFuncion llamada = (LlamadaFuncion) expresion;
+                        List<E> argumentos = llamada.getArgumentos();
+                        List<Tipo> tiposLlamada = new ArrayList<>();
+                        if (!(llamada.getNombreFuncion() instanceof Iden)) {
+                            GestionErrores.errorSemantico("El nombre de la función no es un identificador",
+                                    sentencia.getFila(), sentencia.getColumna());
+                        }
+                        for (E argumento : argumentos) {
+                            Tipo ti = tipoExpresion(argumento);
+                            if (ti != null)
+                                tiposLlamada.add(ti);
+                        }
+                        InstDeclFun declaracionFuncion = (InstDeclFun) llamada.getReferenciaDeclaracion();
+                        int i = 0;
+                        boolean coincidenTipos = true;
+                        if (tiposLlamada.size() == declaracionFuncion.getArgumentos().size()) {
+                            for (TipoArgumento atributo : declaracionFuncion.getArgumentos()) {
+                                if (atributo.getTipo().tipoTipos() != tiposLlamada.get(i).tipoTipos()) {
+                                    coincidenTipos = false;
+                                    GestionErrores.errorSemantico("Error de tipos. El tipo del parámetro número " + i +
+                                            " no es correcto (no coincide con su argumento)." +
+                                            ((Iden) atributo.getArgumento()).getNombre(), sentencia.getFila(), sentencia.getColumna());
+                                }
+                                i++;
+                            }
+                            if (coincidenTipos) {
+                                return llamada.getTipoReturn();
+                            }
+                        } else {
+                            GestionErrores.errorSemantico("No hay el mismo número de atributos que de parámetros.",
+                                    sentencia.getFila(), sentencia.getColumna());
+                        }
+                        break;
+                    case IDEN:
+                        Iden identificador = (Iden) expresion;
+                        return identificador.getTipoVariable();
+                    case NOT:
+                        Not not = (Not) expresion;
+                        if (tipoExpresion(not.getOpnd1()).tipoTipos() == EnumeradoTipo.BOOLEAN) {
+                            return new TipoBoolean(expresion.getFila(), expresion.getColumna());
+                        }
+                        GestionErrores.errorSemantico("La operación de negación (!) solo debe de ser aplicada a un booleano",
+                                sentencia.getFila(), sentencia.getColumna());
+                        break;
+
+                }
+                break;
+            case EXPRESION_BINARIA:
+                EBin ebin = (EBin) sentencia;
+                E operando1= ebin.getOpnd1();
+                E operando2 = ebin.getOpnd2();
+                Tipo tipoOperando1 = tipoExpresion(operando1);
+                Tipo tipoOperando2 = tipoExpresion(operando2);
+
+                if (tipoOperando1 == null) {
+                    System.out.println("Operando devuelve null. Fallo en la casuística previa. Operando: " + operando1 );
+                }
+                else if (tipoOperando2 == null) {
+                    System.out.println("Operando devuelve null. Fallo en la casuística previa. Operando: " + operando2 );
+                }
+                else if (tipoOperando1.tipoTipos() != EnumeradoTipo.ERROR && tipoOperando2.tipoTipos() != EnumeradoTipo.ERROR) {
+                    switch (ebin.tipoExpresion()) {
+                        case AND:
+                        case OR:
+                            if (tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN && tipoOperando2.tipoTipos() == EnumeradoTipo.BOOLEAN) {
+                                return new TipoBoolean(sentencia.getFila(), sentencia.getColumna());
+                            }
+                            GestionErrores.errorSemantico("Error de tipos. Uno de los operandos de la operación booleana no es booleano. Operandos: "
+                                    + operando1.toString() + " y " + operando2.toString(), sentencia.getFila(), sentencia.getColumna());
+                            break;
+                        case DIV:
+                        case ELEV:
+                        case MUL:
+                        case RESTA:
+                        case SUMA:
+                        case MOD:
+                            if (tipoOperando1.tipoTipos() == EnumeradoTipo.INT && tipoOperando2.tipoTipos() == EnumeradoTipo.INT) {
+                                return new TipoInt(sentencia.getFila(), sentencia.getColumna());
+                            }
+                            GestionErrores.errorSemantico("Error de tipos. Uno de los operandos de la operación aritmética no es entero." +
+                                    " Operandos: " + operando1.toString() + " y " + operando2.toString(), sentencia.getFila(),
+                                    sentencia.getColumna());
+                            break;
+                        case IGUALIGUAL:
+                        case DISTINTO:
+                            if ((tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN || tipoOperando1.tipoTipos() == EnumeradoTipo.INT)
+                                    && tipoOperando1.tipoTipos() == tipoOperando2.tipoTipos()) {
+                                return new TipoBoolean(sentencia.getFila(), sentencia.getColumna());
+                            }
+                            GestionErrores.errorSemantico("Error de tipos. Los tipos para la comparación de igualdad no coinciden " +
+                                    "o no son válidos. Operandos: " + operando1.toString() + " y " + operando2.toString(),
+                                    sentencia.getFila(), sentencia.getColumna());
+                            break;
+                        case MAYORIGUAL:
+                        case MAYOR:
+                        case MENORIGUAL:
+                        case MENOR:
+                            if (tipoOperando1.tipoTipos() == EnumeradoTipo.INT && tipoOperando2.tipoTipos() == EnumeradoTipo.INT) {
+                                return new TipoBoolean(sentencia.getFila(), sentencia.getColumna());
+                            }
+                            GestionErrores.errorSemantico("Error de tipos. Los tipos para la comparación no son enteros. Operandos: "
+                                    + operando1.toString() + " y " + operando2.toString(), sentencia.getFila(), sentencia.getColumna());
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+            break;
+            default:
+                break;
+        }
+        return new TipoError(sentencia.getFila(), sentencia.getColumna());
     }
 }

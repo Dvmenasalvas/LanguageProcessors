@@ -55,7 +55,11 @@ public class LlamadaFuncion extends E {
 		this.tipoReturn = tipoReturn;
 	}
 
-	public void setReferencia(Sentencia referenciaDeclaracion) {
+	public Sentencia getReferenciaDeclaracion() {
+		return referenciaDeclaracion;
+	}
+
+	public void setReferenciaDeclaracion(Sentencia referenciaDeclaracion) {
 		this.referenciaDeclaracion = referenciaDeclaracion;
 	}
 }
