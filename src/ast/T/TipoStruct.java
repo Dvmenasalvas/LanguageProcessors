@@ -7,8 +7,6 @@ public class TipoStruct extends Tipo{
     private E nombre;
     private Sentencia referenciaDeclaracion;
 
-
-
     public TipoStruct(E lexema, int fila, int columna) {
         super(fila, columna);
         this.nombre = lexema;

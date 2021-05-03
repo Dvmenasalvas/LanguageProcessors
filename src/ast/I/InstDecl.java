@@ -10,7 +10,7 @@ public class InstDecl extends I{
     private TipoArray tipoVariable;
     private E identificador;
     private List<E> expresion;
-    private Boolean constante;
+    private boolean constante;
 
     public InstDecl(TipoArray tipo, E iden, List<E> expr, Boolean constante, int fila, int columna ) {
         super(fila, columna);
@@ -18,6 +18,14 @@ public class InstDecl extends I{
         this.identificador = iden;
         this.expresion = expr;
         this.constante = constante;
+    }
+
+    public E getIdentificador() {
+        return identificador;
+    }
+
+    public boolean isConstante() {
+        return constante;
     }
 
     @Override

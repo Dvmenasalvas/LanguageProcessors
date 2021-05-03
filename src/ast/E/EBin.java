@@ -10,9 +10,10 @@ public abstract class EBin extends E {
     this.opnd1 = e1;
     this.opnd2 = e2;
   }
-   public E opnd1() {return opnd1;}
-   public E opnd2() {return opnd2;}
+   public E getOpnd1() {return opnd1;}
+   public E getOpnd2() {return opnd2;}
     public abstract String nombreOp();
+
 
     @Override
     public String toString() {

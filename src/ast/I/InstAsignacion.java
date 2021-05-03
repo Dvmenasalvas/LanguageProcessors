@@ -12,6 +12,14 @@ public class InstAsignacion extends I {
         this.valor = valor;
     }
 
+    public E getValor() {
+        return valor;
+    }
+
+    public E getIdentificador() {
+        return identificador;
+    }
+
     public EnumeradoInstrucciones tipoInstruccion() {return EnumeradoInstrucciones.ASIG;}
 
     @Override
