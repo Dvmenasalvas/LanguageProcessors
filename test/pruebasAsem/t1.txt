@@ -20,6 +20,7 @@ void masUno (int x) {
 }
 masUno(x);
 
+int aux = func1(10);
 #Arrays
 int[4][5][t] myArray;
 int[4][5][x] otroArray;

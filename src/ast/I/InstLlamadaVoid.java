@@ -35,6 +35,10 @@ public class InstLlamadaVoid extends I{
         return argumentos;
     }
 
+    public Sentencia getReferencia() {
+        return referencia;
+    }
+
     public void setReferencia(Sentencia referencia) {
         this.referencia = referencia;
     }

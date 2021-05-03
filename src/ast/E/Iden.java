@@ -38,6 +38,10 @@ public class Iden extends EFinal {
         return nombre;
     }
 
+    public Boolean getConstante() {
+        return constante;
+    }
+
     public void setConstante(Boolean constante) {
         this.constante = constante;
     }
