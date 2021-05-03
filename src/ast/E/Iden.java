@@ -44,9 +44,6 @@ public class Iden extends EFinal {
         return "{"+ "Iden: " + nombre + dimShapePrint(dimShape) + '}';
     }
 
-    public String getNombre() {
-        return nombre;
-    }
 
     public String dimShapePrint(List<E> dimShape){
 	    String aux = "";

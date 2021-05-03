@@ -105,7 +105,7 @@ public class AnalizadorSemantico {
                         }
                     case NOT:
                         Not expNot = (Not) expresion;
-                        vincula(expNot.opnd1());
+                        vincula(expNot.getOpnd1());
                         break;
                     default:
                         break;
