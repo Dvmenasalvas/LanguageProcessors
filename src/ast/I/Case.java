@@ -3,12 +3,12 @@ import java.util.List;
 import ast.E.E;
 
 public class Case extends I{
-    private E nombreCase;
+    private E expresion;
     private List<I> cuerpoCase;
-    public Case(E nombreCase, List<I> cuerpoCase, int fila, int columna) {
+    public Case(E nombreCase, List<I> expresion, int fila, int columna) {
         super(fila, columna);
-        this.nombreCase = nombreCase;
-        this.cuerpoCase = cuerpoCase;
+        this.expresion = nombreCase;
+        this.cuerpoCase = expresion;
         this.fila = fila;
         this.columna = columna;
     }
@@ -17,9 +17,13 @@ public class Case extends I{
         return cuerpoCase;
     }
 
+    public E getExpresion() {
+        return expresion;
+    }
+
     @Override
     public String toString() {
-        String aux = nombreCase.toString();
+        String aux = expresion.toString();
         for(I ins : cuerpoCase) aux += ins;
         return aux;
     }

@@ -24,7 +24,7 @@ public class AnalizadorSemantico {
         tabla.cierraBloque();
 
         AtomicBoolean tiposCorrectos = new AtomicBoolean(true);
-        programa.forEach(x -> {tiposCorrectos.set(comprobadorTipos.comprueba(x) && tiposCorrectos.get());});
+        programa.forEach(x -> {tiposCorrectos.set(comprobadorTipos.compruebaInstruccion(x) && tiposCorrectos.get());});
         if(tiposCorrectos.get()) System.out.println("Comprobacion de Tipos sin errores");
         return tiposCorrectos.get();
     }
@@ -75,7 +75,7 @@ public class AnalizadorSemantico {
                         InstDeclFun declaracionFun = (InstDeclFun) sentencia;
                         Tipo tipoFuncion = declaracionFun.getTipo();
                         if(tipoFuncion != null) vincula(tipoFuncion); //Si es void no comprueba
-                        Iden identificadorFuncion = (Iden)declaracionFun.getNombre();
+                        Iden identificadorFuncion = (Iden)declaracionFun.getIdentificador();
                         tabla.insertaId(identificadorFuncion.getNombre(), declaracionFun);
                         identificadorFuncion.setConstante(true);
 

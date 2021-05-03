@@ -8,16 +8,16 @@ import java.util.List;
 
 public class InstDeclFun extends I{
     private Tipo tipo;
-    private E nombre;
+    private E identificador;
     private List<TipoArgumento> argumentos;
     private List<I> cuerpo;
     private E retorno;
 
-    public InstDeclFun(Tipo tipo, E nombre, List<TipoArgumento> argumentos,
-      List<I> cuerpo, E retorno, int fila, int columna) {
+    public InstDeclFun(Tipo tipo, E identificador, List<TipoArgumento> argumentos,
+                       List<I> cuerpo, E retorno, int fila, int columna) {
         super(fila, columna);
         this.tipo = tipo;
-        this.nombre = nombre;
+        this.identificador = identificador;
         this.argumentos = argumentos;
         this.cuerpo = cuerpo;
         this.retorno = retorno;
@@ -30,8 +30,8 @@ public class InstDeclFun extends I{
     @Override
     public String toString() {
         String out;
-        if(tipo != null) out = "{{I: DeclaracionFuncion}{" + tipo + "}" + nombre + "{{Argumentos}";
-        else out = "{{I: DeclaracionFuncion}" + "{Void}" + nombre + "{{Argumentos}";
+        if(tipo != null) out = "{{I: DeclaracionFuncion}{" + tipo + "}" + identificador + "{{Argumentos}";
+        else out = "{{I: DeclaracionFuncion}" + "{Void}" + identificador + "{{Argumentos}";
 
         int i = 0;
         for(TipoArgumento arg : argumentos) {
@@ -60,8 +60,8 @@ public class InstDeclFun extends I{
         return tipo;
     }
 
-    public E getNombre() {
-        return nombre;
+    public E getIdentificador() {
+        return identificador;
     }
 
     public List<I> getCuerpo() {
