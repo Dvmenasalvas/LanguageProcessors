@@ -47,7 +47,7 @@ public class AnalizadorSemantico {
                         Iden id  =(Iden)llamadaVoid.getNombre();
                         Sentencia referenciaDeclaracion =
                                 tabla.getSentenciaDeclaracion(
-                                        ((Iden)llamadaVoid.getNombre()).getNombre());
+                                        id.getNombre());
                         if(referenciaDeclaracion!=null) {
                             llamadaVoid.setReferencia(referenciaDeclaracion);
                             llamadaVoid.getArgumentos().forEach(x -> vincula(x));
@@ -69,6 +69,30 @@ public class AnalizadorSemantico {
                         tabla.insertaId(identificadorV.getNombre(), declaracion);
                         List<E> valorInicial = declaracion.getExpresion();
                         if(valorInicial != null) valorInicial.forEach(x -> vincula(x));
+                        break;
+
+                    case DECLFUN:
+                        InstDeclFun declaracionFun = (InstDeclFun) sentencia;
+                        Tipo tipoFuncion = declaracionFun.getTipo();
+                        if(tipoFuncion != null) vincula(tipoFuncion); //Si es void no comprueba
+                        Iden identificadorFuncion = (Iden)declaracionFun.getNombre();
+                        tabla.insertaId(identificadorFuncion.getNombre(), declaracionFun);
+                        identificadorFuncion.setConstante(true);
+
+                        tabla.abreBloque();
+                        List<TipoArgumento> listaArgumentos = declaracionFun.getArgumentos();
+                        for(TipoArgumento argumento : listaArgumentos) {
+                            tabla.insertaId(((Iden)argumento.getArgumento()).getNombre(), declaracionFun);
+                            Iden identificadorParametro = (Iden)argumento.getArgumento();
+                            identificadorParametro.setTipoVariable(argumento.getTipo());
+                            tabla.addTipoVariable(identificadorParametro.getNombre(), argumento.getTipo());
+                            vincula(argumento.getTipo());
+                        }
+
+                        List<I> cuerpoFuncion = declaracionFun.getCuerpo();
+                        cuerpoFuncion.forEach(x -> vincula(x));
+                        if(tipoFuncion!= null)vincula(declaracionFun.getRetorno());
+                        tabla.cierraBloque();
                         break;
                     default:
                         break;
@@ -133,6 +157,7 @@ public class AnalizadorSemantico {
                             tabla.addTipoVariable(identificador.getNombre(), tipoVariable);
                             identificador.setTipoVariable(tipoVariable);
                         }
+                        break;
                     case NOT:
                         Not expNot = (Not) expresion;
                         vincula(expNot.getOpnd1());

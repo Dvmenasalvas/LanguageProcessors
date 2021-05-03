@@ -1,1 +1,5 @@
-int aux;
+int func1(int x){
+    return x;
+}
+
+int aux = func1();

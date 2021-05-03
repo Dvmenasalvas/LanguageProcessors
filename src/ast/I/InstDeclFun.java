@@ -59,4 +59,16 @@ public class InstDeclFun extends I{
     public Tipo getTipo() {
         return tipo;
     }
+
+    public E getNombre() {
+        return nombre;
+    }
+
+    public List<I> getCuerpo() {
+        return cuerpo;
+    }
+
+    public E getRetorno() {
+        return retorno;
+    }
 }
