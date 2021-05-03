@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alex.AnalizadorLexico;
+import asem.AnalizadorSemantico;
 import ast.I.I;
 import errors.GestionErrores;
 
@@ -73,14 +74,29 @@ public class Main {
 
 	 List<I> programa = (List<I>) constructorast.parse().value;
 
-	 if(GestionErrores.numeroErroresSintacticos == 0){
+	 if(GestionErrores.erroresSintacticos == 0){
 	     System.out.println("Análisis lexico/sintáctico realizado sin errores.");
          System.out.println("Arbol sintático:");
 
          String tree = programa.toString().substring(1, programa.toString().length()-1);
          System.out.println(printTree("PROGRAMA", splitThree(tree), "", true));
 
-     }
- }
-}   
-   
+         System.out.println("Realizando análisis semántico.");
+         AnalizadorSemantico asem = new AnalizadorSemantico(programa);
+         asem.analizar();
+
+         if(GestionErrores.erroresSemanticos == 0) { //Si no hemos tenido errores en el alex, asint y asem, procedemos a generar el codigo
+             System.out.println("Análisis semántico finalizado sin errores.\n");
+            /*
+             //3) Generacion de Codigo
+             System.out.println("Se inicia la generación de código.\n");
+             GeneradorCodigo codeGenerator = new GeneradorCodigo(programa);
+             codeGenerator.generaCodigo();
+             System.out.println("Codigo generado con exito.");
+             */
+         } else System.out.println("Compilacion detenida: se han detectado errores durante el análisis semántico.");
+     } else System.out.println("Compilacion detenida: se han detectado errores durante el análisis sintáctico.");
+
+   }
+}
+
