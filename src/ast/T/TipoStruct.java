@@ -1,9 +1,11 @@
 package ast.T;
 
 import ast.E.E;
+import ast.Sentencia;
 
 public class TipoStruct extends Tipo{
     private E nombre;
+    private Sentencia referenciaDeclaracion;
 
 
 
@@ -18,4 +20,12 @@ public class TipoStruct extends Tipo{
     }
 
     public String toString() { return nombre.toString(); }
+
+    public E getNombre() {
+        return nombre;
+    }
+
+    public void setReferenciaDeclaracion(Sentencia referenciaDeclaracion) {
+        this.referenciaDeclaracion = referenciaDeclaracion;
+    }
 }

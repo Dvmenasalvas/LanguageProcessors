@@ -37,4 +37,11 @@ public class TipoArray extends Tipo{
 		return EnumeradoTipo.ARRAY;
 	}
 
+	public Tipo getTipoBase() {
+		return tipoBase;
+	}
+
+	public List<E> getDimShape() {
+		return dimShape;
+	}
 }

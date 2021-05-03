@@ -2,10 +2,12 @@ package asem;
 
 import ast.E.*;
 import ast.I.*;
+import ast.T.*;
 import ast.Sentencia;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import errors.GestionErrores;
 
 public class AnalizadorSemantico {
     private List<I> programa;
@@ -42,12 +44,55 @@ public class AnalizadorSemantico {
 
                 switch(expresion.tipoExpresion()){
                     case FUNCION:
+                        LlamadaFuncion llamada = (LlamadaFuncion) expresion;
+                        Sentencia referenciaFuncion =
+                                tabla.getSentenciaDeclaracion(((Iden) llamada.getNombreFuncion()).getNombre());
+                        if(referenciaFuncion == null) {
+                            GestionErrores.errorSemantico("Llamada a función " +
+                                    ((Iden) llamada.getNombreFuncion()).getNombre() +
+                                    " no existente.",sentencia.getFila(),sentencia.getColumna());
+                        }else {
+                            llamada.setReferencia(referenciaFuncion);
+                            llamada.setTipoReturn(((InstDeclFun) referenciaFuncion).getTipo());
+                            llamada.getArgumentos().forEach(x -> vincula(x));
+                        }
                         break;
                     case IDEN:
                         break;
                     case NOT:
+                        Not expNot = (Not) expresion;
+                        vincula(expNot.opnd1());
+                        break;
+                    default:
                         break;
                 }
+                break;
+
+            case TIPO:
+                Tipo tipo = (Tipo) sentencia;
+                switch(tipo.tipoTipos()) {
+                    case STRUCT:
+                        TipoStruct tipoStruct = (TipoStruct) tipo;
+                        Sentencia referenciaSentencia =
+                                tabla.getSentenciaDeclaracion(((Iden) tipoStruct.getNombre()).getNombre());
+                        if(referenciaSentencia == null) {
+                            GestionErrores.errorSemantico("Struct " +
+                                    ((Iden) tipoStruct.getNombre()).getNombre() + " no declarado."
+                                    ,sentencia.getFila(),sentencia.getColumna());
+                        }else {
+                            tipoStruct.setReferenciaDeclaracion(referenciaSentencia);
+                        }
+                        break;
+                    case ARRAY:
+                        TipoArray tipoArray = (TipoArray) tipo;
+                        vincula(tipoArray.getTipoBase());
+                        tipoArray.getDimShape().forEach(x -> vincula(x));
+
+                        break;
+                    default:
+                        break;
+                }
+
         }
     }
 }

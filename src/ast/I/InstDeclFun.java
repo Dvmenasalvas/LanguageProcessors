@@ -51,4 +51,8 @@ public class InstDeclFun extends I{
     public EnumeradoInstrucciones tipoInstruccion() {
         return EnumeradoInstrucciones.DECLFUN;
     }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
 }
