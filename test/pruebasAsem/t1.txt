@@ -1,5 +1,27 @@
-int func1(int x){
-    return x;
-}
+#Asignación sin declaración
+aux = 0;
 
-int aux = func1();
+#Asignacion con declaración
+int y = 0;
+y = 2;
+int z;
+z = 3;
+
+#Cambiar constante
+const int x = 0;
+x = 1;
+
+#Procedimiento no declarado
+manolo(x);
+
+#Procedimiento declarado
+void masUno (int x) {
+    x = x + 1;
+}
+masUno(x);
+
+#Arrays
+int[4][5][t] myArray;
+int[4][5][x] otroArray;
+
+#If

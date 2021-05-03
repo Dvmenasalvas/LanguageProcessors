@@ -2,6 +2,7 @@ package ast.T;
 
 import ast.E.E;
 import ast.E.Ent;
+import ast.E.Iden;
 import ast.I.EnumeradoInstrucciones;
 
 import java.util.List;
@@ -26,8 +27,15 @@ public class TipoArray extends Tipo{
 		String aux = "";
 		if (dimShape != null) {
 			for (E dim : dimShape) {
-				Ent dimEnt = (Ent) dim;
-				aux += "[" + dimEnt.valor() + "]";
+				if (dim instanceof Ent) {
+					Ent dimEnt = (Ent) dim;
+					aux += "[" + dimEnt.valor() + "]";
+				} else if (dim instanceof Iden) {
+					Iden dimIden = (Iden) dim;
+					aux += "[" + dimIden.getNombre() + "]";
+				} else  {
+					aux += "[" + dim + "]";
+				}
 			}
 		}
 		return aux;

@@ -94,6 +94,52 @@ public class AnalizadorSemantico {
                         if(tipoFuncion!= null)vincula(declaracionFun.getRetorno());
                         tabla.cierraBloque();
                         break;
+
+                    case IF:
+                        InstIf instIf = (InstIf) sentencia;
+                        vincula(instIf.getCondicion());
+                        tabla.abreBloque();
+                        instIf.getCuerpoIf().forEach(x->vincula(x));
+                        tabla.cierraBloque();
+                        if(instIf.getCuerpoElse() != null) {
+                            tabla.abreBloque();
+                            instIf.getCuerpoElse().forEach(x->vincula(x));
+                            tabla.cierraBloque();
+                        }
+                        break;
+                    case STRUCT:
+                        InstStruct instStruct = (InstStruct) sentencia;
+                        tabla.insertaId(((Iden) instStruct.getIdentificador()).getNombre(), instStruct);
+                        tabla.abreBloque();
+                        instStruct.getDeclaraciones().forEach(x->vincula(x));
+                        tabla.cierraBloque();
+                        break;
+                    case SWITCH:
+                        InstSwitch instSwitch = (InstSwitch) sentencia;
+
+                        Sentencia referenciaVariableSwitch = tabla.getSentenciaDeclaracion(((Iden)instSwitch.getCondicion()).getNombre());
+                        vincula((Iden)instSwitch.getCondicion());
+                        if(referenciaVariableSwitch == null) {
+                            GestionErrores.errorSemantico("La variable " + ((Iden)instSwitch.getCondicion()).getNombre() +
+                                    " no ha sido declarada",sentencia.getFila(),sentencia.getColumna());
+                        }else {
+                            instSwitch.setReferenciaDeclaraciónVariable(referenciaVariableSwitch);
+
+                            List<Case> casos = instSwitch.getCases();
+                            for(Case caso : casos) {
+                                tabla.abreBloque();
+                                caso.getCuerpoCase().forEach(x->vincula(x));
+                                tabla.cierraBloque();
+                            }
+                        }
+                        break;
+                    case WHILE:
+                        InstWhile instWhile = (InstWhile) sentencia;
+                        vincula(instWhile.getCondicion());
+                        tabla.abreBloque();
+                        instWhile.getCuerpo().forEach(x-> vincula(x));
+                        tabla.cierraBloque();
+                        break;
                     default:
                         break;
                 }
@@ -185,7 +231,8 @@ public class AnalizadorSemantico {
                     case ARRAY:
                         TipoArray tipoArray = (TipoArray) tipo;
                         vincula(tipoArray.getTipoBase());
-                        if(tipoArray.getDimShape() != null) tipoArray.getDimShape().forEach(x -> vincula(x));
+                        if(tipoArray.getDimShape() != null)
+                            tipoArray.getDimShape().forEach(x -> vincula(x));
 
                         break;
                     default:

@@ -4,19 +4,23 @@ import ast.E.E;
 
 public class Case extends I{
     private E nombreCase;
-    private List<I> cuerpo_case;
-    public Case(E nombreCase, List<I> cuerpo_case, int fila, int columna) {
+    private List<I> cuerpoCase;
+    public Case(E nombreCase, List<I> cuerpoCase, int fila, int columna) {
         super(fila, columna);
         this.nombreCase = nombreCase;
-        this.cuerpo_case = cuerpo_case;
+        this.cuerpoCase = cuerpoCase;
         this.fila = fila;
         this.columna = columna;
+    }
+
+    public List<I> getCuerpoCase() {
+        return cuerpoCase;
     }
 
     @Override
     public String toString() {
         String aux = nombreCase.toString();
-        for(I ins : cuerpo_case) aux += ins;
+        for(I ins : cuerpoCase) aux += ins;
         return aux;
     }
 
