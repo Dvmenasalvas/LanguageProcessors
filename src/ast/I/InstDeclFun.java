@@ -23,6 +23,10 @@ public class InstDeclFun extends I{
         this.retorno = retorno;
     }
 
+    public List<TipoArgumento> getArgumentos() {
+        return argumentos;
+    }
+
     @Override
     public String toString() {
         String out;

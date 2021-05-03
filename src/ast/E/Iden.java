@@ -8,14 +8,36 @@ import java.util.List;
 public class Iden extends EFinal {
 	private String nombre;
 	private List<E> dimShape;
+	private Tipo tipoVariable;
+	private Sentencia referencia;
 
 	public Iden(String e1, List<E> dimShape,int fila,int columna) {
         super(fila,columna);
         this.nombre = e1;
         this.dimShape = dimShape;
-   }    
+   }
 
-   public TipoE tipoExpresion() {return TipoE.IDEN;}
+    public Sentencia getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(Sentencia referencia) {
+        this.referencia = referencia;
+    }
+
+    public Tipo getTipoVariable() {
+        return tipoVariable;
+    }
+
+    public void setTipoVariable(Tipo tipoVariable) {
+        this.tipoVariable = tipoVariable;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public TipoE tipoExpresion() {return TipoE.IDEN;}
 
     @Override
     public String toString() {
