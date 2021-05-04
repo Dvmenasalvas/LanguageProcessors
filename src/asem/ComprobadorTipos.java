@@ -28,7 +28,7 @@ public class ComprobadorTipos {
                 E iden = instruccionAsignacion.getIdentificador();
                 Tipo tipoOriginal = tipoExpresion(iden);
                 Tipo tipoAsignar = tipoExpresion(instruccionAsignacion.getValor());
-                if(tipoOriginal.tipoTipos() == tipoAsignar.tipoTipos()) {
+                if(tipoOriginal == null || tipoOriginal.tipoTipos() == tipoAsignar.tipoTipos()) {
                     return true;
                 }else {
                     GestionErrores.errorSemantico("Error de tipos en la asignación." +

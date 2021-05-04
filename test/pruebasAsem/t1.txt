@@ -1,40 +1,39 @@
-#Asignación sin declaración
-#aux = 0;
-
-#Asignacion con declaración
+#Asignación
+##Iden no declarado
+aux = 0;
+##Fallo de tipos
+int x;
+x = True;
+#Asignacion con declaración (sin error)
 int y = 0;
 y = 2;
-int z;
-z = 3;
-
-int[1] array1 = {10};
-
-
-#Fallo en asignación de tipos
-int w;
-w = False;
-
-int[1] array2 = 1;
-
+#Redefinir variable
+boolean y = x;
 #Cambiar constante
-const int x = 0;
-x = 1;
+const int z = 0;
+z = 1;
+
+#Llamada a procedimiento
+
+#int[1] array1 = {10};
+
+
+#int[1] array2 = 1;
+
 
 #Procedimiento no declarado
-manolo(x);
+#manolo(x);
 
 #Funcion no declarada
-int aux2 = func1(10);
+#int aux2 = func1(10);
 
 #Procedimiento declarado
-void masUno (int x) {
-    x = x + 1;
-}
-masUno(x);
+#void masUno (int x) {
+#    x = x + 1;
+#}
+#masUno(x);
 
 
 #Arrays
-int[4][5][t] myArray;
-int[4][5][x] otroArray;
-
-
+#int[4][5][t] myArray;
+#int[4][5][x] otroArray;
