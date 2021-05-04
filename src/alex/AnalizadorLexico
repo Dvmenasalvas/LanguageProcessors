@@ -105,7 +105,7 @@ puntoyComa = \;
 {const}                   {return ops.unidadConst();}
 {true}                    {return ops.unidadTrue();}
 {false}                   {return ops.unidadFalse();}
-{struct}				          {return ops.unidadStruct();}
+{struct}				  {return ops.unidadStruct();}
 {void}                    {return ops.unidadVoid();}
 {print}                   {return ops.unidadPrint();}
 {read}                    {return ops.unidadRead();}

@@ -20,7 +20,9 @@ public class AnalizadorSemantico {
 
     public boolean analizar(){
         tabla.abreBloque();
-        for(I  instruccion : programa) vincula(instruccion);
+        for(I  instruccion : programa) {
+            vincula(instruccion);
+        }
         tabla.cierraBloque();
 
         AtomicBoolean tiposCorrectos = new AtomicBoolean(true);

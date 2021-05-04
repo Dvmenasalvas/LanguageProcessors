@@ -1,11 +1,20 @@
 #Asignación sin declaración
-aux = 0;
+#aux = 0;
 
 #Asignacion con declaración
 int y = 0;
 y = 2;
 int z;
 z = 3;
+
+int[1] array1 = {10};
+
+
+#Fallo en asignación de tipos
+int w;
+w = False;
+
+int[1] array2 = 1;
 
 #Cambiar constante
 const int x = 0;
@@ -14,15 +23,18 @@ x = 1;
 #Procedimiento no declarado
 manolo(x);
 
+#Funcion no declarada
+int aux2 = func1(10);
+
 #Procedimiento declarado
 void masUno (int x) {
     x = x + 1;
 }
 masUno(x);
 
-int aux = func1(10);
+
 #Arrays
 int[4][5][t] myArray;
 int[4][5][x] otroArray;
 
-#If
+

@@ -3,7 +3,7 @@ package ast.T;
 import ast.E.E;
 import ast.E.Ent;
 import ast.E.Iden;
-import ast.I.EnumeradoInstrucciones;
+import ast.I.*;
 
 import java.util.List;
 
@@ -42,6 +42,12 @@ public class TipoArray extends Tipo{
 	}
 
 	public EnumeradoTipo tipoTipos() {
+		if(dimShape == null){
+			if(tipoBase instanceof TipoInt)
+				return EnumeradoTipo.INT;
+			else if(tipoBase instanceof TipoBoolean)
+				return EnumeradoTipo.BOOLEAN;
+		}
 		return EnumeradoTipo.ARRAY;
 	}
 
