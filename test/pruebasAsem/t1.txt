@@ -2,23 +2,23 @@
 #aux = 0;
 
 #Asignacion con declaración
-int y = 0;
-y = 2;
-int z;
-z = 3;
+#int y = 0;
+#y = 2;
+#int z;
+#z = 3;
 
-int[1] array1 = {10};
+#int[1] array1 = {10};
 
 
 #Fallo en asignación de tipos
-int w;
-w = False;
+#int w;
+#w = False;
 
-int[1] array2 = 1;
+#int[1] array2 = 1;
 
 #Cambiar constante
 const int x = 0;
-x = 1;
+#x = 1;
 
 #Procedimiento no declarado
 manolo(x);

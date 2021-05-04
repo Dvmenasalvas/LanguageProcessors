@@ -52,14 +52,16 @@ public class ComprobadorTipos {
                             instruccion.getFila(), instruccion.getColumna());
                 }
                 boolean correctArguments = true;
-                for(TipoArgumento argumento : declaracionFunc.getArgumentos()) {
-                    if(tipoExpresion(argumentos.get(i)).tipoTipos() != argumento.getTipo().tipoTipos()) {
-                        correctArguments = false;
-                        GestionErrores.errorSemantico("Error tipos. El par�metro n�mero " + i +
-                                " no concuerda con el tipo del atributo de la funci�n. Atributo: " +
-                                ((Iden)argumento.getArgumento()).getNombre(),instruccion.getFila(),instruccion.getColumna());
+                if(declaracionFunc != null ) {
+                    for (TipoArgumento argumento : declaracionFunc.getArgumentos()) {
+                        if (tipoExpresion(argumentos.get(i)).tipoTipos() != argumento.getTipo().tipoTipos()) {
+                            correctArguments = false;
+                            GestionErrores.errorSemantico("Error tipos. El parámetro número " + i +
+                                    " no concuerda con el tipo del atributo de la función. Atributo: " +
+                                    ((Iden) argumento.getArgumento()).getNombre(), instruccion.getFila(), instruccion.getColumna());
+                        }
+                        i++;
                     }
-                    i++;
                 }
                 if(correctArguments) return true;
                 break;
