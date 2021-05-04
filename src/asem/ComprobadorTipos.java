@@ -23,6 +23,7 @@ public class ComprobadorTipos {
                                         + identificador.getNombre() +
                                         " corresponde con una constante o una función por lo que no es modificable.",
                                 instruccion.getFila(), instruccion.getColumna());
+                        return false;
                     }
                 }
                 E iden = instruccionAsignacion.getIdentificador();
@@ -37,9 +38,8 @@ public class ComprobadorTipos {
                             " el valor " + instruccionAsignacion.getValor().toString() +
                             ".Tipos: " + tipoOriginal + " " +
                             tipoAsignar, instruccion.getFila(), instruccion.getColumna());
-
+                    return false;
                 }
-               break;
             case LLAMDADAPROC:
                 InstLlamadaVoid intruccionLlamadaFun  = (InstLlamadaVoid) instruccion;
                 InstDeclFun declaracionFunc = (InstDeclFun) intruccionLlamadaFun.getReferencia();
@@ -50,6 +50,7 @@ public class ComprobadorTipos {
                             "Error de tipos. El identificador de una función" +
                                     " tiene que ser de tipo iden",
                             instruccion.getFila(), instruccion.getColumna());
+                    return false;
                 }
                 boolean correctArguments = true;
                 if(declaracionFunc != null ) {
@@ -57,8 +58,9 @@ public class ComprobadorTipos {
                         if (tipoExpresion(argumentos.get(i)).tipoTipos() != argumento.getTipo().tipoTipos()) {
                             correctArguments = false;
                             GestionErrores.errorSemantico("Error tipos. El parámetro número " + i +
-                                    " no concuerda con el tipo del atributo de la función. Atributo: " +
+                                    " no concuerda con el tipo del atributo de la función. Argumento: " +
                                     ((Iden) argumento.getArgumento()).getNombre(), instruccion.getFila(), instruccion.getColumna());
+                            return false;
                         }
                         i++;
                     }
@@ -66,54 +68,46 @@ public class ComprobadorTipos {
                 if(correctArguments) return true;
                 break;
             case DECL:
-                /*
                 InstDecl instruccionDeclaracion = (InstDecl) instruccion;
                 if(instruccionDeclaracion.getIdentificador().tipoExpresion() == TipoE.IDEN) {
                     Tipo tipoDeclaracion = instruccionDeclaracion.getTipo();
                     boolean correct = true;
-                    if(instruccionDeclaracion.getExpresion() != null) {//Esta inicializada
-
+                    /*
+                    if(instruccionDeclaracion.getExpresion() != null) {
                         if(tipoDeclaracion.tipoTipos() == EnumeradoTipo.ARRAY) {
                             TipoArray tipo = (TipoArray)tipoDeclaracion;
-                            int numDimension = tamanoArray(tipo, instruccionDeclaracion);
+                            int numDimension = tipo.getDimShape().size();
 
-                            if(numDimension != instruccionDeclaracion.getValor().size()) {
-                                GestionErrores.errorSemantico("El n�mero de valores debe coincidir con el tama�o del vector",
-                                        instruccion.getFila(), instruccion.getColumna());
+                            if(tipo.getDimShape().get(0) != instruccionDeclaracion.getExpresion().size()) {
+                                GestionErrores.errorSemantico("El n�mero de valores debe coincidir con el tama�o del vector",sentencia.getFila(),sentencia.getColumna());
                             }
                             Tipo tipoValores = ((TipoArray)tipoDeclaracion).getTipoBase();
                             for(E valor : instruccionDeclaracion.getValor()) {
                                 Tipo aux = tiposExpresion(valor);
                                 if(!(((TipoArray)tipoDeclaracion).getTipoBase() instanceof TipoArray) && aux.tipoEnumerado() != ((TipoArray)tipoDeclaracion).getTipoBase().tipoEnumerado()) {
                                     correct = false;
-                                    GestionErrores.errorSemantico("Error tipos. El tipo de la declaraci�n no concuerda con su valor inicial. Intentando asignar al tipo " + tipoValores + " el tipo " + aux ,sentencia.getFila(),sentencia.getColumna());
+                                    GestionErroresTiny.errorSemantico("Error de tipos. El tipo de la declaraci�n no concuerda con su valor inicial. Intentando asignar al tipo " + tipoValores + " el tipo " + aux ,sentencia.getFila(),sentencia.getColumna());
                                     break;
                                 }
                             }
                         } else {
-                            E valor = instruccionDeclaracion.getExpresion().get(0);
-                            Tipo aux = tipoExpresion(valor);
-                            if(aux.tipoTipos() != tipoDeclaracion.tipoTipos()) {
-                                correct = false;
-                                GestionErrores.errorSemantico(
-                                        "Error tipos. El tipo de la declaración no concuerda con su valor inicial." +
-                                                " Asignando a " +
-                                                instruccionDeclaracion.getIdentificador().toString() +
-                                                " el valor " + valor.toString() + ". Con tipos " +
-                                                tipoDeclaracion + " y " + aux,
-                                        instruccion.getFila(), instruccion.getColumna());
-                            }
-                        }
+
+                     */
+                    E valor = instruccionDeclaracion.getExpresion().get(0);
+                    Tipo tipoValor = tipoExpresion(valor);
+                    if(tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
+                        correct = false;
+                        GestionErrores.errorSemantico("Error de tipos. " +
+                                "La declaración está mal tipada. Asigna a la variable: " +
+                                instruccionDeclaracion.getIdentificador() + ", el valor: " + valor +
+                                ". Tipo variable: " + tipoDeclaracion + ". " + tipoValor + "."
+                                ,instruccion.getFila(),instruccion.getColumna());
                     }
                     return correct;
                 }else {
-                    GestionErrores.errorSemantico(
-                            "Error de tipos. La variable tiene que ser" +
-                                    " necesariamente un identificador.",
-                            instruccion.getFila(), instruccion.getColumna());
+                    GestionErrores.errorSemantico("Error de tipos. La variable de una declaración " +
+                                    "tiene que ser necesariamente un identificador.", instruccion.getFila(),instruccion.getColumna());
                 }
-
-                 */
                 break;
             case DECLFUN:
                 InstDeclFun instruccionDeclaracionFuncion = (InstDeclFun) instruccion;
@@ -122,6 +116,7 @@ public class ComprobadorTipos {
                     GestionErrores.errorSemantico(
                             "Error: El identificador de la función no es un identificador",
                             instruccion.getFila(),instruccion.getColumna());
+                    return false;
                 }
                 if(instruccionDeclaracionFuncion.getTipo() != null)
                     tipoReturn = tipoExpresion(instruccionDeclaracionFuncion.getRetorno());
@@ -133,6 +128,7 @@ public class ComprobadorTipos {
                         GestionErrores.errorSemantico(
                                 "Error de tipos. El tipo del return no coincide con el de la función.",
                                 instruccion.getFila(),instruccion.getColumna());
+                        return false;
                     }
                     instruccionDeclaracionFuncion.getCuerpo().forEach(x -> {correcto.set(compruebaInstruccion(x) && correcto.get());});
                     if(instruccionDeclaracionFuncion.getTipo() != null)
@@ -142,8 +138,8 @@ public class ComprobadorTipos {
                     GestionErrores.errorSemantico(
                             "Error de tipos. El nombre de la funcion tiene que ser necesariamente un identificador.",
                             instruccion.getFila(),instruccion.getColumna());
+                    return false;
                 }
-                break;
 
             case IF:
                 InstIf instruccionIf = (InstIf) instruccion;
@@ -158,13 +154,14 @@ public class ComprobadorTipos {
                 }else {
                     GestionErrores.errorSemantico("Error de tipos. La condición del if no es un booleano",
                             instruccion.getFila(),instruccion.getColumna());
+                    return false;
                 }
-                break;
             case STRUCT:
                 InstStruct instruccionStruct = (InstStruct) instruccion;
                 if(!(instruccionStruct.getIdentificador() instanceof Iden)) {
                     GestionErrores.errorSemantico("Error de tipos. El identificador del struct no es un identificador.",
                             instruccion.getFila(),instruccion.getColumna());
+                    return false;
                 }
                 AtomicBoolean correcto = new AtomicBoolean(true);
                 instruccionStruct.getDeclaraciones().forEach(x -> {correcto.set(compruebaInstruccion(x) && correcto.get());});
@@ -177,12 +174,13 @@ public class ComprobadorTipos {
                 for(Case caso : instruccionSwitch.getCases()) {
                     if(!caso.getCuerpoCase().isEmpty()) {
                         if(caso.getCuerpoCase()!=null) {
-                            if(tipoCondicion.tipoTipos() != tipoExpresion(caso.getExpresion()).tipoTipos()) {
+                            if(tipoCondicion != null && !caso.isDefault() &&
+                                    tipoCondicion.tipoTipos() != tipoExpresion(caso.getExpresion()).tipoTipos()) {
                                 correct.set(false);
                                 GestionErrores.errorSemantico("Error de tipos. " +
                                         "El tipo del case no coincide con el de la variable del switch.",
                                         instruccion.getFila(), instruccion.getColumna());
-
+                                return false;
                             }
                         }
                         caso.getCuerpoCase().forEach(x -> {correct.set(compruebaInstruccion(x) && correct.get());});
@@ -200,8 +198,8 @@ public class ComprobadorTipos {
                     GestionErrores.errorSemantico(
                             "Error de tipos. La condición del while no es un booleano.",
                             instruccion.getFila(),instruccion.getColumna());
+                    return false;
                 }
-                break;
 
         }
         return true;

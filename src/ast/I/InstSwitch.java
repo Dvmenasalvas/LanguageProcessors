@@ -39,7 +39,7 @@ public class InstSwitch extends I{
         String aux = "{{Switch}{{Cond}" + condicion + "}";
 
         for (Case single_case : cases) {
-            aux += "{" + single_case + "}";
+            aux +=  single_case;
         }
         aux += "}";
 

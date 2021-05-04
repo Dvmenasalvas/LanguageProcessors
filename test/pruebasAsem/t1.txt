@@ -9,56 +9,69 @@ int y = 0;
 y = 2;
 #Redefinir variable
 boolean y = x;
-#Asignación sin declaración
-#aux = 0;
-
-#Asignacion con declaración
-#int y = 0;
-#y = 2;
-#int z;
-#z = 3;
-
-#int[1] array1 = {10};
-
-
-#Fallo en asignación de tipos
-#int w;
-#w = False;
-
-#int[1] array2 = 1;
-
 #Cambiar constante
 const int z = 0;
 z = 1;
 
 #Llamada a procedimiento
-
-#int[1] array1 = {10};
-
-
-#int[1] array2 = 1;
-
-const int x = 0;
-#x = 1;
-
-#Procedimiento no declarado
-manolo(x);
-
-#Funcion no declarada
-int aux2 = func1(10);
-
+##No declarado
+elMati(x);
 #Procedimiento declarado
 void masUno (int x) {
     x = x + 1;
 }
+boolean b;
 masUno(x);
+masUno(b);
 
+#Switch
+#Variable no declarada
+switch(manteca){
+default{
+    int e = 2;
+    }
+}
+#Case con mal tipo
+int manteca = 5;
+boolean a;
+switch(manteca){
+case 5{
+    int i = 4;
+}
+case True{
+    int i = 4;
+}
+default{
+    int e = 2;
+    }
+}
+
+#While
+while(5){}
+
+#Funciones
+##Funcion no declarada
+int aux2 = func1(10);
+
+#Mal tipo de return
+int myFuncion (int x) {
+    return False;
+}
+
+#Struct
+struct dani a;
+
+#If
+if (5) {}
+
+#Operaciones binarias
 
 #Arrays
-int[4][5][t] myArray;
-int[4][5][x] otroArray;
+#int[4][5][t] myArray;
+#int[4][5][x] otroArray;
 
-
+#int[1] array1 = {10};
+#int[1] array2 = 1;
 
 struct myStruct{
     int v;
