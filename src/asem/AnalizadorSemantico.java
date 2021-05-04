@@ -77,7 +77,7 @@ public class AnalizadorSemantico {
                     case DECLFUN:
                         InstDeclFun declaracionFun = (InstDeclFun) sentencia;
                         Tipo tipoFuncion = declaracionFun.getTipo();
-                        if(tipoFuncion != null) vincula(tipoFuncion); //Si es void no comprueba
+                        if(tipoFuncion != null) vincula(tipoFuncion);
                         Iden identificadorFuncion = (Iden)declaracionFun.getIdentificador();
                         tabla.insertaId(identificadorFuncion.getNombre(), declaracionFun);
                         identificadorFuncion.setConstante(true);
@@ -123,8 +123,8 @@ public class AnalizadorSemantico {
                         Sentencia referenciaVariableSwitch = tabla.getSentenciaDeclaracion(((Iden)instSwitch.getCondicion()).getNombre());
                         vincula((Iden)instSwitch.getCondicion());
                         if(referenciaVariableSwitch == null) {
-                            GestionErrores.errorSemantico("La variable " + ((Iden)instSwitch.getCondicion()).getNombre() +
-                                    " no ha sido declarada",sentencia.getFila(),sentencia.getColumna());
+                            GestionErrores.errorSemantico("La variable del switch no ha sido declarada. Nombre: " +
+                                            ((Iden)instSwitch.getCondicion()).getNombre(),sentencia.getFila(),sentencia.getColumna());
                         }else {
                             instSwitch.setReferenciaDeclaraciónVariable(referenciaVariableSwitch);
 
