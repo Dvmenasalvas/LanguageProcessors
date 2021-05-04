@@ -44,6 +44,18 @@ public class AnalizadorSemantico {
                         vincula(asignacion.getValor());
                         break;
 
+                    case DECL:
+                        InstDecl declaracion = (InstDecl) sentencia;
+                        Iden identificadorV = (Iden)declaracion.getIdentificador();
+                        identificadorV.setConstante(declaracion.isConstante());
+                        identificadorV.setReferencia(declaracion);
+                        identificadorV.setTipoVariable(declaracion.getTipo());
+                        vincula(declaracion.getTipo());
+                        tabla.insertaId(identificadorV.getNombre(), declaracion);
+                        List<E> valorInicial = declaracion.getExpresion();
+                        if(valorInicial != null) valorInicial.forEach(x -> vincula(x));
+                        break;
+
                     case LLAMDADAPROC:
                         InstLlamadaVoid llamadaVoid = (InstLlamadaVoid) sentencia;
                         Iden id  =(Iden)llamadaVoid.getNombre();
@@ -61,17 +73,6 @@ public class AnalizadorSemantico {
                         }
                         break;
 
-                    case DECL:
-                        InstDecl declaracion = (InstDecl) sentencia;
-                        Iden identificadorV = (Iden)declaracion.getIdentificador();
-                        identificadorV.setConstante(declaracion.isConstante());
-                        identificadorV.setReferencia(declaracion);
-                        identificadorV.setTipoVariable(declaracion.getTipo());
-                        vincula(declaracion.getTipo());
-                        tabla.insertaId(identificadorV.getNombre(), declaracion);
-                        List<E> valorInicial = declaracion.getExpresion();
-                        if(valorInicial != null) valorInicial.forEach(x -> vincula(x));
-                        break;
 
                     case DECLFUN:
                         InstDeclFun declaracionFun = (InstDeclFun) sentencia;

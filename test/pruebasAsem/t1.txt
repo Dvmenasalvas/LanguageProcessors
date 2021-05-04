@@ -1,3 +1,14 @@
+#Asignación
+##Iden no declarado
+aux = 0;
+##Fallo de tipos
+int x;
+x = True;
+#Asignacion con declaración (sin error)
+int y = 0;
+y = 2;
+#Redefinir variable
+boolean y = x;
 #Asignación sin declaración
 #aux = 0;
 
@@ -17,6 +28,16 @@
 #int[1] array2 = 1;
 
 #Cambiar constante
+const int z = 0;
+z = 1;
+
+#Llamada a procedimiento
+
+#int[1] array1 = {10};
+
+
+#int[1] array2 = 1;
+
 const int x = 0;
 #x = 1;
 
