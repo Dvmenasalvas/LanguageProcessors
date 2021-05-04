@@ -59,3 +59,15 @@ int[4][5][t] myArray;
 int[4][5][x] otroArray;
 
 
+
+struct myStruct{
+    int v;
+};
+
+
+struct myStruct hola;
+#hola.v = 10;
+
+#struct myStruct[10] pam;
+
+

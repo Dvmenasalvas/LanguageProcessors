@@ -114,7 +114,9 @@ public class AnalizadorSemantico {
                         InstStruct instStruct = (InstStruct) sentencia;
                         tabla.insertaId(((Iden) instStruct.getIdentificador()).getNombre(), instStruct);
                         tabla.abreBloque();
-                        instStruct.getDeclaraciones().forEach(x->vincula(x));
+                        for (I inst: instStruct.getDeclaraciones()){
+                            vincula(inst);
+                        }
                         tabla.cierraBloque();
                         break;
                     case SWITCH:
@@ -220,6 +222,7 @@ public class AnalizadorSemantico {
                 Tipo tipo = (Tipo) sentencia;
                 switch(tipo.tipoTipos()) {
                     case STRUCT:
+                        System.out.println(tipo.tipoTipos());
                         TipoStruct tipoStruct = (TipoStruct) tipo;
                         Sentencia referenciaSentencia =
                                 tabla.getSentenciaDeclaracion(((Iden) tipoStruct.getNombre()).getNombre());

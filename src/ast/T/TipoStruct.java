@@ -23,6 +23,10 @@ public class TipoStruct extends Tipo{
         return nombre;
     }
 
+    public Sentencia getReferenciaDeclaracion() {
+        return referenciaDeclaracion;
+    }
+
     public void setReferenciaDeclaracion(Sentencia referenciaDeclaracion) {
         this.referenciaDeclaracion = referenciaDeclaracion;
     }

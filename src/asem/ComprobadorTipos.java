@@ -332,6 +332,32 @@ public class ComprobadorTipos {
                             GestionErrores.errorSemantico("Error de tipos. Los tipos para la comparación no son enteros. Operandos: "
                                     + operando1.toString() + " y " + operando2.toString(), sentencia.getFila(), sentencia.getColumna());
                             break;
+                        case PUNTO:
+                            if(tipoOperando1.tipoTipos() == EnumeradoTipo.STRUCT){
+                                TipoStruct tipoStruct = (TipoStruct) tipoOperando1;
+                                InstStruct sentenciaStruct = (InstStruct) tipoStruct.getReferenciaDeclaracion();
+                                if(sentenciaStruct == null) {
+                                    GestionErrores.errorSemantico(
+                                            "No existe ningun struct con este nombre" + operando1
+                                                    , sentencia.getFila(), sentencia.getColumna());
+                                }
+                                else{
+                                    for(I instruccion : sentenciaStruct.getDeclaraciones()) {
+                                        if(instruccion instanceof InstDecl) {
+                                            Iden atributoStruct = (Iden)((InstDecl) instruccion).getIdentificador();
+                                            if(atributoStruct.getNombre() == ((Iden) operando2).getNombre()) {
+                                                return atributoStruct.getTipoVariable();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            GestionErrores.errorSemantico(
+                                    "Error de tipos. Operandos: " +
+                                            operando1.toString() + " y " +
+                                            operando2.toString(), sentencia.getFila(), sentencia.getColumna());
+
+                            break;
                         default:
                             break;
 
