@@ -257,6 +257,10 @@ Inst ::= InstPrint:ins
 InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
 {:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
 
+InstAsig ::= Exp0:id IGUAL:igual LLAVE_A ListVal:list LLAVE_C
+{:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
+
+
 InstAsig ::= error PUNTOCOMA
     {:System.err.println("Error en la asignación");:};
 

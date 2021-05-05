@@ -5,12 +5,12 @@ import ast.E.E;
 import java.util.List;
 
 public class InstStruct extends I{
-    private E identificador;
+    private E nombreTipo;
     private List<I> declaraciones;
 
-    public InstStruct(E identificador, List<I> declaraciones, int fila, int columna) {
+    public InstStruct(E nombreTipo, List<I> declaraciones, int fila, int columna) {
         super(fila, columna);
-        this.identificador = identificador;
+        this.nombreTipo = nombreTipo;
         this.declaraciones = declaraciones;
     }
 
@@ -19,7 +19,7 @@ public class InstStruct extends I{
     }
 
     public E getIdentificador() {
-        return identificador;
+        return nombreTipo;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class InstStruct extends I{
 
     @Override
     public String toString() {
-        String aux = "{{I: Declaracion}" + identificador;
+        String aux = "{{I: Declaracion}" + nombreTipo;
         for(I ins : declaraciones) aux += ins;
         return aux + "}";
     }

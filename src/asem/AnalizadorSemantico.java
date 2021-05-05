@@ -222,8 +222,11 @@ public class AnalizadorSemantico {
                 Tipo tipo = (Tipo) sentencia;
                 switch(tipo.tipoTipos()) {
                     case STRUCT:
-                        System.out.println(tipo.tipoTipos());
+                        System.out.println(sentencia);
+                        System.out.println(tipo.toString());
                         TipoStruct tipoStruct = (TipoStruct) tipo;
+                        //Sentencia referenciaSentencia =
+                          //      tabla.getSentenciaDeclaracion((Iden) tipo)
                         Sentencia referenciaSentencia =
                                 tabla.getSentenciaDeclaracion(((Iden) tipoStruct.getNombre()).getNombre());
                         if(referenciaSentencia == null) {
@@ -245,7 +248,8 @@ public class AnalizadorSemantico {
                         break;
                 }
                 break;
-
+            default:
+                break;
         }
     }
 }

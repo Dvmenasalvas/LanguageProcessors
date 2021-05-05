@@ -77,7 +77,7 @@ public class AS {
   public I instPrint(E exp, int fila, int columna){return new InstPrint(exp, fila, columna);}
 
   public I instDecl(TipoArray tipo, E iden, List<E> expr,Boolean constante, int fila, int columna) {return new InstDecl(tipo, iden, expr, constante, fila, columna);}
-  public I instStruct(E nombre, List<I> lista, int fila, int columna) {return new InstStruct(nombre, lista, fila, columna);}
+  public I instStruct(E nombreTipo, List<I> lista, int fila, int columna) {return new InstStruct(nombreTipo, lista, fila, columna);}
 
 
   //Tipo

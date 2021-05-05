@@ -2,18 +2,20 @@ package ast.I;
 
 import ast.E.E;
 
+import java.util.List;
+
 public class InstAsignacion extends I {
     private E identificador;
-    private E valor;
+    private List<E> valores;
 
-    public InstAsignacion(E iden, E valor,int fila,int columna) {
+    public InstAsignacion(E iden, List<E> valores, int fila,int columna) {
         super(fila,columna);
         this.identificador = iden;
-        this.valor = valor;
+        this.valores = valores;
     }
 
-    public E getValor() {
-        return valor;
+    public List<E> getValor() {
+        return valores;
     }
 
     public E getIdentificador() {
@@ -24,6 +26,8 @@ public class InstAsignacion extends I {
 
     @Override
     public String toString() {
-        return  "{{Asignacion}" + identificador.toString() + valor.toString() + "}";
+        String aux = "{{Asignacion}";
+        for(E valor : valores) aux += valor;
+        return aux + "}";
     }
 }
