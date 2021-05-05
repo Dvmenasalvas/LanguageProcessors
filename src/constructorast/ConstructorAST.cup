@@ -52,7 +52,7 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDe
 
 //Listas
 non terminal List<I> Start, ListDecl;
-non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ListVal, Corchetes1, Corchetes;
+non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ValoresAsig, ListVal, Corchetes1, Corchetes;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
 non terminal List<Case> ListaCase;
 
@@ -254,11 +254,20 @@ Inst ::= InstPrint:ins
     {:RESULT = ins;:};
 
 //4.2) Instruccion asignacion
-InstAsig ::= Exp0:id IGUAL:igual Exp0:valor PUNTOCOMA
-{:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
+InstAsig ::= Exp0:id IGUAL:igual ValoresAsig:list PUNTOCOMA
+{:RESULT = as.instAsignacion(id, list, igual.getFila(), igual.getColumna());:};
 
-InstAsig ::= Exp0:id IGUAL:igual LLAVE_A ListVal:list LLAVE_C
-{:RESULT = as.instAsignacion(id, valor, igual.getFila(), igual.getColumna());:};
+//InstAsig ::= Exp0:id IGUAL:igual LLAVE_A ValoresAsig:list LLAVE_C PUNTOCOMA
+//{:RESULT = as.instAsignacion(id, list, igual.getFila(), igual.getColumna());:};
+
+
+//Solo soporta una dimension
+ValoresAsig ::= Exp0:val
+{: List<E> list = new ArrayList<E>(); list.add(0, val); RESULT = list;:};
+ValoresAsig   ::= LLAVE_A LLAVE_C
+{: List<E> list = new ArrayList<E>(); RESULT = list;:};
+ValoresAsig   ::= LLAVE_A ListVal:list LLAVE_C
+{:RESULT = list;:};
 
 
 InstAsig ::= error PUNTOCOMA

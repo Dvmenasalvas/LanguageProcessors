@@ -90,17 +90,17 @@ int[2] myArray;
 int[4][5] myArray1;
 #int[4][5][x] otroArray;
 
-myArray = {1, 2};
+myArray = {1, 1};
+
+
 
 
 #Struct
 
 #struct dani a;
-
 struct myStruct{
     int v;
 };
-
 
 #struct myStruct hola;
 #hola.v = 10;

@@ -17,6 +17,8 @@ public class ComprobadorTipos {
                 InstAsignacion instruccionAsignacion = (InstAsignacion) instruccion;
                 if(instruccionAsignacion.getIdentificador() instanceof Iden) {
                     Iden identificador = (Iden) instruccionAsignacion.getIdentificador();
+
+
                     if (identificador.getConstante()) {
                         GestionErrores.errorSemantico(
                                 "Error de tipos. El identificador "
@@ -26,19 +28,91 @@ public class ComprobadorTipos {
                         return false;
                     }
                     E iden = instruccionAsignacion.getIdentificador();
-                    Tipo tipoOriginal = tipoExpresion(iden);
-                    Tipo tipoAsignar = tipoExpresion(instruccionAsignacion.getValor());
-                    if (tipoOriginal == null || tipoOriginal.tipoTipos() == tipoAsignar.tipoTipos()) {
-                        return true;
-                    } else {
-                        GestionErrores.errorSemantico("Error de tipos en la asignación." +
-                                " Los tipos no coinciden. Intentando asignar a " +
-                                iden.toString() +
-                                " el valor " + instruccionAsignacion.getValor().toString() +
-                                ".Tipos: " + tipoOriginal + " " +
-                                tipoAsignar, instruccion.getFila(), instruccion.getColumna());
-                        return false;
+                    Tipo tipoOriginal = tipoExpresion(instruccionAsignacion.getIdentificador());
+                    Tipo tipoAsignar;
+
+                    EnumeradoTipo tipoBaseElemento = null;
+                    TipoArray tipoArray = null;
+                    if (tipoOriginal != null && tipoOriginal.tipoTipos() == EnumeradoTipo.ARRAY) {
+                        tipoArray = (TipoArray) tipoOriginal;
+                        tipoBaseElemento = tipoArray.getTipoBase().tipoTipos();
+
+                        EnumeradoTipo tipoBaseArray = tipoArray.getTipoBase().tipoTipos();
+
+
+                        int primeraDim = Integer.parseInt(((Ent) tipoArray.getDimShape().get(0)).valor());
+                        if (primeraDim != instruccionAsignacion.getValor().size()){
+                            GestionErrores.errorSemantico("Error de tipos. Debe haber tantos valores como se indica en la " +
+                                            "primera dimensión del vector. Dimensión indicada: " + primeraDim +
+                                            ", dimensión recibida: " + instruccionAsignacion.getValor().size(),
+                                    instruccion.getFila(),instruccion.getColumna());
+                        }
+
+
+                        if (tipoArray.getDimShape().size() == 1) {
+                            for (E val: instruccionAsignacion.getValor()) {
+                                EnumeradoTipo tipoElemento = tipoExpresion(val).tipoTipos();
+                                tipoBaseElemento = tipoArray.getTipoBase().tipoTipos();
+                                if (tipoBaseArray != tipoElemento) {
+                                    GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de tipo " +
+                                                    tipoBaseArray + " con el elemento " + val +
+                                                    " de tipo " + tipoElemento + ".",
+                                            instruccion.getFila(), instruccion.getColumna());
+                                }
+                            }
+                        }
+                        //Arrays varias dims
+                        else {
+                            for (E val : instruccionAsignacion.getValor()) {
+                                EnumeradoTipo tipoElemento = tipoExpresion(val).tipoTipos();
+                                if (tipoExpresion(val).tipoTipos() == EnumeradoTipo.ARRAY) {
+                                    TipoArray tipoElementoArray = (TipoArray) tipoExpresion(val);
+                                    EnumeradoTipo tipoBaseElemento2 = tipoElementoArray.getTipoBase().tipoTipos();
+
+
+                                    if (tipoBaseElemento != tipoBaseElemento2) {
+                                        GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de tipo " +
+                                                tipoBaseElemento + " con el array " + val +
+                                                " de tipo " + tipoBaseElemento2 + ".", instruccion.getFila(), instruccion.getColumna());
+                                        return false;
+                                    }
+
+                                    int dimArray = tipoArray.getDimShape().size();
+                                    int dimElemento = tipoElementoArray.getDimShape().size();
+                                    int dimArrayMenosUno = dimArray - 1;
+                                    if (dimArrayMenosUno != dimElemento) {
+                                        GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de " +
+                                                        dimArray + " dimensiones con el array " + val +
+                                                        " de dimensión " + dimElemento + ". La dimensión de " + val + " debería ser " +
+                                                        dimArrayMenosUno + ".",
+                                                instruccion.getFila(), instruccion.getColumna());
+                                        return false;
+                                    }
+                                    //Comprobamos que las dimensiones sean iguales una a una
+                                    for (int j = 1; j < dimArray; j++) {
+                                        int dimA = Integer.parseInt(((Ent) tipoArray.getDimShape().get(j)).valor());
+                                        int dimB = Integer.parseInt(((Ent) tipoElementoArray.getDimShape().get(j - 1)).valor());
+                                        if (dimA != dimB) {
+                                            GestionErrores.errorSemantico("Error de tipos. Al formar el array " +
+                                                            instruccionAsignacion.getIdentificador() + " con el elemento "
+                                                            + val + ". No encaja la dimensión número " + j
+                                                            + " del array (" + dimA + ") con la del elemento (" +
+                                                            dimB + ").",
+                                                    instruccion.getFila(), instruccion.getColumna());
+                                            return false;
+                                        }
+                                    }
+                                } else {
+                                    GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array " +
+                                                    "multidimensional " + instruccionAsignacion.getIdentificador() +
+                                                    " con el elemento " + val + " de tipo " + tipoElemento + " (no array).",
+                                            instruccion.getFila(),instruccion.getColumna());
+                                    return false;
+                                }
+                            }
+                        }
                     }
+                    return true;
                 } else {
                     GestionErrores.errorSemantico(
                             "Error de tipos. Una asignación debe comenzar con un identificador.",
@@ -120,6 +194,7 @@ public class ComprobadorTipos {
                                                            tipoBaseArray + " con el array " + elemento +
                                                            " de tipo " + tipoBaseElemento + ".",
                                                    instruccion.getFila(),instruccion.getColumna());
+                                           return false;
                                        }
                                        int dimArray = tipoArray.getDimShape().size();
                                        int dimElemento = tipoElementoArray.getDimShape().size();
@@ -130,6 +205,7 @@ public class ComprobadorTipos {
                                                            " de dimensión " + dimElemento + ". La dimensión de " + elemento + " debería ser " +
                                                     dimArrayMenosUno + ".",
                                                    instruccion.getFila(),instruccion.getColumna());
+                                           return false;
                                        }
                                        //Comprobamos que las dimensiones sean iguales una a una
                                        for(int j = 1; j < dimArray; j++){
@@ -141,6 +217,7 @@ public class ComprobadorTipos {
                                                                ". No encaja la dimensión número " + j + " del array (" + dimA + ") con la del elemento (" +
                                                                dimB + ").",
                                                        instruccion.getFila(),instruccion.getColumna());
+                                               return false;
                                            }
                                        }
                                    } else {
@@ -148,6 +225,7 @@ public class ComprobadorTipos {
                                                        "multidimensional " + instruccionDeclaracion.getIdentificador() +
                                                        " con el elemento " + elemento + " de tipo " + tipoElemento + " (no array).",
                                                instruccion.getFila(),instruccion.getColumna());
+                                       return false;
                                    }
                                }
 

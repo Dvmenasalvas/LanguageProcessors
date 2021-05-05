@@ -62,7 +62,7 @@ public class AS {
 
   //Instrucciones
   public I instIf(E condicion, List<I> cuerpo_if, List<I> cuerpo_else, int fila, int columna) {return new InstIf(condicion, cuerpo_if, cuerpo_else,fila,columna);}
-  public I instAsignacion(E iden, E valor,int fila,int columna) {return new InstAsignacion(iden, valor,fila,columna);};
+  public I instAsignacion(E iden, List<E> valores, int fila,int columna) {return new InstAsignacion(iden, valores,fila,columna);};
   public I instWhile(E cond, List<I> cuerpo, int fila, int columna) {
     return new InstWhile(cond, cuerpo, fila, columna);
   }
