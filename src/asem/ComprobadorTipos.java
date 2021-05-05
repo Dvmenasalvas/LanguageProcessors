@@ -17,7 +17,7 @@ public class ComprobadorTipos {
                 InstAsignacion instruccionAsignacion = (InstAsignacion) instruccion;
                 if(instruccionAsignacion.getIdentificador() instanceof Iden) {
                     Iden identificador = (Iden) instruccionAsignacion.getIdentificador();
-                    if(identificador.getConstante()) {
+                    if (identificador.getConstante()) {
                         GestionErrores.errorSemantico(
                                 "Error de tipos. El identificador "
                                         + identificador.getNombre() +
@@ -25,20 +25,24 @@ public class ComprobadorTipos {
                                 instruccion.getFila(), instruccion.getColumna());
                         return false;
                     }
-                }
-                E iden = instruccionAsignacion.getIdentificador();
-                Tipo tipoOriginal = tipoExpresion(iden);
-                Tipo tipoAsignar = tipoExpresion(instruccionAsignacion.getValor());
-                if(tipoOriginal == null || tipoOriginal.tipoTipos() == tipoAsignar.tipoTipos()) {
-                    return true;
-                }else {
-                    GestionErrores.errorSemantico("Error de tipos en la asignación." +
-                            " Los tipos no coinciden. Intentando asignar a " +
-                            iden.toString() +
-                            " el valor " + instruccionAsignacion.getValor().toString() +
-                            ".Tipos: " + tipoOriginal + " " +
-                            tipoAsignar, instruccion.getFila(), instruccion.getColumna());
-                    return false;
+                    E iden = instruccionAsignacion.getIdentificador();
+                    Tipo tipoOriginal = tipoExpresion(iden);
+                    Tipo tipoAsignar = tipoExpresion(instruccionAsignacion.getValor());
+                    if (tipoOriginal == null || tipoOriginal.tipoTipos() == tipoAsignar.tipoTipos()) {
+                        return true;
+                    } else {
+                        GestionErrores.errorSemantico("Error de tipos en la asignación." +
+                                " Los tipos no coinciden. Intentando asignar a " +
+                                iden.toString() +
+                                " el valor " + instruccionAsignacion.getValor().toString() +
+                                ".Tipos: " + tipoOriginal + " " +
+                                tipoAsignar, instruccion.getFila(), instruccion.getColumna());
+                        return false;
+                    }
+                } else {
+                    GestionErrores.errorSemantico(
+                            "Error de tipos. Una asignación debe comenzar con un identificador.",
+                            instruccion.getFila(), instruccion.getColumna());
                 }
             case LLAMDADAPROC:
                 InstLlamadaVoid intruccionLlamadaFun  = (InstLlamadaVoid) instruccion;
@@ -72,38 +76,96 @@ public class ComprobadorTipos {
                 if(instruccionDeclaracion.getIdentificador().tipoExpresion() == TipoE.IDEN) {
                     Tipo tipoDeclaracion = instruccionDeclaracion.getTipo();
                     boolean correct = true;
-                    /*
-                    if(instruccionDeclaracion.getExpresion() != null) {
-                        if(tipoDeclaracion.tipoTipos() == EnumeradoTipo.ARRAY) {
-                            TipoArray tipo = (TipoArray)tipoDeclaracion;
-                            int numDimension = tipo.getDimShape().size();
-
-                            if(tipo.getDimShape().get(0) != instruccionDeclaracion.getExpresion().size()) {
-                                GestionErrores.errorSemantico("El n�mero de valores debe coincidir con el tama�o del vector",sentencia.getFila(),sentencia.getColumna());
+                    if(tipoDeclaracion.tipoTipos() == EnumeradoTipo.ARRAY) {
+                        TipoArray tipoArray = (TipoArray) tipoDeclaracion;
+                        for (E dimExp : tipoArray.getDimShape()) {
+                            if (!(dimExp instanceof Ent)) {
+                                GestionErrores.errorSemantico("La dimension de los arrays debe ser indicada con un entero." +
+                                                " No se permiten identificadores u otras expresiones: " + dimExp,
+                                        instruccion.getFila(), instruccion.getColumna());
                             }
-                            Tipo tipoValores = ((TipoArray)tipoDeclaracion).getTipoBase();
-                            for(E valor : instruccionDeclaracion.getValor()) {
-                                Tipo aux = tiposExpresion(valor);
-                                if(!(((TipoArray)tipoDeclaracion).getTipoBase() instanceof TipoArray) && aux.tipoEnumerado() != ((TipoArray)tipoDeclaracion).getTipoBase().tipoEnumerado()) {
-                                    correct = false;
-                                    GestionErroresTiny.errorSemantico("Error de tipos. El tipo de la declaraci�n no concuerda con su valor inicial. Intentando asignar al tipo " + tipoValores + " el tipo " + aux ,sentencia.getFila(),sentencia.getColumna());
-                                    break;
-                                }
-                            }
-                        } else {
-
-                     */
-                    E valor = instruccionDeclaracion.getExpresion().get(0);
-                    Tipo tipoValor = tipoExpresion(valor);
-                    if(tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
-                        correct = false;
-                        GestionErrores.errorSemantico("Error de tipos. " +
-                                "La declaración está mal tipada. Asigna a la variable: " +
-                                instruccionDeclaracion.getIdentificador() + ", el valor: " + valor +
-                                ". Tipo variable: " + tipoDeclaracion + ". " + tipoValor + "."
-                                ,instruccion.getFila(),instruccion.getColumna());
+                        }
                     }
-                    return correct;
+                    if(instruccionDeclaracion.getExpresiones() != null) {
+                        if(tipoDeclaracion.tipoTipos() == EnumeradoTipo.ARRAY) {
+                           TipoArray tipoArray = (TipoArray)tipoDeclaracion;
+                           int primeraDim = Integer.parseInt(((Ent) tipoArray.getDimShape().get(0)).valor());
+                           if (primeraDim != instruccionDeclaracion.getExpresiones().size()){
+                               GestionErrores.errorSemantico("Error de tipos. Debe haber tantos valores como se indica en la " +
+                                               "primera dimensión del vector. Dimensión indicada: " + primeraDim +
+                                       ", dimensión recibida: " + instruccionDeclaracion.getExpresiones().size(),
+                                       instruccion.getFila(),instruccion.getColumna());
+                           }
+                           EnumeradoTipo tipoBaseArray = tipoArray.getTipoBase().tipoTipos();
+                           //Array de 1 dimensión
+                           if (tipoArray.getDimShape().size() == 1){
+                               for (E elemento: instruccionDeclaracion.getExpresiones()){
+                                   EnumeradoTipo tipoElemento = tipoExpresion(elemento).tipoTipos();
+                                   if (tipoBaseArray != tipoElemento){
+                                       GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de tipo " +
+                                                       tipoBaseArray + " con el elemento " + elemento +
+                                                        " de tipo " + tipoElemento + ".",
+                                               instruccion.getFila(),instruccion.getColumna());
+                                   }
+                               }
+                           //Array de varias dimensiones
+                           } else {
+                               for (E elemento: instruccionDeclaracion.getExpresiones()){
+                                   EnumeradoTipo tipoElemento = tipoExpresion(elemento).tipoTipos();
+                                   if (tipoExpresion(elemento).tipoTipos() == EnumeradoTipo.ARRAY){
+                                       TipoArray tipoElementoArray = (TipoArray) tipoExpresion(elemento);
+                                       EnumeradoTipo tipoBaseElemento = tipoElementoArray.getTipoBase().tipoTipos();
+                                       if (tipoBaseArray != tipoBaseElemento){
+                                           GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de tipo " +
+                                                           tipoBaseArray + " con el array " + elemento +
+                                                           " de tipo " + tipoBaseElemento + ".",
+                                                   instruccion.getFila(),instruccion.getColumna());
+                                       }
+                                       int dimArray = tipoArray.getDimShape().size();
+                                       int dimElemento = tipoElementoArray.getDimShape().size();
+                                       int dimArrayMenosUno = dimArray - 1;
+                                       if (dimArrayMenosUno != dimElemento){
+                                           GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de " +
+                                                           dimArray + " dimensiones con el array " + elemento +
+                                                           " de dimensión " + dimElemento + ". La dimensión de " + elemento + " debería ser " +
+                                                    dimArrayMenosUno + ".",
+                                                   instruccion.getFila(),instruccion.getColumna());
+                                       }
+                                       //Comprobamos que las dimensiones sean iguales una a una
+                                       for(int j = 1; j < dimArray; j++){
+                                           int dimA = Integer.parseInt(((Ent)tipoArray.getDimShape().get(j)).valor());
+                                           int dimB = Integer.parseInt(((Ent)tipoElementoArray.getDimShape().get(j - 1)).valor());
+                                           if(dimA != dimB){
+                                               GestionErrores.errorSemantico("Error de tipos. Al formar el array " +
+                                                               instruccionDeclaracion.getIdentificador()+ " con el elemento " + elemento +
+                                                               ". No encaja la dimensión número " + j + " del array (" + dimA + ") con la del elemento (" +
+                                                               dimB + ").",
+                                                       instruccion.getFila(),instruccion.getColumna());
+                                           }
+                                       }
+                                   } else {
+                                       GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array " +
+                                                       "multidimensional " + instruccionDeclaracion.getIdentificador() +
+                                                       " con el elemento " + elemento + " de tipo " + tipoElemento + " (no array).",
+                                               instruccion.getFila(),instruccion.getColumna());
+                                   }
+                               }
+
+                           }
+                        } else {
+                            E valor = instruccionDeclaracion.getExpresiones().get(0);
+                            Tipo tipoValor = tipoExpresion(valor);
+                            if (tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
+                                correct = false;
+                                GestionErrores.errorSemantico("Error de tipos. " +
+                                                "La declaración está mal tipada. Asigna a la variable: " +
+                                                instruccionDeclaracion.getIdentificador() + ", el valor: " + valor +
+                                                ". Tipo variable: " + tipoDeclaracion + ". " + tipoValor + "."
+                                        , instruccion.getFila(), instruccion.getColumna());
+                            }
+                        }
+                        return correct;
+                    }
                 }else {
                     GestionErrores.errorSemantico("Error de tipos. La variable de una declaración " +
                                     "tiene que ser necesariamente un identificador.", instruccion.getFila(),instruccion.getColumna());
@@ -230,24 +292,26 @@ public class ComprobadorTipos {
                         InstDeclFun declaracionFuncion = (InstDeclFun) llamada.getReferenciaDeclaracion();
                         int i = 0;
                         boolean coincidenTipos = true;
-                        if (tiposLlamada.size() == declaracionFuncion.getArgumentos().size()) {
-                            for (TipoArgumento atributo : declaracionFuncion.getArgumentos()) {
-                                if (atributo.getTipo().tipoTipos() != tiposLlamada.get(i).tipoTipos()) {
-                                    coincidenTipos = false;
-                                    GestionErrores.errorSemantico(
-                                            "Error de tipos. El tipo del parámetro número " + i +
-                                            " no es correcto (no coincide con su argumento)." +
-                                            ((Iden) atributo.getArgumento()).getNombre(),
-                                            sentencia.getFila(), sentencia.getColumna());
+                        if (declaracionFuncion != null) {
+                            if (tiposLlamada.size() == declaracionFuncion.getArgumentos().size()) {
+                                for (TipoArgumento atributo : declaracionFuncion.getArgumentos()) {
+                                    if (atributo.getTipo().tipoTipos() != tiposLlamada.get(i).tipoTipos()) {
+                                        coincidenTipos = false;
+                                        GestionErrores.errorSemantico(
+                                                "Error de tipos. El tipo del parámetro número " + i +
+                                                        " no es correcto (no coincide con su argumento)." +
+                                                        ((Iden) atributo.getArgumento()).getNombre(),
+                                                sentencia.getFila(), sentencia.getColumna());
+                                    }
+                                    i++;
                                 }
-                                i++;
+                                if (coincidenTipos) {
+                                    return llamada.getTipoReturn();
+                                }
+                            } else {
+                                GestionErrores.errorSemantico("No hay el mismo número de atributos que de parámetros.",
+                                        sentencia.getFila(), sentencia.getColumna());
                             }
-                            if (coincidenTipos) {
-                                return llamada.getTipoReturn();
-                            }
-                        } else {
-                            GestionErrores.errorSemantico("No hay el mismo número de atributos que de parámetros.",
-                                    sentencia.getFila(), sentencia.getColumna());
                         }
                         break;
                     case IDEN:

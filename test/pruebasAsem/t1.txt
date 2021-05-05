@@ -77,6 +77,8 @@ int myFuncion (int x) {
 }
 
 
+#Struct
+#struct dani a;
 
 #If
 if (5) {}
