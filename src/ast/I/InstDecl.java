@@ -39,9 +39,9 @@ public class InstDecl extends I{
 
     @Override
     public String toString() {
-        String out = "{{I: Declaracion}";
-        if(constante) out += "{Const}";
-        out += "{" + tipoVariable + "}" + identificador;
+        String out = "{{I: Declaracion";
+        if(constante) out += " Const ";
+        out += "}" + tipoVariable + identificador;
 
         if(expresiones != null) {
             out += "{{Inicializacion}";

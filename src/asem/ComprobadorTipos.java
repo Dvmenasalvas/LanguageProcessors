@@ -34,16 +34,30 @@ public class ComprobadorTipos {
                         GestionErrores.errorSemantico("Error de tipos en la asignación." +
                                 " Los tipos no coinciden. Intentando asignar a " +
                                 iden.toString() +
-                                " el valor " + instruccionAsignacion.getValor().toString() +
+                                " el valor " + instruccionAsignacion.getValor() +
                                 ".Tipos: " + tipoOriginal + " " +
                                 tipoAsignar, instruccion.getFila(), instruccion.getColumna());
                         return false;
                     }
-                } else {
+                } else if (instruccionAsignacion.getIdentificador() instanceof AccederStruct){
+                    AccederStruct accesoStruct = (AccederStruct) instruccionAsignacion.getIdentificador();
+                    Tipo tipoAsignar = tipoExpresion(instruccionAsignacion.getValor());
+                    if (accesoStruct.getTipoReferencia() != null && accesoStruct.getTipoReferencia().tipoTipos() != tipoAsignar.tipoTipos()){
+                        GestionErrores.errorSemantico("Error de tipos en la asignación." +
+                                " Los tipos no coinciden. Intentando asignar al campo " + accesoStruct.getCampo() +
+                                " del struct " + accesoStruct.getStruct() +
+                                " el valor " + instruccionAsignacion.getValor() +
+                                ".Tipo del campo: " + accesoStruct.getTipoReferencia() + ", tipo asignado: " +
+                                tipoAsignar, instruccion.getFila(), instruccion.getColumna());
+                        return false;
+                    }
+                }
+                else {
                     GestionErrores.errorSemantico(
-                            "Error de tipos. Una asignación debe comenzar con un identificador.",
+                            "Error de tipos. Una asignación debe comenzar con un identificador o una referencia al campo de un struct.",
                             instruccion.getFila(), instruccion.getColumna());
                 }
+                break;
             case LLAMDADAPROC:
                 InstLlamadaVoid intruccionLlamadaFun  = (InstLlamadaVoid) instruccion;
                 InstDeclFun declaracionFunc = (InstDeclFun) intruccionLlamadaFun.getReferencia();
@@ -228,7 +242,6 @@ public class ComprobadorTipos {
                 AtomicBoolean correcto = new AtomicBoolean(true);
                 instruccionStruct.getDeclaraciones().forEach(x -> {correcto.set(compruebaInstruccion(x) && correcto.get());});
                 return correcto.get();
-
             case SWITCH:
                 InstSwitch instruccionSwitch = (InstSwitch) instruccion;
                 Tipo tipoCondicion = tipoExpresion(instruccionSwitch.getCondicion());

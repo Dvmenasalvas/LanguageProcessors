@@ -72,5 +72,15 @@ public class Iden extends EFinal {
 	    return nombre;
     }
 
+    public boolean igual(Iden i){
+	    boolean out = this.nombre.equals(i.nombre)  && tipoVariable.tipoTipos() == i.tipoVariable.tipoTipos() &&
+                this.constante == i.constante && dimShape.size() == i.dimShape.size();
+	    if (out){
+	        for (int j = 0; j < dimShape.size(); j++){
+	            out = out && ((Ent)dimShape.get(j)).valor() == ((Ent)i.dimShape.get(j)).valor();
+            }
+        }
+	    return out;
+    }
 
 }

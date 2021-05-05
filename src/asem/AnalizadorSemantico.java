@@ -185,7 +185,7 @@ public class AnalizadorSemantico {
                         }else if(declaracion == null) {
                                 GestionErrores.errorSemantico("El identificador " + identificador.getNombre() +
                                         " no ha sido declarado.",sentencia.getFila(),sentencia.getColumna());
-                        //Tipo base
+                        //Declarando
                         }else if(declaracion instanceof InstDecl) {
                                     tabla.addTipoVariable(identificador.getNombre(), ((InstDecl)declaracion).getTipo());
                                     identificador.setTipoVariable(((InstDecl)declaracion).getTipo());
@@ -211,6 +211,36 @@ public class AnalizadorSemantico {
                         Not expNot = (Not) expresion;
                         vincula(expNot.getOpnd1());
                         break;
+                    case PUNTO:
+                        AccederStruct expAccederStruct= (AccederStruct) expresion;
+                        if (expAccederStruct.getStruct() instanceof Iden && expAccederStruct.getCampo() instanceof  Iden){
+                            Iden struct = (Iden) expAccederStruct.getStruct();
+                            Sentencia declaracionInstanciaStruct = tabla.getSentenciaDeclaracion(struct.getNombre());
+                            if (declaracionInstanciaStruct == null) {
+                                GestionErrores.errorSemantico("Llamada a struct " +
+                                        struct.getNombre() +
+                                        " no existente.",sentencia.getFila(),sentencia.getColumna());
+                            } else if (declaracionInstanciaStruct instanceof InstDecl &&
+                                    ((InstDecl) declaracionInstanciaStruct).getTipo().tipoTipos() == EnumeradoTipo.STRUCT){
+                                Sentencia declaracionStruct = tabla.getSentenciaDeclaracion(
+                                                ((Iden)((TipoStruct)((InstDecl) declaracionInstanciaStruct).getTipo().getTipoBase()).getNombre()).getNombre());
+                                expAccederStruct.setDeclaracion(declaracionStruct);
+                                String nombreCampo = ((Iden) expAccederStruct.getCampo()).getNombre();
+                                if (!((InstStruct) declaracionStruct).getCampos().containsKey(nombreCampo)){
+                                    GestionErrores.errorSemantico("Se ha llamado al campo " + nombreCampo + " no existente en" +
+                                                    " el struct " +  struct.getNombre() + "."
+                                            ,sentencia.getFila(),sentencia.getColumna());
+                                }
+                                expAccederStruct.setTipoReferencia(((InstStruct) declaracionStruct).getCampos().get(nombreCampo));
+                            } else {
+                                System.out.print(declaracionInstanciaStruct);
+                                GestionErrores.errorSemantico("Se ha usado terminología para llamar a un struct con un identificador: " +
+                                        struct.getNombre() +
+                                        " que no ha sido asignado a un struct, si no a " + struct.getTipoVariable() + "."
+                                        ,sentencia.getFila(),sentencia.getColumna());
+                            }
+                        }
+
                     default:
                         break;
                 }
@@ -220,7 +250,7 @@ public class AnalizadorSemantico {
                 Tipo tipo = (Tipo) sentencia;
                 switch(tipo.tipoTipos()) {
                     case STRUCT:
-                        TipoStruct tipoStruct = (TipoStruct) tipo;
+                        TipoStruct tipoStruct = ((TipoStruct) ((TipoArray) tipo).getTipoBase());
                         Sentencia referenciaSentencia =
                                 tabla.getSentenciaDeclaracion(((Iden) tipoStruct.getNombre()).getNombre());
                         if(referenciaSentencia == null) {

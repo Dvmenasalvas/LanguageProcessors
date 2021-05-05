@@ -58,8 +58,6 @@ int myFuncion (int x) {
     return False;
 }
 
-#Struct
-#struct dani a;
 
 #If
 if (5) {}
