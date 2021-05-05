@@ -47,6 +47,10 @@ public class TipoArray extends Tipo{
 				return EnumeradoTipo.INT;
 			else if(tipoBase instanceof TipoBoolean)
 				return EnumeradoTipo.BOOLEAN;
+			else if(tipoBase instanceof TipoStruct)
+				return EnumeradoTipo.STRUCT;
+			else
+				return EnumeradoTipo.ERROR;
 		}
 		return EnumeradoTipo.ARRAY;
 	}

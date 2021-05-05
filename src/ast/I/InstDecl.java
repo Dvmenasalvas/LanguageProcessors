@@ -1,7 +1,6 @@
 package ast.I;
 
 import ast.E.E;
-import ast.T.Tipo;
 import ast.T.TipoArray;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 public class InstDecl extends I{
     private TipoArray tipoVariable;
     private E identificador;
-    private List<E> expresion;
+    private List<E> expresiones;
     private boolean constante;
 
 
@@ -18,15 +17,15 @@ public class InstDecl extends I{
         super(fila, columna);
         this.tipoVariable = tipo;
         this.identificador = iden;
-        this.expresion = expr;
+        this.expresiones = expr;
         this.constante = constante;
     }
 
     public E getIdentificador() {
         return identificador;
     }
-    public List<E> getExpresion() {
-        return expresion;
+    public List<E> getExpresiones() {
+        return expresiones;
     }
 
     public boolean isConstante() {
@@ -44,9 +43,9 @@ public class InstDecl extends I{
         if(constante) out += "{Const}";
         out += "{" + tipoVariable + "}" + identificador;
 
-        if(expresion != null) {
+        if(expresiones != null) {
             out += "{{Inicializacion}";
-            for(E v : expresion) {
+            for(E v : expresiones) {
                 out += v;
             }
             out += "}";

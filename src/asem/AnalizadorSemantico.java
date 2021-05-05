@@ -52,7 +52,7 @@ public class AnalizadorSemantico {
                         identificadorV.setTipoVariable(declaracion.getTipo());
                         vincula(declaracion.getTipo());
                         tabla.insertaId(identificadorV.getNombre(), declaracion);
-                        List<E> valorInicial = declaracion.getExpresion();
+                        List<E> valorInicial = declaracion.getExpresiones();
                         if(valorInicial != null) valorInicial.forEach(x -> vincula(x));
                         break;
 
