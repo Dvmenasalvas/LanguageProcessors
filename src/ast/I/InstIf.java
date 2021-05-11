@@ -1,7 +1,7 @@
 package ast.I;
 
 import java.util.List;
-import ast.E.E;
+import ast.E.*;
 
 public class InstIf extends I {
 

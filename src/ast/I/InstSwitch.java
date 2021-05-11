@@ -1,9 +1,10 @@
 package ast.I;
 
-import ast.E.E;
 import ast.Sentencia;
+import ast.E.*;
 
 import java.util.List;
+
 
 public class InstSwitch extends I{
 

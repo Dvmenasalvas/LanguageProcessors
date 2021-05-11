@@ -1,6 +1,6 @@
 package ast.I;
 import java.util.List;
-import ast.E.E;
+import ast.E.*;
 
 public class Case extends I{
     private E expresion;

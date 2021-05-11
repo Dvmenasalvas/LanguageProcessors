@@ -1,7 +1,7 @@
 package ast.T;
 
-import ast.E.E;
 import ast.Sentencia;
+import ast.E.*;
 
 public class TipoStruct extends Tipo{
     private E nombre;

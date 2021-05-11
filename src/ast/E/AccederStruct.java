@@ -9,7 +9,7 @@ public class AccederStruct extends E{
     }
 
     @Override
-    public TipoE tipo() {
+    public TipoE tipoExpresion() {
         return TipoE.PUNTO;
     }
 }

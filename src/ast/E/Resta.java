@@ -10,5 +10,5 @@ public class Resta extends EBin {
         return "resta";
     }
 
-    public TipoE tipo() {return TipoE.RESTA;}
+    public TipoE tipoExpresion() {return TipoE.RESTA;}
 }

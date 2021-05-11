@@ -11,5 +11,6 @@ public class Distinto extends EBin {
         return "distinto";
     }
 
-    public TipoE tipo() {return TipoE.DISTINTO;}
+    public TipoE tipoExpresion() {return TipoE.DISTINTO;}
+
 }

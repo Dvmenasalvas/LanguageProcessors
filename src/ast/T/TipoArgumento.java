@@ -1,6 +1,6 @@
 package ast.T;
 
-import ast.E.E;
+import ast.E.*;
 
 public class TipoArgumento {
     private Tipo tipo;

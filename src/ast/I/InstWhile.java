@@ -1,8 +1,7 @@
 package ast.I;
 
-import ast.E.E;
-
 import java.util.List;
+import ast.E.*;
 
 public class InstWhile extends I{
     private E condicion;

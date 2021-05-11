@@ -10,5 +10,5 @@ public class Pot extends EBin {
         return "potencia";
     }
 
-    public TipoE tipo() {return TipoE.ELEV;}
+    public TipoE tipoExpresion() {return TipoE.ELEV;}
 }

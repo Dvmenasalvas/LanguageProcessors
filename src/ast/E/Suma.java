@@ -10,5 +10,5 @@ public class Suma extends EBin {
         return "suma";
     }
 
-    public TipoE tipo() {return TipoE.SUMA;}
+    public TipoE tipoExpresion() {return TipoE.SUMA;}
 }

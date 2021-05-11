@@ -1,9 +1,8 @@
 package ast.T;
 
-import ast.E.E;
+import ast.E.*;
 import ast.E.Ent;
 import ast.E.Iden;
-import ast.I.*;
 
 import java.util.List;
 

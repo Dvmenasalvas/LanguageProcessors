@@ -1,7 +1,7 @@
 package ast.I;
 
-import ast.E.E;
 import ast.T.TipoArray;
+import ast.E.*;
 
 import java.util.List;
 

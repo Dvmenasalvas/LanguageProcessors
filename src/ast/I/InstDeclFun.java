@@ -1,8 +1,8 @@
 package ast.I;
 
-import ast.E.E;
 import ast.T.Tipo;
 import ast.T.TipoArgumento;
+import ast.E.*;
 
 import java.util.List;
 

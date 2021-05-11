@@ -1,6 +1,6 @@
 package ast.I;
 
-import ast.E.E;
+import ast.E.*;
 
 public class InstPrint extends I{
     E expresion;

@@ -1,8 +1,7 @@
 package ast.I;
 
-import ast.E.E;
-
 import java.util.List;
+import ast.E.*;
 
 public class InstAsignacion extends I {
     private E identificador;

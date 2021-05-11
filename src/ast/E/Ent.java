@@ -6,6 +6,9 @@ public class Ent extends E {
     super(fila,columna);
     this.v = v;   
   }
-  public TipoE tipo() {return TipoE.ENT;}   
+  public TipoE tipoExpresion() {return TipoE.ENT;}
   public String toString() {return  v ;}
+  public String valor() {
+    return v;
+  }
 }
