@@ -11,6 +11,6 @@ public class Menor extends EBin {
         return "menor";
     }
 
-    public TipoE tipoExpresion() {return TipoE.MENOR;}
+    public TipoE tipo() {return TipoE.MENOR;}
 
 }

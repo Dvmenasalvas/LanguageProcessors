@@ -10,5 +10,5 @@ public class Div extends EBin {
         return "division";
     }
 
-    public TipoE tipoExpresion() {return TipoE.DIV;}
+    public TipoE tipo() {return TipoE.DIV;}
 }

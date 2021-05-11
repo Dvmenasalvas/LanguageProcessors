@@ -10,5 +10,5 @@ public class IgualIgual extends EBin {
 		return "igualigual";
 	}
 
-	public TipoE tipoExpresion() {return TipoE.IGUALIGUAL;}
+	public TipoE tipo() {return TipoE.IGUALIGUAL;}
 }

@@ -9,12 +9,7 @@ public class AccederStruct extends E{
     }
 
     @Override
-    public TipoE tipoExpresion() {
+    public TipoE tipo() {
         return TipoE.PUNTO;
-    }
-
-    @Override
-    public String toString() {
-        return "{{Acceder}" + id1 + id2 + "}";
     }
 }

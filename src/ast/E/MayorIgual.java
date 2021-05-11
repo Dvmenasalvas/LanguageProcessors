@@ -11,6 +11,6 @@ public class MayorIgual extends EBin {
         return "mayorIgual";
     }
 
-    public TipoE tipoExpresion() {return TipoE.MAYORIGUAL;}
+    public TipoE tipo() {return TipoE.MAYORIGUAL;}
 
 }

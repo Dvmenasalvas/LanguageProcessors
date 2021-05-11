@@ -5,6 +5,6 @@ public class Verdadero extends E {
       super(fila,columna);
    }
    
-   public TipoE tipoExpresion() {return TipoE.VERDADERO;}
-   public String toString() {return "{E: True}";}
+   public TipoE tipo() {return TipoE.VERDADERO;}
+   public String toString() {return "true";}
 }

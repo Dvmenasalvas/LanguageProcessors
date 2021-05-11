@@ -14,6 +14,5 @@ public abstract class Sentencia {
 	public int getColumna() {
 		return columna;
 	}
-	public abstract EnumeradoSentencia tipoSentencia();
 }
 	
