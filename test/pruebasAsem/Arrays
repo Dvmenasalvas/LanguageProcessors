@@ -90,3 +90,33 @@ int[2][2] c5;
 c5 = { b1, b4};
 
 
+
+##############Acceder a posiciones de arrays#########
+###Correcto###
+#En declaración
+int[5] v1 = {1, 2, 3, 4, 5};
+int x1 = v1[2];
+
+int i = 1;
+int xx1 = v1[i];
+
+#En asignación
+int x3;
+x3 = v1[3];
+
+
+###Error de tipos###
+#En declaración
+boolean x3 = v1[1];
+
+#En asignación
+boolean x4;
+x4 = v1[4];
+
+
+
+
+
+
+
+

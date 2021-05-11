@@ -59,8 +59,8 @@ public class Iden extends EFinal {
 
 	    if (dimShape != null) {
             for (E dim : dimShape) {
-                EFinal eFinal = (EFinal) dim;
-                aux += "[" + eFinal.valor() + "]";
+                //EFinal eFinal = (EFinal) dim;
+                aux += "[" + dim + "]";
             }
         }
 

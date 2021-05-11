@@ -1,0 +1,7 @@
+struct Persona{
+    int dni;
+    int edad;
+};
+#struct Persona p1;
+#struct Persona p2;
+#Persona[2] v;

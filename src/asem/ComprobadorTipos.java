@@ -70,6 +70,8 @@ public class ComprobadorTipos {
                                     EnumeradoTipo tipoBaseElemento2 = tipoElementoArray.getTipoBase().tipoTipos();
 
 
+
+
                                     if (tipoBaseElemento != tipoBaseElemento2) {
                                         GestionErrores.errorSemantico("Error de tipos. Se ha intentado formar un array de tipo " +
                                                 tipoBaseElemento + " con el array " + val +
@@ -112,6 +114,31 @@ public class ComprobadorTipos {
                             }
                         }
                     }
+                    else {
+                        E valor = instruccionAsignacion.getValor().get(0);
+                        Tipo tipoValor = tipoExpresion(valor);
+
+                        //Para dar a una variable el valor de una posicion del array
+                        if(tipoValor.tipoTipos() == EnumeradoTipo.ARRAY) {
+                            TipoArray tipoElementoArray = (TipoArray) tipoExpresion(valor);
+                            tipoBaseElemento = tipoElementoArray.getTipoBase().tipoTipos();
+                            E identificadorTipoElem = instruccionAsignacion.getIdentificador();
+                            EnumeradoTipo tipoBasePrimerElem = ((TipoArray)
+                                    tipoExpresion(identificadorTipoElem)).tipoTipos();
+                            if (tipoBasePrimerElem != tipoBaseElemento) {
+                                GestionErrores.errorSemantico("Error de tipos. " +
+                                                "La declaración está mal tipada. Asigna a la variable: " +
+                                                instruccionAsignacion.getIdentificador() + " de tipo: " +
+                                                tipoBasePrimerElem + " el valor: " + valor +
+                                                " de tipo " + tipoBaseElemento + "."
+                                        , instruccion.getFila(), instruccion.getColumna());
+                                return false;
+                            }
+
+                        }
+                    }
+
+
                     return true;
                 } else {
                     GestionErrores.errorSemantico(
@@ -234,7 +261,24 @@ public class ComprobadorTipos {
                         } else {
                             E valor = instruccionDeclaracion.getExpresiones().get(0);
                             Tipo tipoValor = tipoExpresion(valor);
-                            if (tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
+
+                            //Para dar a una variable el valor de una posicion del array
+                            if(tipoValor.tipoTipos() == EnumeradoTipo.ARRAY){
+                                TipoArray tipoElementoArray = (TipoArray) tipoExpresion(valor);
+                                EnumeradoTipo tipoBaseElemento = tipoElementoArray.getTipoBase().tipoTipos();
+                                EnumeradoTipo tipoVariable = tipoDeclaracion.tipoTipos();
+                                if(tipoVariable != tipoBaseElemento){
+                                    GestionErrores.errorSemantico("Error de tipos. " +
+                                                    "La declaración está mal tipada. Asigna a la variable: " +
+                                                    instruccionDeclaracion.getIdentificador() + " de tipo: " +
+                                                    tipoVariable + " el valor: " + valor +
+                                                    " de tipo " + tipoBaseElemento + "."
+                                                    , instruccion.getFila(), instruccion.getColumna());
+                                    return false;
+                                }
+
+                            }
+                            else if (tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
                                 correct = false;
                                 GestionErrores.errorSemantico("Error de tipos. " +
                                                 "La declaración está mal tipada. Asigna a la variable: " +
