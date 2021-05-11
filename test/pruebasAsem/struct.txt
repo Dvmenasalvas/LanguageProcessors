@@ -1,0 +1,21 @@
+#Struct
+struct dani {
+    int x;
+    int y;
+};
+
+#Declaracion bien
+struct dani d2;
+
+#Asignación bien
+d2.x = 2;
+
+#Declaración struct no existe
+struct pablo d1;
+
+#Asignación fallo de tipos
+d2.x = True;
+
+#Asignación campo no existe
+d2.z = 3;
+

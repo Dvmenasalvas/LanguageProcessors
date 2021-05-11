@@ -9,24 +9,6 @@ int y = 0;
 y = 2;
 #Redefinir variable
 boolean y = x;
-#Asignación sin declaración
-#aux = 0;
-
-#Asignacion con declaración
-#int y = 0;
-#y = 2;
-#int z;
-#z = 3;
-
-#int[1] array1 = {10};
-
-
-#Fallo en asignación de tipos
-#int w;
-#w = False;
-
-#int[1] array2 = 1;
-
 #Cambiar constante
 const int z = 0;
 z = 1;
@@ -77,34 +59,5 @@ int myFuncion (int x) {
 }
 
 
-#Struct
-#struct dani a;
-
 #If
 if (5) {}
-
-#Operaciones binarias
-
-#Arrays
-int[2] myArray;
-int[4][5] myArray1;
-#int[4][5][x] otroArray;
-
-myArray = {1, 1};
-
-
-
-
-#Struct
-
-#struct dani a;
-struct myStruct{
-    int v;
-};
-
-#struct myStruct hola;
-#hola.v = 10;
-
-#struct myStruct[10] pam;
-
-

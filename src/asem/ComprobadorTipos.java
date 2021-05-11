@@ -115,9 +115,10 @@ public class ComprobadorTipos {
                     return true;
                 } else {
                     GestionErrores.errorSemantico(
-                            "Error de tipos. Una asignación debe comenzar con un identificador.",
+                            "Error de tipos. Una asignación debe comenzar con un identificador o una referencia al campo de un struct.",
                             instruccion.getFila(), instruccion.getColumna());
                 }
+                break;
             case LLAMDADAPROC:
                 InstLlamadaVoid intruccionLlamadaFun  = (InstLlamadaVoid) instruccion;
                 InstDeclFun declaracionFunc = (InstDeclFun) intruccionLlamadaFun.getReferencia();
