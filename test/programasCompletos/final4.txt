@@ -1,3 +1,12 @@
+
+int[5] v1 = {1, 2, 3, 4, 5};
+
+int x5 = v1[True];
+
+
+
+
+
 struct Persona{
     int dni;
     int edad;

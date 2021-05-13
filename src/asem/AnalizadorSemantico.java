@@ -6,8 +6,10 @@ import ast.T.*;
 import ast.Sentencia;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import errors.GestionErrores;
+
 
 public class AnalizadorSemantico {
     private List<I> programa;
@@ -41,7 +43,15 @@ public class AnalizadorSemantico {
                         E iden = asignacion.getIdentificador();
                         iden.setAsignacion(true);
                         vincula(iden);
-                        for (E exp: asignacion.getValor()) vincula(exp);
+                        List<Tipo> lista = new ArrayList<Tipo>();
+                        for (E exp: asignacion.getValor()){
+                            vincula(exp);
+
+                            Tipo t = ((Iden) exp).getTipoVariable();
+                            lista.add(0, t);
+                        }
+                        Iden identificador = (Iden) asignacion.getIdentificador();
+                        identificador.setTiposLista(lista);
                         break;
 
                     case DECL:

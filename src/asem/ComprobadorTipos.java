@@ -114,12 +114,27 @@ public class ComprobadorTipos {
                             }
                         }
                     }
+                    //Cuando asignamos algo a una variable que no es un array
                     else {
                         E valor = instruccionAsignacion.getValor().get(0);
                         Tipo tipoValor = tipoExpresion(valor);
 
                         //Para dar a una variable el valor de una posicion del array
                         if(tipoValor.tipoTipos() == EnumeradoTipo.ARRAY) {
+
+                            Iden aux = (Iden)instruccionAsignacion.getValor().get(0);
+
+                            for (E e : aux.getDimShape()) {
+                                if (!(tipoExpresion(e) instanceof TipoInt) &&
+                                        !(e.tipoExpresion() == TipoE.IDEN)) {
+
+                                    GestionErrores.errorSemantico("Error de tipos. " +
+                                                    "El tipo de una expresion del array no es Int"
+                                            , instruccion.getFila(), instruccion.getColumna());
+                                }
+
+                            }
+
                             TipoArray tipoElementoArray = (TipoArray) tipoExpresion(valor);
                             tipoBaseElemento = tipoElementoArray.getTipoBase().tipoTipos();
                             E identificadorTipoElem = instruccionAsignacion.getIdentificador();
@@ -263,7 +278,21 @@ public class ComprobadorTipos {
                             Tipo tipoValor = tipoExpresion(valor);
 
                             //Para dar a una variable el valor de una posicion del array
-                            if(tipoValor.tipoTipos() == EnumeradoTipo.ARRAY){
+                            if(tipoValor != null &&
+                                    tipoValor.tipoTipos() == EnumeradoTipo.ARRAY){
+
+                                Iden aux = (Iden)instruccionDeclaracion.getExpresiones().get(0);
+
+                                for (E e : aux.getDimShape()) {
+                                    if (!(tipoExpresion(e) instanceof TipoInt) &&
+                                            !(e.tipoExpresion() == TipoE.IDEN)) {
+
+                                        GestionErrores.errorSemantico("Error de tipos. " +
+                                                        "El tipo de una expresion del array no es Int"
+                                                , instruccion.getFila(), instruccion.getColumna());
+                                    }
+                                }
+
                                 TipoArray tipoElementoArray = (TipoArray) tipoExpresion(valor);
                                 EnumeradoTipo tipoBaseElemento = tipoElementoArray.getTipoBase().tipoTipos();
                                 EnumeradoTipo tipoVariable = tipoDeclaracion.tipoTipos();
@@ -278,7 +307,8 @@ public class ComprobadorTipos {
                                 }
 
                             }
-                            else if (tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
+                            else if (tipoValor != null &&
+                                    tipoValor.tipoTipos() != tipoDeclaracion.tipoTipos()) {
                                 correct = false;
                                 GestionErrores.errorSemantico("Error de tipos. " +
                                                 "La declaración está mal tipada. Asigna a la variable: " +

@@ -2,6 +2,7 @@ package ast.E;
 
 import ast.EnumeradoSentencia;
 import ast.Sentencia;
+import ast.T.*;
 
 public abstract class E extends Sentencia{
     private boolean asignacion;
@@ -23,5 +24,6 @@ public abstract class E extends Sentencia{
     public EnumeradoSentencia tipoSentencia() {
         return EnumeradoSentencia.EXPRESION;
     }
+
 }
 
