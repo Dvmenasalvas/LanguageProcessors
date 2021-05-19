@@ -12,6 +12,7 @@ public class InstDeclFun extends I{
     private List<TipoArgumento> argumentos;
     private List<I> cuerpo;
     private E retorno;
+    private int profundidadAnidamiento = 0;
 
     public InstDeclFun(Tipo tipo, E identificador, List<TipoArgumento> argumentos,
                        List<I> cuerpo, E retorno, int fila, int columna) {
@@ -70,5 +71,13 @@ public class InstDeclFun extends I{
 
     public E getRetorno() {
         return retorno;
+    }
+
+    public int getProfundidadAnidamiento(){
+        return profundidadAnidamiento;
+    }
+
+    public void setProfundidadAnidamiento(int profundidadAnidamiento){
+        this.profundidadAnidamiento = profundidadAnidamiento;
     }
 }

@@ -1,19 +1,17 @@
 package codeGenerator;
 
-import ast.E.E;
-import ast.E.Ent;
-import ast.E.Iden;
+import ast.E.*;
 import ast.I.*;
-import ast.T.Tipo;
-import ast.T.TipoStruct;
+import ast.T.*;
+
+import java.util.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 public class GeneradorCodigo {
     private File ficheroSalida;
@@ -144,20 +142,55 @@ public class GeneradorCodigo {
                         insertaIdentificadorBloqueActual(idenDeclaracion, tamano);
                         break;
                     case ARRAY:
-                        //Por hacer
+                        int aux1 = 0, aux2 = 0;
+                        List<Integer> aux = new ArrayList<Integer>();
+                        obtenerInformacionArray(instruccionDeclaracion, aux1, aux2, aux);
+                        int tamArray = aux1;
+                        int tamTipoBase = aux2;
+                        List<Integer> dimensionesArray = aux;
+
+                        insertaIdentificadorBloqueActual(idenDeclaracion, tamArray);
+                        bloqueActual.insertaTamanoTipo(idenDeclaracion, tamTipoBase);
+                        bloqueActual.insertaDimensionesArray(idenDeclaracion, dimensionesArray);
                         break;
                     default:
                         break;
                 }
-
                 break;
 
             case STRUCT:
-                //Por hacer
+                InstStruct instruccionStruct = (InstStruct) instruccion;
+                String nombreStruct = ((Iden) instruccionStruct.getIdentificador()).getNombre();
+                int tamStruct = 0;
+                Map<String, Integer> tamCamposStruct = new HashMap<>();
+                obtenerInformacionStruct(instruccionStruct, tamStruct, tamCamposStruct);
+                bloqueActual.insertaTamanoTipo(nombreStruct, tamStruct);
+                bloqueActual.insertaCamposStruct(nombreStruct, tamCamposStruct);
                 break;
 
             case DECLFUN:
-                //Por hacer
+                InstDeclFun instruccionDeclFun = (InstDeclFun) instruccion;
+                instruccionDeclFun.setProfundidadAnidamiento(bloqueActual.getProfundidadAnidamiento());
+
+                //Abrimos ambito
+                crearNuevoBloque(true);
+
+                //Asignamos direccion a cada parametro
+                for(TipoArgumento arg: instruccionDeclFun.getArgumentos()) {
+                    //Transformamos cada argumento en una declaracion (REVISAR)
+                    InstDecl argumentoDeclaracion = new InstDecl((TipoArray) arg.getTipo(), arg.getArgumento(),
+                            null, false, ((Iden)arg.getArgumento()).getFila(),((Iden)arg.getArgumento()).getColumna());
+                    generaDireccionesInstruccion(argumentoDeclaracion);
+                }
+
+                //Asignamos direccion a cada instruccion del cuerpo (no llamamos a
+                //la funcion generaDireccionesCuerpo porque generariamos otro ambito)
+                for(I instr : instruccionDeclFun.getCuerpo()) {
+                    generaDireccionesInstruccion(instr);
+                }
+
+                //Cerramos ambito
+                guardarBloqueActual();
 
                 break;
 
@@ -165,6 +198,13 @@ public class GeneradorCodigo {
                 break;
         }
     }
+
+
+
+
+
+
+
 
     //####################### -3- Funciones auxiliares para bloques ##############################
     private Bloque getBloqueNivelActual() {
@@ -186,6 +226,116 @@ public class GeneradorCodigo {
         bloqueActual.insertaIdentificador(nombreIdentificador, tamanoIdentificador);
         proximaDireccion += tamanoIdentificador;
     }
+
+
+
+    private int obtenerDimensionArray(E expresion) {
+        int dimension = 0;
+        switch(expresion.tipoExpresion()) {
+            case IDEN: //Case base 1
+                Iden iden = (Iden) expresion;
+                InstDecl referencia = (InstDecl) iden.getReferencia();
+                if(referencia.isConstante()) return obtenerDimensionArray(referencia.getExpresiones().get(0));
+                else {
+                    System.err.println("Error de ejecucion: La dimension del array debe ser un valor constante.");
+                    return 0;
+                }
+            case ENT: //Caso base 2
+                return Integer.parseInt(((Ent) expresion).toString());
+            //Casos recursivos
+            case SUMA:
+                E suma = ((Suma) expresion);
+                return obtenerDimensionArray(suma.getOpnd1()) + obtenerDimensionArray(suma.getOpnd2());
+            case RESTA:
+                E resta = ((Resta) expresion);
+                return obtenerDimensionArray(resta.getOpnd1()) - obtenerDimensionArray(resta.getOpnd2());
+            case MUL:
+                E mul = ((Mul) expresion);
+                return obtenerDimensionArray(mul.getOpnd1()) * obtenerDimensionArray(mul.getOpnd2());
+            case DIV:
+                E div = ((Div) expresion);
+                return obtenerDimensionArray(div.getOpnd1()) / obtenerDimensionArray(div.getOpnd2());
+            default:
+                System.err.println("Error de ejecucion: Operacion no soportada para la dimension de un array");
+                break;
+        }
+
+        return dimension;
+    }
+
+
+
+
+
+
+    private void obtenerInformacionArray(InstDecl declaracionArray, int tamanoArray, int tamanoTipoBase,
+                                    List<Integer> dimensiones) {
+        //Si la declaracion pasada no es de tipo array => ERROR
+        if(declaracionArray.getTipo().tipoTipos() == EnumeradoTipo.ARRAY){
+            dimensiones = new ArrayList<Integer>();
+            tamanoArray = 1; //El tamano total sera el multiplicatorio de sus dimensiones por el tipo base
+            tamanoTipoBase = 1;
+
+            TipoArray t = (TipoArray) declaracionArray.getTipo();
+            int dimension;
+            for (E exp : t.getDimShape()) { //Mientras siga habiendo dimensiones
+                dimension = obtenerDimensionArray(exp);
+                dimensiones.add(dimension);
+                tamanoArray *= dimension;
+            }
+
+
+            Tipo tipoBase = ((TipoArray) declaracionArray.getTipo()).getTipoBase();
+            if(tipoBase instanceof TipoStruct) {
+                tamanoTipoBase = this.bloqueActual.getTamanoTipo(((Iden) ((TipoStruct) tipoBase).getNombre()).getNombre());
+                ;
+                tamanoArray *= tamanoArray;
+            }
+        }
+    }
+
+    private void obtenerInformacionStruct(InstStruct struct, int tamStruct, Map<String, Integer> tamCamposStruct) {
+        tamStruct = 0;
+        tamCamposStruct = new HashMap<>();
+
+        for(I instruccion : struct.getDeclaraciones()) { //Para cada declaracion del struct, sumamos su tamano
+            InstDecl declaracion = (InstDecl) instruccion;
+            String idenDeclaracion = ((Iden) declaracion.getIdentificador()).getNombre();
+            int tamCampo = 0;
+
+            switch(declaracion.getTipo().tipoTipos()) {
+                case INT:
+                case BOOLEAN:
+                    //Sumamos 1 (lo que ocupan int y boolean)
+                    tamCampo = 1;
+                    break;
+                case STRUCT:
+                    //Sumamos el tamano del tipo struct, que lo tendremos almacenado en un bloque previo
+                    TipoStruct tipoStruct = (TipoStruct) declaracion.getTipo().getTipoBase();
+                    tamCampo = bloqueActual.getTamanoTipo(((Iden)tipoStruct.getNombre()).getNombre());
+                    break;
+                case ARRAY:
+                    //Sumamos el tamano del tipo array y almacenamos sus dimensiones y tamano del tipo base
+                    int aux1 = 0, aux2 = 0;
+                    List<Integer> aux = new ArrayList<>();
+                    obtenerInformacionArray(declaracion, aux1, aux2, aux);
+                    tamCampo = aux1;
+
+                    List<Integer> dimensionesArray = aux;
+                    this.bloqueActual.insertaDimensionesArray(idenDeclaracion, dimensionesArray); //OJO! POSIBLE ERROR, QUIZAS DEBERIA SER idenStruct + "." + idenDeclaracion
+                    //PERO ESO NO NOS SIRVE PARA EL SQUAREBRACKET :/, HAY QUE PENSARLO
+                    int tamanoBaseArray = aux2;
+                    this.bloqueActual.insertaTamanoTipo(idenDeclaracion, tamanoBaseArray);
+                    break;
+                default:
+                    break;
+            }
+            tamCamposStruct.put(idenDeclaracion, tamCampo);
+            tamStruct += tamCampo;
+        }
+        return new Pair(tamanoStruct, tamanoCamposStruct);
+    }
+
 
 
 }
