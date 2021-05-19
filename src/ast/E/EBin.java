@@ -13,7 +13,7 @@ public abstract class EBin extends E {
     public E getOpnd1() {return opnd1;}
     public E getOpnd2() {return opnd2;}
     public abstract String nombreOp();
-    public abstract String instruccionWA();
+    public abstract String wasm_opcode();
 
 
     @Override
