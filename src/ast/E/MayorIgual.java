@@ -11,6 +11,11 @@ public class MayorIgual extends EBin {
         return "mayorIgual";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.ge_s";
+    }
+
     public TipoE tipoExpresion() {return TipoE.MAYORIGUAL;}
 
 }

@@ -10,5 +10,10 @@ public class Pot extends EBin {
         return "potencia";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "f32.sqrt";
+    }
+
     public TipoE tipoExpresion() {return TipoE.ELEV;}
 }

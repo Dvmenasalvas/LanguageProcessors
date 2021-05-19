@@ -11,5 +11,10 @@ public class MenorIgual extends EBin {
         return "menorIgual";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.le";
+    }
+
     public TipoE tipoExpresion() {return TipoE.MENORIGUAL;}
 }

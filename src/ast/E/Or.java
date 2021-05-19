@@ -11,6 +11,11 @@ public class Or extends EBin {
         return "or";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.or";
+    }
+
     public TipoE tipoExpresion() {return TipoE.OR;}
 
 }

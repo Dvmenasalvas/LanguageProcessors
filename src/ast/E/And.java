@@ -11,6 +11,11 @@ public class And extends EBin {
         return "and";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.and";
+    }
+
     public TipoE tipoExpresion() {return TipoE.AND;}
 
 }

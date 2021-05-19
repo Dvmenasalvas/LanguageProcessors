@@ -10,5 +10,10 @@ public class Div extends EBin {
         return "division";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.div_s";
+    }
+
     public TipoE tipoExpresion() {return TipoE.DIV;}
 }

@@ -1,15 +1,17 @@
 package constructorast;
 
+import alex.AnalizadorLexico;
+import asem.AnalizadorSemantico;
+import ast.I.I;
+import errors.GestionErrores;
+import codeGenerator.GeneradorCodigo;
+
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import alex.AnalizadorLexico;
-import asem.AnalizadorSemantico;
-import ast.I.I;
-import errors.GestionErrores;
 
 public class Main {
     public static List<String> splitThree(String three){
@@ -87,13 +89,13 @@ public class Main {
 
          if(GestionErrores.erroresSemanticos == 0) { //Si no hemos tenido errores en el alex, asint y asem, procedemos a generar el codigo
              System.out.println("Análisis semántico finalizado sin errores.\n");
-            /*
+
              //3) Generacion de Codigo
              System.out.println("Se inicia la generación de código.\n");
              GeneradorCodigo codeGenerator = new GeneradorCodigo(programa);
              codeGenerator.generaCodigo();
              System.out.println("Codigo generado con exito.");
-             */
+
          } else System.out.println("Compilacion detenida: se han detectado errores durante el análisis semántico.");
      } else System.out.println("Compilacion detenida: se han detectado errores durante el análisis sintáctico.");
 

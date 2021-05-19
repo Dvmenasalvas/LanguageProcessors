@@ -10,5 +10,10 @@ public class Resta extends EBin {
         return "resta";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.sub";
+    }
+
     public TipoE tipoExpresion() {return TipoE.RESTA;}
 }

@@ -10,5 +10,10 @@ public class Suma extends EBin {
         return "suma";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.add";
+    }
+
     public TipoE tipoExpresion() {return TipoE.SUMA;}
 }

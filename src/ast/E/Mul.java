@@ -10,5 +10,10 @@ public class Mul extends EBin {
         return "multiplicacion";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.mul";
+    }
+
     public TipoE tipoExpresion() {return TipoE.MUL;}
 }

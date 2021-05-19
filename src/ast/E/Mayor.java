@@ -11,6 +11,11 @@ public class Mayor extends EBin {
         return "mayor";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.gt_s";
+    }
+
     public TipoE tipoExpresion() {return TipoE.MAYOR;}
 
 }

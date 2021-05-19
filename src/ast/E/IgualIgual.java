@@ -10,5 +10,10 @@ public class IgualIgual extends EBin {
 		return "igualigual";
 	}
 
+	@Override
+	public String wasm_opcode() {
+		return "i32.eq";
+	}
+
 	public TipoE tipoExpresion() {return TipoE.IGUALIGUAL;}
 }

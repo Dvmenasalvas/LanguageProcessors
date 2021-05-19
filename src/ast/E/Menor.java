@@ -11,6 +11,11 @@ public class Menor extends EBin {
         return "menor";
     }
 
+    @Override
+    public String wasm_opcode() {
+        return "i32.lt_s";
+    }
+
     public TipoE tipoExpresion() {return TipoE.MENOR;}
 
 }
