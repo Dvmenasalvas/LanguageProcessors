@@ -1,6 +1,7 @@
 package codeGenerator;
 
 import ast.E.E;
+import ast.E.Ent;
 import ast.E.Iden;
 import ast.I.*;
 import ast.T.Tipo;
@@ -67,6 +68,26 @@ public class GeneradorCodigo {
             e.printStackTrace();
         }
     }
+
+    StringBuilder codeE (E expresion) {
+        StringBuilder out = new StringBuilder();
+        switch (expresion.tipoExpresion()){
+            case ENT:
+                out.append("i32.const").append(((Ent) expresion).valor());
+
+        }
+
+        return out;
+    }
+
+    StringBuilder codeD (Iden iden) {
+        StringBuilder out = new StringBuilder();
+
+
+        return out;
+    }
+
+
 
     //############### -1- GENERACION DE DIRECCIONES #################
     private void generaDireccionesPrograma() {
