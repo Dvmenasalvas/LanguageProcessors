@@ -17,6 +17,7 @@ public class Bloque {
     private int profundidadAnidamiento;
     private int ssp;
     boolean nuevoMarcoActivacion;
+    int inicioMemoriaMarco;
 
     public Bloque(Bloque bloquePadre, int posicionBloque, boolean nuevoMarcoActivacion) {
         this.tamanoBloque = 0;
@@ -30,15 +31,21 @@ public class Bloque {
             this.ssp = 0;
         } else {
             if (nuevoMarcoActivacion) {
+                inicioMemoriaMarco = bloquePadre.getInicioMemoriaMarco() + bloquePadre.getTamanoBloque();
                 this.proximaDireccion = 5;
                 this.profundidadAnidamiento = bloquePadre.getProfundidadAnidamiento() + 1;
                 this.ssp = 5;
             } else {
+                inicioMemoriaMarco = bloquePadre.getInicioMemoriaMarco();
                 this.proximaDireccion = bloquePadre.getProximaDireccion();
                 this.profundidadAnidamiento = bloquePadre.getProfundidadAnidamiento();
                 this.ssp = 0;
             }
         }
+    }
+
+    public int getInicioMemoriaMarco() {
+        return inicioMemoriaMarco;
     }
 
     public int getTamanoBloque() {

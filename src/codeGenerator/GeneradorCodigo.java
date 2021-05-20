@@ -4,12 +4,12 @@ import ast.E.*;
 import ast.I.*;
 import ast.T.*;
 
-import java.util.*;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -70,8 +70,37 @@ public class GeneradorCodigo {
     StringBuilder codeE (E expresion) {
         StringBuilder out = new StringBuilder();
         switch (expresion.tipoExpresion()){
+            case AND:
+            case DISTINTO:
+            case DIV:
+            case IGUALIGUAL:
+            case MAYOR:
+            case MAYORIGUAL:
+            case MENOR:
+            case MENORIGUAL:
+            case MOD:
+            case MUL:
+            case OR:
+            case ELEV:
+            case RESTA:
+            case SUMA:
+                EBin expresionBinaria = (EBin) expresion;
+                out.append(codeE(expresionBinaria.getOpnd1())).append('\n');
+                out.append(codeE(expresionBinaria.getOpnd2())).append('\n');
+                out.append(expresionBinaria.wasm_opcode());
+                break;
             case ENT:
-                out.append("i32.const").append(((Ent) expresion).valor());
+                out.append("i32.const ").append(((Ent) expresion).valor());
+                break;
+            case FALSO:
+                out.append("i32.const 0");
+                break;
+            case VERDADERO:
+                out.append("i32.const 1");
+                break;
+            case IDEN:
+                out.append(codeD((Iden) expresion)).append('\n');
+                out.append("i32.load");
 
         }
 
@@ -81,8 +110,54 @@ public class GeneradorCodigo {
     StringBuilder codeD (Iden iden) {
         StringBuilder out = new StringBuilder();
 
+        //Array
+        if (iden.getDimShape() != null) {
+            out.append(codeD(new Iden(iden.getNombre(), null, iden.getFila(), iden.getColumna()))).append('\n');
+            if (iden.getDimShape().size() == 1) {
+                if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.BOOLEAN ||
+                    iden.getTipoVariable().tipoTipos() == EnumeradoTipo.INT) {
+                    out.append("i32.const 1\n");
+
+                    //Struct
+                } else {
+                    out.append("i32.const ").append(bloqueActual.getTamanoTipo(iden.valor())).append('\n');
+                }
+                out.append(codeE(iden.getDimShape().get(0))).append('\n');
+                out.append("i32.mul\n");
+                out.append("i32.add");
+            }
+
+        //Struct
+        } else if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.STRUCT){
+
+        //Identificador (entero o boolean)
+        } else {
+            out.append("i32.const ")
+                    .append(bloqueActual.getDireccionIdentificador(iden.valor()))
+                    .append('\n');
+            out.append("i32.const ").append(bloqueActual.getInicioMemoriaMarco());
+            out.append("i32.add");
+        }
+
 
         return out;
+    }
+
+    StringBuilder codeI (I instruccion) {
+        StringBuilder out = new StringBuilder();
+        switch (instruccion.tipoInstruccion()){
+            case ASIG:
+                InstAsignacion instAsignacion = (InstAsignacion) instruccion;
+
+                out.append(((Iden) instAsignacion.getIdentificador())).append('\n');
+                //Codigo inicio contexto (d)
+                out.append("i32.add\n");
+                if(instAsignacion.getValor().size() == 1) {
+                    out.append(codeE(instAsignacion.getValor().get(0))).append('\n');
+                }
+                out.append("i32.store");
+
+        }
     }
 
 
@@ -156,6 +231,7 @@ public class GeneradorCodigo {
                     default:
                         break;
                 }
+
                 break;
 
             case STRUCT:
@@ -198,13 +274,6 @@ public class GeneradorCodigo {
                 break;
         }
     }
-
-
-
-
-
-
-
 
     //####################### -3- Funciones auxiliares para bloques ##############################
     private Bloque getBloqueNivelActual() {
@@ -333,7 +402,6 @@ public class GeneradorCodigo {
             tamCamposStruct.put(idenDeclaracion, tamCampo);
             tamStruct += tamCampo;
         }
-        return new Pair(tamanoStruct, tamanoCamposStruct);
     }
 
 
