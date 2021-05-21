@@ -43,15 +43,10 @@ public class AnalizadorSemantico {
                         E iden = asignacion.getIdentificador();
                         iden.setAsignacion(true);
                         vincula(iden);
-                        List<Tipo> lista = new ArrayList<Tipo>();
                         for (E exp: asignacion.getValor()){
                             vincula(exp);
-
-                            Tipo t = ((Iden) exp).getTipoVariable();
-                            lista.add(0, t);
                         }
                         Iden identificador = (Iden) asignacion.getIdentificador();
-                        identificador.setTiposLista(lista);
                         break;
 
                     case DECL:

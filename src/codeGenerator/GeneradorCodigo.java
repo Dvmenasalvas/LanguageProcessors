@@ -6,6 +6,7 @@ import ast.T.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,22 +16,24 @@ import java.util.HashMap;
 
 public class GeneradorCodigo {
     private File ficheroSalida;
+    private String inicioPath = "src/codeGenerator/InitialCode.wat";
+
     private List<Bloque> bloques = new ArrayList<>();
     private Bloque bloqueActual;
 
     private int proximaDireccion;
     private static int ambitoActual = 0;
     private int maxPila = 0;
-    private int maxAmbitos = 0;
+    private int maxAmbito = 0;
 
-    private List<InstruccionMaquina> codigoGenerado = new ArrayList<>();
+    private List<String> codigoGenerado = new ArrayList<>();
     private List<I> programa;
 
     public GeneradorCodigo(List<I> programa, String ficheroEntrada) {
         this.programa = programa;
         String fileName = ficheroEntrada;
         int lastIndex = fileName.lastIndexOf("/");
-        String newFilename = fileName.substring(0, lastIndex+1) + "CodigoMaquina" + fileName.substring(lastIndex+1);
+        String newFilename = "out/CodigoMaquina.wat";
         ficheroSalida = new File(newFilename);
     }
 
@@ -45,21 +48,28 @@ public class GeneradorCodigo {
         }
 
         //Generamos código
-        codigoGenerado.add(new InstruccionMaquina(InstruccionesMaquinaEnumerado.SSP,0,Integer.toString(bloques.get(0).getSsp())));
-        codigoGenerado.add(new InstruccionMaquina(InstruccionesMaquinaEnumerado.SEP,0));
-        generaCodigoCuerpo(this.programa);
-        int tamPila = tamanoPilaEvaluacion(1);
-        codigoGenerado.get(1).setArgumento1(Integer.toString(tamPila));
-        codigoGenerado.add(new InstruccionMaquina(InstruccionesMaquinaEnumerado.STP,0));
+        programa.forEach(instruccion -> codeI(instruccion));
+        //int tamPila = tamanoPilaEvaluacion(1);
 
         //Escribimos código en archivo de salida
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(ficheroSalida));
+            File iniCodeFile = new File(inicioPath);
+            FileInputStream inCodeIni = new FileInputStream(iniCodeFile);
+            int c;
+            while ((c = inCodeIni.read()) != -1)
+                writer.write(c);
+
+            inCodeIni.close();
+
             i = 0;
-            for(InstruccionMaquina instruccion : codigoGenerado) {
-                writer.write("{" + i + "} " + instruccion.toString());
+            for(String instruccion : codigoGenerado) {
+                writer.write(instruccion + '\n');
                 i++;
             }
+
+            writer.write(")\n");
+            writer.write(")");
             writer.close();
         } catch (IOException e) {
             System.out.println("Error al generar el archivo de salida.");
@@ -67,8 +77,8 @@ public class GeneradorCodigo {
         }
     }
 
-    StringBuilder codeE (E expresion) {
-        StringBuilder out = new StringBuilder();
+    //Generadores de código
+    void codeE (E expresion) {
         switch (expresion.tipoExpresion()){
             case AND:
             case DISTINTO:
@@ -85,81 +95,90 @@ public class GeneradorCodigo {
             case RESTA:
             case SUMA:
                 EBin expresionBinaria = (EBin) expresion;
-                out.append(codeE(expresionBinaria.getOpnd1())).append('\n');
-                out.append(codeE(expresionBinaria.getOpnd2())).append('\n');
-                out.append(expresionBinaria.wasm_opcode());
+                codeE(expresionBinaria.getOpnd1());
+                codeE(expresionBinaria.getOpnd2());
+                codigoGenerado.add(expresionBinaria.wasm_opcode());
                 break;
             case ENT:
-                out.append("i32.const ").append(((Ent) expresion).valor());
+                codigoGenerado.add("i32.const " + ((Ent) expresion).valor());
                 break;
             case FALSO:
-                out.append("i32.const 0");
+                codigoGenerado.add("i32.const 0");
                 break;
             case VERDADERO:
-                out.append("i32.const 1");
+                codigoGenerado.add("i32.const 1");
                 break;
             case IDEN:
-                out.append(codeD((Iden) expresion)).append('\n');
-                out.append("i32.load");
-
+                codeD((Iden) expresion);
+                codigoGenerado.add("i32.load");
         }
-
-        return out;
     }
 
-    StringBuilder codeD (Iden iden) {
-        StringBuilder out = new StringBuilder();
-
+    void codeD (Iden iden) {
         //Array
         if (iden.getDimShape() != null) {
-            out.append(codeD(new Iden(iden.getNombre(), null, iden.getFila(), iden.getColumna()))).append('\n');
+            codeD(new Iden(iden.getNombre(), null, iden.getFila(), iden.getColumna()));
             if (iden.getDimShape().size() == 1) {
                 if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.BOOLEAN ||
                     iden.getTipoVariable().tipoTipos() == EnumeradoTipo.INT) {
-                    out.append("i32.const 1\n");
+                    codigoGenerado.add("i32.const 1");
 
                     //Struct
                 } else {
-                    out.append("i32.const ").append(bloqueActual.getTamanoTipo(iden.valor())).append('\n');
+                    codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getTamanoTipo(iden.valor()));
                 }
-                out.append(codeE(iden.getDimShape().get(0))).append('\n');
-                out.append("i32.mul\n");
-                out.append("i32.add");
+                codeE(iden.getDimShape().get(0));
+                codigoGenerado.add("i32.mul");
+                codigoGenerado.add("i32.add");
             }
-
+/*
         //Struct
         } else if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.STRUCT){
 
+
+ */
         //Identificador (entero o boolean)
         } else {
-            out.append("i32.const ")
-                    .append(bloqueActual.getDireccionIdentificador(iden.valor()))
-                    .append('\n');
-            out.append("i32.const ").append(bloqueActual.getInicioMemoriaMarco());
-            out.append("i32.add");
+            codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionIdentificador(iden.valor()));
+            codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getInicioMemoriaMarco());
+            codigoGenerado.add("i32.add");
         }
-
-
-        return out;
     }
 
-    StringBuilder codeI (I instruccion) {
-        StringBuilder out = new StringBuilder();
+    void codeI (I instruccion) {
         switch (instruccion.tipoInstruccion()){
+            case DECL:
+                InstDecl instDecl = (InstDecl) instruccion;
+                if (instDecl.getExpresiones().size() > 0) {
+                    codeD((Iden) instDecl.getIdentificador());
+                    //Codigo inicio contexto (d)
+                    //codigoGenerado.add("i32.const 0"); // Provisional
+                    //codigoGenerado.add("i32.add");
+                    if (instDecl.getExpresiones().size() == 1) {
+                        codeE(instDecl.getExpresiones().get(0));
+                    }
+                    codigoGenerado.add("i32.store");
+                }
+                break;
+
             case ASIG:
                 InstAsignacion instAsignacion = (InstAsignacion) instruccion;
 
-                out.append(((Iden) instAsignacion.getIdentificador())).append('\n');
+                codeD((Iden) instAsignacion.getIdentificador());
                 //Codigo inicio contexto (d)
-                out.append("i32.add\n");
+                //codigoGenerado.add("i32.const 0"); // Provisional
+                //codigoGenerado.add("i32.add");
                 if(instAsignacion.getValor().size() == 1) {
-                    out.append(codeE(instAsignacion.getValor().get(0))).append('\n');
+                    codeE(instAsignacion.getValor().get(0));
                 }
-                out.append("i32.store");
-
+                codigoGenerado.add("i32.store");
+                break;
+            case PRINT:
+                InstPrint instPrint = (InstPrint) instruccion;
+                codeE(instPrint.getExpresion());
+                codigoGenerado.add("call $print");
         }
     }
-
 
 
     //############### -1- GENERACION DE DIRECCIONES #################

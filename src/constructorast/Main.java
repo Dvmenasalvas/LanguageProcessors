@@ -14,6 +14,7 @@ import java.util.List;
 
 
 public class Main {
+    public static String FILE_NAME;
     public static List<String> splitThree(String three){
         List<String> children = new ArrayList<>();
         int begin_inst_index, end_inst_index, counter = 0, i = 0;
@@ -70,6 +71,7 @@ public class Main {
 
    public static void main(String[] args) throws Exception {
      Reader input = new InputStreamReader(new FileInputStream(args[0]));
+     FILE_NAME = args[0];
      System.out.println("Ejecutando análisis lexico/sintáctico.");
 	 AnalizadorLexico alex = new AnalizadorLexico(input);
 	 ConstructAST constructorast = new ConstructAST(alex);
@@ -92,7 +94,7 @@ public class Main {
 
              //3) Generacion de Codigo
              System.out.println("Se inicia la generación de código.\n");
-             GeneradorCodigo codeGenerator = new GeneradorCodigo(programa);
+             GeneradorCodigo codeGenerator = new GeneradorCodigo(programa, FILE_NAME);
              codeGenerator.generaCodigo();
              System.out.println("Codigo generado con exito.");
 

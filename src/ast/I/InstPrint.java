@@ -14,6 +14,10 @@ public class InstPrint extends I{
         return EnumeradoInstrucciones.PRINT;
     }
 
+    public E getExpresion() {
+        return expresion;
+    }
+
     public String toString() {
         return "{{I: Print}{" + expresion + "}}";
     }
