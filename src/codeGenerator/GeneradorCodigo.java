@@ -188,6 +188,7 @@ public class GeneradorCodigo {
                 instWhile.getCuerpo().forEach(this::codeI);
                 codigoGenerado.add("br 0");
                 codigoGenerado.add("end");
+                codigoGenerado.add("end");
                 break;
         }
     }

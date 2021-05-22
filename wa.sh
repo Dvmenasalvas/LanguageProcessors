@@ -1,5 +1,5 @@
 #! /bin/bash
-cd out
+cd codeGenerated
 ./wat2wasm CodigoMaquina.wat
 node main.js
 cd ..
