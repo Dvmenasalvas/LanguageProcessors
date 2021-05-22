@@ -32,6 +32,10 @@ practicaFinal.iml
 .DS_Store
 .classpath
 
+#Webassembly
+*.wasm
+*.wat
+
 #Generated files
 src/alex/AnalizadorLexico.java
 src/constructorast/ClaseLexica.java
