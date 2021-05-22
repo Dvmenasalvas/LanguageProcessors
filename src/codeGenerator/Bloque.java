@@ -96,12 +96,12 @@ public class Bloque {
     }
 
     public int getDireccionIdentificador(String iden) {
-        if(direccionIdentificadores.containsKey(iden)) return direccionIdentificadores.get(iden);
+        if(direccionIdentificadores.containsKey(iden)) return direccionIdentificadores.get(iden) * 4;
         else if(bloquePadre ==null) {
             System.out.println("El identificador " + iden + " no está guardado.");
             return -1;
         }
-        else return bloquePadre.getDireccionIdentificador(iden);
+        else return bloquePadre.getDireccionIdentificador(iden) * 4;
     }
 
     public void insertaIdentificador(String identificador,int tamanoIdentificador) {

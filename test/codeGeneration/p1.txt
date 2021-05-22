@@ -1,4 +1,7 @@
-int x = 34;
-int y = 55;
-int z = x + 5;
-print(x);
+int x = 34 / 2;
+int y = 54;
+int z = x + y;
+boolean si = True;
+boolean no = False;
+print(x == y);
+print(x < y);

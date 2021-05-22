@@ -149,7 +149,7 @@ public class GeneradorCodigo {
         switch (instruccion.tipoInstruccion()){
             case DECL:
                 InstDecl instDecl = (InstDecl) instruccion;
-                if (instDecl.getExpresiones().size() > 0) {
+                if (instDecl.getExpresiones() != null && instDecl.getExpresiones().size() > 0) {
                     codeD((Iden) instDecl.getIdentificador());
                     //Codigo inicio contexto (d)
                     //codigoGenerado.add("i32.const 0"); // Provisional
