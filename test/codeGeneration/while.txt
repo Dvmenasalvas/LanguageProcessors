@@ -1,5 +1,14 @@
 int x = 0;
+int y = 2;
 while (x < 5) {
-   print(x);
+   print(y);
+   y = y * 2;
    x = x + 1;
+    int z = 0;
+    int t = 2;
+    while(z < 3){
+        print(t);
+        t = t * 2;
+        z = z + 1;
+    }
 }
