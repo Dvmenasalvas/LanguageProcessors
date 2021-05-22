@@ -177,6 +177,18 @@ public class GeneradorCodigo {
                 InstPrint instPrint = (InstPrint) instruccion;
                 codeE(instPrint.getExpresion());
                 codigoGenerado.add("call $print");
+                break;
+            case WHILE:
+                InstWhile instWhile = (InstWhile) instruccion;
+                codigoGenerado.add("block");
+                codigoGenerado.add("loop");
+                codeE(instWhile.getCondicion());
+                codigoGenerado.add("i32.eqz");
+                codigoGenerado.add("i32.br_if 1");
+                instWhile.getCuerpo().forEach(this::codeI);
+                codigoGenerado.add("br 0");
+                codigoGenerado.add("end");
+                break;
         }
     }
 
