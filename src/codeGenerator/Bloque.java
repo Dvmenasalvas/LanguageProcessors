@@ -101,7 +101,7 @@ public class Bloque {
             System.out.println("El identificador " + iden + " no está guardado.");
             return -1;
         }
-        else return bloquePadre.getDireccionIdentificador(iden) * 4;
+        else return bloquePadre.getDireccionIdentificador(iden);
     }
 
     public void insertaIdentificador(String identificador,int tamanoIdentificador) {

@@ -33,7 +33,7 @@ public class GeneradorCodigo {
         this.programa = programa;
         String fileName = ficheroEntrada;
         int lastIndex = fileName.lastIndexOf("/");
-        String newFilename = "out/CodigoMaquina.wat";
+        String newFilename = "codeGenerated/CodigoMaquina.wat";
         ficheroSalida = new File(newFilename);
     }
 
@@ -173,6 +173,32 @@ public class GeneradorCodigo {
                 }
                 codigoGenerado.add("i32.store");
                 break;
+
+            case IF:
+                maxAmbito++;
+                ambitoActual = maxAmbito;
+                InstIf instIf = (InstIf) instruccion;
+                codeE(instIf.getCondicion());
+                codigoGenerado.add("if");
+                for (I ins: instIf.getCuerpoIf()){
+                    codeI(ins);
+                }
+                ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+
+                if(instIf.getCuerpoElse() != null) {
+                    maxAmbito++;
+                    ambitoActual = maxAmbito;
+                    codigoGenerado.add("else");
+                    for (I ins : instIf.getCuerpoElse()) {
+                        codeI(ins);
+                    }
+                    ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+                }
+
+
+                codigoGenerado.add("end");
+                break;
+
             case PRINT:
                 InstPrint instPrint = (InstPrint) instruccion;
                 codeE(instPrint.getExpresion());
@@ -191,6 +217,9 @@ public class GeneradorCodigo {
                 codigoGenerado.add("end");
                 break;
         }
+
+
+
     }
 
 
