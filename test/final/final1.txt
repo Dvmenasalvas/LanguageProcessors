@@ -11,21 +11,23 @@ struct myStruct{
 };
 int x = 0;
 struct myStruct persona;
-
-switch (x) {
-    case 0 {
-        persona.nombre = 10;
-        persona.b = True;
-        print(persona.nombre);
+while(x < 4){
+    switch (x) {
+        case 0 {
+            persona.nombre = 10;
+            persona.b = True;
+            print(persona.nombre);
+        }
+        case 1 {
+            persona.nombre = 20;
+            persona.b = False;
+            print(persona.b);
+        }
+        default{
+            persona.nombre = 123;
+            persona.b = False;
+            print(persona.nombre);
+        }
     }
-    case 1 {
-        persona.nombre = 20;
-        persona.b = False;
-        print(persona.b);
-    }
-    default{
-        persona.nombre = 123;
-        persona.b = False;
-        print(persona.nombre);
-    }
+    x = x + 1;
 }
