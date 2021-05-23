@@ -155,7 +155,19 @@ public class ComprobadorTipos {
 
 
                     return true;
-                } else {
+                } else if (instruccionAsignacion.getIdentificador() instanceof AccederStruct){
+                    AccederStruct accederStruct = (AccederStruct) instruccionAsignacion.getIdentificador();
+                   if(!(accederStruct.getStruct() instanceof Iden)) {
+                       GestionErrores.errorSemantico(
+                               "Error de tipos. Una referencia a un struct debe ser un identificador.",
+                               instruccion.getFila(), instruccion.getColumna());
+                   }
+                    if(!(accederStruct.getCampo() instanceof Iden)) {
+                        GestionErrores.errorSemantico(
+                                "Error de tipos. Una referencia al campo de un struct debe ser un identificador.",
+                                instruccion.getFila(), instruccion.getColumna());
+                    }
+                }else{
                     GestionErrores.errorSemantico(
                             "Error de tipos. Una asignación debe comenzar con un identificador o una referencia al campo de un struct.",
                             instruccion.getFila(), instruccion.getColumna());

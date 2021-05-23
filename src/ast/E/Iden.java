@@ -11,12 +11,21 @@ public class Iden extends EFinal {
 	private Tipo tipoVariable;
 	private Sentencia referencia;
 	private Boolean constante = false;
+	private Boolean campoStruct = false;
 
 	public Iden(String e1, List<E> dimShape, int fila,int columna) {
         super(fila,columna);
         this.nombre = e1;
         this.dimShape = dimShape;
    }
+
+    public void setCampoStruct(Boolean campoStruct) {
+        this.campoStruct = campoStruct;
+    }
+
+    public Boolean getCampoStruct() {
+        return campoStruct;
+    }
 
     public Sentencia getReferencia() {
         return referencia;

@@ -1,12 +1,11 @@
 package ast.E;
 
-import ast.I.I;
 import ast.Sentencia;
-import ast.T.EnumeradoTipo;
 import ast.T.Tipo;
 
 public class AccederStruct extends E{
-    private E struct, campo;
+    private E struct;
+    private E campo;
     private Sentencia declaracion;
     private Tipo tipoReferencia;
 
@@ -18,7 +17,7 @@ public class AccederStruct extends E{
         return tipoReferencia;
     }
 
-    public AccederStruct(E iden, E iden2, int fila, int columna) {
+    public AccederStruct(Iden iden, Iden iden2, int fila, int columna) {
         super(fila, columna);
         this.struct = iden;
         this.campo = iden2;

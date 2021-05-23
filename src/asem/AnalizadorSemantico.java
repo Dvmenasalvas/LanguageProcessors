@@ -45,7 +45,6 @@ public class AnalizadorSemantico {
                         for (E exp: asignacion.getValor()){
                             vincula(exp);
                         }
-                        Iden identificador = (Iden) asignacion.getIdentificador();
                         break;
 
                     case DECL:
@@ -256,7 +255,7 @@ public class AnalizadorSemantico {
                 Tipo tipo = (Tipo) sentencia;
                 switch(tipo.tipoTipos()) {
                     case STRUCT:
-                        TipoStruct tipoStruct = (TipoStruct) tipo;
+                        TipoStruct tipoStruct = (TipoStruct) ((TipoArray) tipo).getTipoBase();
                         //Sentencia referenciaSentencia =
                           //      tabla.getSentenciaDeclaracion((Iden) tipo)
                         tipoStruct = ((TipoStruct) ((TipoArray) tipo).getTipoBase());

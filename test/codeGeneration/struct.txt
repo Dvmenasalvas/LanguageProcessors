@@ -3,4 +3,7 @@ struct myStruct{
     int y;
     boolean t;
 };
-
+struct myStruct dani;
+dani.x = 5;
+dani.y = 7;
+print(dani.x + dani.y);

@@ -7,6 +7,7 @@ import java.util.Map;
 public class Bloque {
     private Map<String,Integer> direccionIdentificadores = new HashMap<>();
     private Map<String,Integer> tamanoTipos = new HashMap<>();
+    private Map<String,String> varTipo = new HashMap<>();
     private Map<String, List<Integer>> dimensionesArrays = new HashMap<>();
     //Nombre struct -> nombre propiedad -> posición
     private Map<String, Map<String, Integer>> camposStructs = new HashMap<>();
@@ -15,7 +16,6 @@ public class Bloque {
     private Bloque bloquePadre;
     private int proximaDireccion;
     private int profundidadAnidamiento;
-    private int ssp;
     boolean nuevoMarcoActivacion;
     int inicioMemoriaMarco;
 
@@ -28,18 +28,15 @@ public class Bloque {
         if(bloquePadre == null) { //Primer bloque
             this.proximaDireccion = 0;
             this.profundidadAnidamiento = 0;
-            this.ssp = 0;
         } else {
             if (nuevoMarcoActivacion) {
                 inicioMemoriaMarco = bloquePadre.getInicioMemoriaMarco() + bloquePadre.getTamanoBloque();
                 this.proximaDireccion = 5;
                 this.profundidadAnidamiento = bloquePadre.getProfundidadAnidamiento() + 1;
-                this.ssp = 5;
             } else {
                 inicioMemoriaMarco = bloquePadre.getInicioMemoriaMarco();
                 this.proximaDireccion = bloquePadre.getProximaDireccion();
                 this.profundidadAnidamiento = bloquePadre.getProfundidadAnidamiento();
-                this.ssp = 0;
             }
         }
     }
@@ -55,6 +52,17 @@ public class Bloque {
     public int getPosicionBloque() {
         return posicionBloque;
     }
+    public void putVarTipo(String var, String struct) {
+        varTipo.put(var,struct);
+    }
+    public String getVarTipo(String var) {
+        if(varTipo.containsKey(var)) return varTipo.get(var);
+        else if(!nuevoMarcoActivacion && bloquePadre != null) return bloquePadre.getVarTipo(var);
+        else {
+            System.out.println("Se ha accedido a un struct no declarado.");
+            return "";
+        }
+    }
 
     public Bloque getBloquePadre() {
         return bloquePadre;
@@ -64,29 +72,8 @@ public class Bloque {
         return proximaDireccion;
     }
 
-    public void setProximaDireccion(int proximaDireccion) {
-        this.proximaDireccion = proximaDireccion;
-    }
-
     public int getProfundidadAnidamiento() {
         return profundidadAnidamiento;
-    }
-
-    public int getSsp() {
-        return ssp;
-    }
-
-    public void setSsp(int ssp) {
-        this.ssp = ssp;
-    }
-
-    public boolean getNuevoMarcoActivacion() {
-        return nuevoMarcoActivacion;
-    }
-
-    private void actualizarSsp(int nuevoSsp) {
-        if(nuevoMarcoActivacion) ssp = Math.max(ssp, nuevoSsp);
-        else bloquePadre.actualizarSsp(nuevoSsp);
     }
 
     public boolean estaIdentificador(String identificador) {
@@ -109,7 +96,6 @@ public class Bloque {
         proximaDireccion += tamanoIdentificador;
 
         if(!nuevoMarcoActivacion) tamanoBloque += tamanoIdentificador;
-        actualizarSsp(proximaDireccion);
     }
 
     public int getTamanoTipo(String nombreTipo) {
@@ -157,9 +143,12 @@ public class Bloque {
         }
         else return bloquePadre.getDireccionRelativaCampoStruct(tipoStruct, nombreCampo);
     }
+    public boolean isStruct(String var){
+        return varTipo.containsKey(var);
+    }
 
     public int getDireccionCampoStruct(String tipoStruct, String nombreStruct, String nombreCampo) {
-        return getDireccionIdentificador(nombreStruct) + getDireccionRelativaCampoStruct(tipoStruct, nombreCampo);
+        return getDireccionIdentificador(nombreStruct) + getDireccionRelativaCampoStruct(tipoStruct, nombreCampo) * 4;
     }
 
     public void insertaCamposStruct(String nombreStruct, Map<String, Integer> tamanoCamposStruct) {
@@ -187,8 +176,7 @@ public class Bloque {
             aux += "\t" + entry.getKey() + " " + entry.getValue() + "\n";
         }
 
-        if(nuevoMarcoActivacion) aux += "SSP: " + ssp + "\n";
-        else aux += "Tamano Bloque: " + tamanoBloque + "\n";
+        aux += "Tamano Bloque: " + tamanoBloque + "\n";
 
         aux += "Posicion Bloque: " + posicionBloque + "\n";
         if(bloquePadre != null) aux += "Bloque Padre: " + bloquePadre.getPosicionBloque() + "\n";

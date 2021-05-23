@@ -41,7 +41,8 @@ public class AS {
     {return new Pot(e1, e2, fila,columna);}
   
   //Not, Punto, Corchete llamadaFuncion
-  public E accederStruct(E iden, E iden2, int fila, int columna){
+  public E accederStruct(Iden iden, Iden iden2, int fila, int columna){
+    iden2.setCampoStruct(true);
     return new AccederStruct(iden, iden2, fila, columna);
   }
   public E not(E e1,int fila,int columna)
@@ -57,7 +58,7 @@ public class AS {
   {return new Verdadero(fila,columna);}
   public E falso(int fila, int columna) 
   {return new Falso(fila,columna);}
-  public E iden(String iden, List<E> dimShape, int fila, int columna)
+  public Iden iden(String iden, List<E> dimShape, int fila, int columna)
   {return new Iden(iden, dimShape, fila,columna);}
 
   //Instrucciones

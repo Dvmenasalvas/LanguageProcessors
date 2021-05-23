@@ -1,4 +1,4 @@
-int[2] v = {1, 2};
-int x = v[1];
-
-print(x);
+int[2] v = {44, 55};
+print(v[1]);
+v = {33, 22};
+print(v[1]);

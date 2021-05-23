@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-
-
 public class GeneradorCodigo {
     private File ficheroSalida;
     private String inicioPath = "src/codeGenerator/InitialCode.wat";
@@ -81,40 +79,23 @@ public class GeneradorCodigo {
 
     //Generadores de código
     void codeE (E expresion) {
-        switch (expresion.tipoExpresion()){
-            case AND:
-            case DISTINTO:
-            case DIV:
-            case IGUALIGUAL:
-            case MAYOR:
-            case MAYORIGUAL:
-            case MENOR:
-            case MENORIGUAL:
-            case MOD:
-            case MUL:
-            case OR:
-            case ELEV:
-            case RESTA:
-            case SUMA:
+        switch (expresion.tipoExpresion()) {
+            case AND, DISTINTO, DIV, IGUALIGUAL, MAYOR, MAYORIGUAL, MENOR, MENORIGUAL, MOD, MUL, OR, ELEV, RESTA, SUMA -> {
                 EBin expresionBinaria = (EBin) expresion;
                 codeE(expresionBinaria.getOpnd1());
                 codeE(expresionBinaria.getOpnd2());
                 codigoGenerado.add(expresionBinaria.wasm_opcode());
-                break;
-            case ENT:
+            }
+            case ENT ->
                 codigoGenerado.add("i32.const " + ((Ent) expresion).valor());
-                break;
-            case FALSO:
+            case FALSO ->
                 codigoGenerado.add("i32.const 0");
-                break;
-            case VERDADERO:
+            case VERDADERO ->
                 codigoGenerado.add("i32.const 1");
-                break;
-            case IDEN:
+            case IDEN -> {
                 codeD((Iden) expresion);
                 codigoGenerado.add("i32.load");
-                break;
-
+            }
         }
     }
 
@@ -123,30 +104,45 @@ public class GeneradorCodigo {
         if (iden.getDimShape() != null) {
             codeD(new Iden(iden.getNombre(), null, iden.getFila(), iden.getColumna()));
             if (iden.getDimShape().size() == 1) {
-                if (((TipoArray) iden.getTipoVariable()).getTipoBase() instanceof TipoBoolean ||
-                        ((TipoArray) iden.getTipoVariable()).getTipoBase() instanceof TipoInt) {
-                    codigoGenerado.add("i32.const 1");
-
-                    //Struct
+                if (iden.getTipoVariable() != null &&
+                    (((TipoArray)iden.getTipoVariable()).getTipoBase().tipoTipos() == EnumeradoTipo.BOOLEAN ||
+                    ((TipoArray)iden.getTipoVariable()).getTipoBase().tipoTipos() == EnumeradoTipo.INT)
+                || !bloques.get(ambitoActual).isStruct(iden.valor())) {
+                    codigoGenerado.add("i32.const 4");
+                //Struct
                 } else {
-                    codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getTamanoTipo(iden.valor()));
+                    codigoGenerado.add(
+                            "i32.const " +
+                            (bloques.get(ambitoActual)
+                                    .getTamanoTipo(((Iden)((TipoStruct)((TipoArray)iden.getTipoVariable()).getTipoBase()).getNombre()).valor()))*4);
                 }
                 codeE(iden.getDimShape().get(0));
                 codigoGenerado.add("i32.mul");
                 codigoGenerado.add("i32.add");
             }
-        }
-
-
-        //Struct
-
-        //Identificador (entero o boolean)
-        else {
+        //Identificador (entero o boolean) o struct
+        } else {
             codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionIdentificador(iden.valor()));
             codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getInicioMemoriaMarco());
             codigoGenerado.add("i32.add");
-
         }
+    }
+    void asignacion(E identificador, List<E> expresiones) {
+        if (identificador instanceof AccederStruct){
+            AccederStruct accederStruct = (AccederStruct) identificador;
+            String nombreStruct  = ((Iden) accederStruct.getStruct()).valor();
+            String campoStruct = ((Iden) accederStruct.getCampo()).valor();
+            String tipoStruct = bloques.get(ambitoActual).getVarTipo(nombreStruct);
+            codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionCampoStruct(tipoStruct, nombreStruct,campoStruct));
+        }
+        else {
+            codeD((Iden) identificador);
+        }
+        //Codigo inicio contexto (d)
+        if (expresiones.size() == 1) {
+            codeE(expresiones.get(0));
+        }
+        codigoGenerado.add("i32.store");
     }
 
     void codeI (I instruccion) {
@@ -154,28 +150,31 @@ public class GeneradorCodigo {
             case DECL:
                 InstDecl instDecl = (InstDecl) instruccion;
                 if (instDecl.getExpresiones() != null && instDecl.getExpresiones().size() > 0) {
-                    codeD((Iden) instDecl.getIdentificador());
-                    //Codigo inicio contexto (d)
-                    //codigoGenerado.add("i32.const 0"); // Provisional
-                    //codigoGenerado.add("i32.add");
-                    for(E exp: instDecl.getExpresiones()){
-                        codeE(exp);
+                    if(instDecl.getExpresiones().size() == 1){
+                        asignacion(instDecl.getIdentificador(), instDecl.getExpresiones());
+                    } else {
+                        Iden iden = (Iden) instDecl.getIdentificador();
+                        for (int i = 0; i < instDecl.getExpresiones().size(); i++){
+                            asignacion(new Iden(iden.valor(), List.of(new Ent(((Integer)i).toString(), instDecl.getFila(), instDecl.getColumna())),
+                                            instDecl.getFila(), instDecl.getColumna()),
+                                    List.of(instDecl.getExpresiones().get(i)));
+                        }
                     }
-                    codigoGenerado.add("i32.store");
                 }
                 break;
 
             case ASIG:
                 InstAsignacion instAsignacion = (InstAsignacion) instruccion;
-
-                codeD((Iden) instAsignacion.getIdentificador());
-                //Codigo inicio contexto (d)
-                //codigoGenerado.add("i32.const 0"); // Provisional
-                //codigoGenerado.add("i32.add");
-                for(E exp: instAsignacion.getValor()){
-                    codeE(exp);
+                if(instAsignacion.getValor().size() == 1){
+                    asignacion(instAsignacion.getIdentificador(), instAsignacion.getValor());
+                } else {
+                    Iden iden = (Iden) instAsignacion.getIdentificador();
+                    for (int i = 0; i < instAsignacion.getValor().size(); i++){
+                        asignacion(new Iden(iden.valor(), List.of(new Ent(((Integer)i).toString(), instAsignacion.getFila(), instAsignacion.getColumna())),
+                                        instAsignacion.getFila(), instAsignacion.getColumna()),
+                                List.of(instAsignacion.getValor().get(i)));
+                    }
                 }
-                codigoGenerado.add("i32.store");
                 break;
 
             case IF:
@@ -247,7 +246,7 @@ public class GeneradorCodigo {
     }
 
 
-    //############### -1- GENERACION DE DIRECCIONES #################
+    //Generación de direcciones
     private void generaDireccionesPrograma() {
         crearNuevoBloque(true);
         for(I instruccion : this.programa) {
@@ -299,6 +298,7 @@ public class GeneradorCodigo {
                     case STRUCT:
                         String nombreStruct = ((Iden)((TipoStruct) instruccionDeclaracion.getTipo().getTipoBase()).getNombre()).getNombre();
                         int tamano = bloqueActual.getTamanoTipo(nombreStruct);
+                        bloqueActual.putVarTipo(idenDeclaracion, nombreStruct);
                         insertaIdentificadorBloqueActual(idenDeclaracion, tamano);
                         break;
                     case ARRAY:
@@ -335,13 +335,13 @@ public class GeneradorCodigo {
             case STRUCT:
                 InstStruct instruccionStruct = (InstStruct) instruccion;
                 String nombreStruct = ((Iden) instruccionStruct.getIdentificador()).getNombre();
-                int tamStruct = 0;
-                Map<String, Integer> tamCamposStruct = new HashMap<>();
-                obtenerInformacionStruct(instruccionStruct, tamStruct, tamCamposStruct);
+                Map<String, Integer> tamCamposStruct = tamanoCamposStruct(instruccionStruct);
+                int tamStruct = tamCamposStruct.values().stream().mapToInt(tam -> tam).sum();
                 bloqueActual.insertaTamanoTipo(nombreStruct, tamStruct);
                 bloqueActual.insertaCamposStruct(nombreStruct, tamCamposStruct);
                 break;
 
+                /*
             case DECLFUN:
                 InstDeclFun instruccionDeclFun = (InstDeclFun) instruccion;
                 instruccionDeclFun.setProfundidadAnidamiento(bloqueActual.getProfundidadAnidamiento());
@@ -367,17 +367,13 @@ public class GeneradorCodigo {
                 guardarBloqueActual();
 
                 break;
-
+                 */
             default:
                 break;
         }
     }
 
-    //####################### -3- Funciones auxiliares para bloques ##############################
-    private Bloque getBloqueNivelActual() {
-        return bloques.get(ambitoActual);
-    }
-
+    //Funciones auxiliares para bloques
     private void crearNuevoBloque(boolean ambitoFuncion) {
         Bloque bloque = new Bloque(bloqueActual, bloques.size(), ambitoFuncion);
         bloques.add(bloque);
@@ -393,8 +389,6 @@ public class GeneradorCodigo {
         bloqueActual.insertaIdentificador(nombreIdentificador, tamanoIdentificador);
         proximaDireccion += tamanoIdentificador;
     }
-
-
 
     private int obtenerDimensionArray(E expresion) {
         int dimension = 0;
@@ -430,11 +424,6 @@ public class GeneradorCodigo {
         return dimension;
     }
 
-
-
-
-
-
     private int obtenerInformacionArray(InstDecl declaracionArray) {
         int tamArray = 0;
         int tamanoTipoBase;
@@ -463,11 +452,10 @@ public class GeneradorCodigo {
         return tamArray;
     }
 
-    private void obtenerInformacionStruct(InstStruct struct, int tamStruct, Map<String, Integer> tamCamposStruct) {
-        tamStruct = 0;
-        tamCamposStruct = new HashMap<>();
+    private Map<String,Integer> tamanoCamposStruct(InstStruct struct) {
+        Map<String, Integer> tamCamposStruct = new HashMap<>();
 
-        for(I instruccion : struct.getDeclaraciones()) { //Para cada declaracion del struct, sumamos su tamano
+        for(I instruccion : struct.getDeclaraciones()) {
             InstDecl declaracion = (InstDecl) instruccion;
             String idenDeclaracion = ((Iden) declaracion.getIdentificador()).getNombre();
             int tamCampo = 0;
@@ -475,35 +463,30 @@ public class GeneradorCodigo {
             switch(declaracion.getTipo().tipoTipos()) {
                 case INT:
                 case BOOLEAN:
-                    //Sumamos 1 (lo que ocupan int y boolean)
                     tamCampo = 1;
                     break;
                 case STRUCT:
-                    //Sumamos el tamano del tipo struct, que lo tendremos almacenado en un bloque previo
                     TipoStruct tipoStruct = (TipoStruct) declaracion.getTipo().getTipoBase();
                     tamCampo = bloqueActual.getTamanoTipo(((Iden)tipoStruct.getNombre()).getNombre());
                     break;
                 case ARRAY:
-                    //Sumamos el tamano del tipo array y almacenamos sus dimensiones y tamano del tipo base
+                    /*
                     int aux1 = 0, aux2 = 0;
                     List<Integer> aux = new ArrayList<>();
                     aux1 = obtenerInformacionArray(declaracion);
                     tamCampo = aux1;
-
                     List<Integer> dimensionesArray = aux;
-                    this.bloqueActual.insertaDimensionesArray(idenDeclaracion, dimensionesArray); //OJO! POSIBLE ERROR, QUIZAS DEBERIA SER idenStruct + "." + idenDeclaracion
-                    //PERO ESO NO NOS SIRVE PARA EL SQUAREBRACKET :/, HAY QUE PENSARLO
+                    this.bloqueActual.insertaDimensionesArray(idenDeclaracion, dimensionesArray);
                     int tamanoBaseArray = aux2;
                     this.bloqueActual.insertaTamanoTipo(idenDeclaracion, tamanoBaseArray);
+                     */
                     break;
                 default:
                     break;
             }
             tamCamposStruct.put(idenDeclaracion, tamCampo);
-            tamStruct += tamCampo;
         }
+        return tamCamposStruct;
     }
-
-
-
 }
+
