@@ -27,21 +27,18 @@ public class ComprobadorTipos {
                                 instruccion.getFila(), instruccion.getColumna());
                         return false;
                     }
-                    E iden = instruccionAsignacion.getIdentificador();
                     Tipo tipoOriginal = tipoExpresion(instruccionAsignacion.getIdentificador());
-                    Tipo tipoAsignar;
 
-                    EnumeradoTipo tipoBaseElemento = null;
-                    TipoArray tipoArray = null;
+                    EnumeradoTipo tipoBaseElemento;
+                    TipoArray tipoArray;
                     if (tipoOriginal != null && tipoOriginal.tipoTipos() == EnumeradoTipo.ARRAY) {
                         tipoArray = (TipoArray) tipoOriginal;
                         tipoBaseElemento = tipoArray.getTipoBase().tipoTipos();
 
                         EnumeradoTipo tipoBaseArray = tipoArray.getTipoBase().tipoTipos();
 
-
                         int primeraDim = Integer.parseInt(((Ent) tipoArray.getDimShape().get(0)).valor());
-                        if (primeraDim != instruccionAsignacion.getValor().size()){
+                        if (primeraDim != instruccionAsignacion.getValor().size() && 1 != instruccionAsignacion.getValor().size()){
                             GestionErrores.errorSemantico("Error de tipos. Debe haber tantos valores como se indica en la " +
                                             "primera dimensión del vector. Dimensión indicada: " + primeraDim +
                                             ", dimensión recibida: " + instruccionAsignacion.getValor().size(),
