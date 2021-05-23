@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+
+
 public class GeneradorCodigo {
     private File ficheroSalida;
     private String inicioPath = "src/codeGenerator/InitialCode.wat";
@@ -121,8 +123,8 @@ public class GeneradorCodigo {
         if (iden.getDimShape() != null) {
             codeD(new Iden(iden.getNombre(), null, iden.getFila(), iden.getColumna()));
             if (iden.getDimShape().size() == 1) {
-                if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.BOOLEAN ||
-                    iden.getTipoVariable().tipoTipos() == EnumeradoTipo.INT) {
+                if (((TipoArray) iden.getTipoVariable()).getTipoBase() instanceof TipoBoolean ||
+                        ((TipoArray) iden.getTipoVariable()).getTipoBase() instanceof TipoInt) {
                     codigoGenerado.add("i32.const 1");
 
                     //Struct
@@ -134,21 +136,16 @@ public class GeneradorCodigo {
                 codigoGenerado.add("i32.add");
             }
         }
+
+
         //Struct
-        else if(iden.getReferencia() != null){
-            if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.STRUCT){
-                codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionIdentificador(iden.valor()));
-                codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getInicioMemoriaMarco());
-                codigoGenerado.add("i32.add");
-        }
-
-
 
         //Identificador (entero o boolean)
-        } else {
+        else {
             codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionIdentificador(iden.valor()));
             codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getInicioMemoriaMarco());
             codigoGenerado.add("i32.add");
+
         }
     }
 
@@ -161,8 +158,8 @@ public class GeneradorCodigo {
                     //Codigo inicio contexto (d)
                     //codigoGenerado.add("i32.const 0"); // Provisional
                     //codigoGenerado.add("i32.add");
-                    if (instDecl.getExpresiones().size() == 1) {
-                        codeE(instDecl.getExpresiones().get(0));
+                    for(E exp: instDecl.getExpresiones()){
+                        codeE(exp);
                     }
                     codigoGenerado.add("i32.store");
                 }
@@ -175,8 +172,8 @@ public class GeneradorCodigo {
                 //Codigo inicio contexto (d)
                 //codigoGenerado.add("i32.const 0"); // Provisional
                 //codigoGenerado.add("i32.add");
-                if(instAsignacion.getValor().size() == 1) {
-                    codeE(instAsignacion.getValor().get(0));
+                for(E exp: instAsignacion.getValor()){
+                    codeE(exp);
                 }
                 codigoGenerado.add("i32.store");
                 break;
@@ -305,12 +302,25 @@ public class GeneradorCodigo {
                         insertaIdentificadorBloqueActual(idenDeclaracion, tamano);
                         break;
                     case ARRAY:
-                        int aux1 = 0, aux2 = 0;
-                        List<Integer> aux = new ArrayList<Integer>();
-                        obtenerInformacionArray(instruccionDeclaracion, aux1, aux2, aux);
-                        int tamArray = aux1;
-                        int tamTipoBase = aux2;
-                        List<Integer> dimensionesArray = aux;
+                        int tamArray = obtenerInformacionArray(instruccionDeclaracion);
+                        int tamTipoBase = 1;
+                        List<Integer> dimensionesArray =  new ArrayList<Integer>();;
+
+
+                        Tipo tipoBase = ((TipoArray) instruccionDeclaracion.getTipo()).getTipoBase();
+                        if(tipoBase instanceof TipoStruct) {
+                            tamTipoBase = this.bloqueActual.getTamanoTipo(((Iden) ((TipoStruct) tipoBase).getNombre()).getNombre());
+                            tamArray *= tamArray;
+                        }
+
+                        TipoArray t = (TipoArray) instruccionDeclaracion.getTipo();
+                        int dimension;
+                        for (E exp : t.getDimShape()) { //Mientras siga habiendo dimensiones
+                            dimension = obtenerDimensionArray(exp);
+                            dimensionesArray.add(dimension);
+                        }
+
+
 
                         insertaIdentificadorBloqueActual(idenDeclaracion, tamArray);
                         bloqueActual.insertaTamanoTipo(idenDeclaracion, tamTipoBase);
@@ -425,12 +435,15 @@ public class GeneradorCodigo {
 
 
 
-    private void obtenerInformacionArray(InstDecl declaracionArray, int tamanoArray, int tamanoTipoBase,
-                                    List<Integer> dimensiones) {
+    private int obtenerInformacionArray(InstDecl declaracionArray) {
+        int tamArray = 0;
+        int tamanoTipoBase;
+        List<Integer> dimensiones;
+
         //Si la declaracion pasada no es de tipo array => ERROR
         if(declaracionArray.getTipo().tipoTipos() == EnumeradoTipo.ARRAY){
             dimensiones = new ArrayList<Integer>();
-            tamanoArray = 1; //El tamano total sera el multiplicatorio de sus dimensiones por el tipo base
+            tamArray = 1; //El tamano total sera el multiplicatorio de sus dimensiones por el tipo base
             tamanoTipoBase = 1;
 
             TipoArray t = (TipoArray) declaracionArray.getTipo();
@@ -438,17 +451,16 @@ public class GeneradorCodigo {
             for (E exp : t.getDimShape()) { //Mientras siga habiendo dimensiones
                 dimension = obtenerDimensionArray(exp);
                 dimensiones.add(dimension);
-                tamanoArray *= dimension;
+                tamArray *= dimension;
             }
 
 
             Tipo tipoBase = ((TipoArray) declaracionArray.getTipo()).getTipoBase();
             if(tipoBase instanceof TipoStruct) {
                 tamanoTipoBase = this.bloqueActual.getTamanoTipo(((Iden) ((TipoStruct) tipoBase).getNombre()).getNombre());
-                ;
-                tamanoArray *= tamanoArray;
             }
         }
+        return tamArray;
     }
 
     private void obtenerInformacionStruct(InstStruct struct, int tamStruct, Map<String, Integer> tamCamposStruct) {
@@ -475,7 +487,7 @@ public class GeneradorCodigo {
                     //Sumamos el tamano del tipo array y almacenamos sus dimensiones y tamano del tipo base
                     int aux1 = 0, aux2 = 0;
                     List<Integer> aux = new ArrayList<>();
-                    obtenerInformacionArray(declaracion, aux1, aux2, aux);
+                    aux1 = obtenerInformacionArray(declaracion);
                     tamCampo = aux1;
 
                     List<Integer> dimensionesArray = aux;

@@ -54,7 +54,7 @@ non terminal I Inst, InstIf, InstAsig, InstWhile, InstSwitch, InstStruct, InstDe
 non terminal List<I> Start, ListDecl;
 non terminal List<E> ListArg, Dims, ConArg, Arg, ValoresDecl, ValoresAsig, ListVal, Corchetes1, Corchetes;
 non terminal List<TipoArgumento> ListTipoArg, PrimerTipoArg, TipoArgs;
-non terminal List<Case> ListaCase;
+non terminal List<InstCase> ListaCase;
 
 
 
@@ -307,7 +307,7 @@ ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_Inst
 
 //Default
 ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
-     {: List<Case> lista_Inst_case = new ArrayList<Case>();
+     {: List<InstCase> lista_Inst_case = new ArrayList<InstCase>();
     	 	lista_Inst_case.add(0, as.createCase(as.iden("default", null,def.getFila(), def.getColumna()), cuerpo,true, def.getFila(), def.getColumna()));
     	 	RESULT = lista_Inst_case; :};
 
