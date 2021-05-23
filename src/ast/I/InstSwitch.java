@@ -9,16 +9,16 @@ import java.util.List;
 public class InstSwitch extends I{
 
     private E condicion;
-    private List<Case> cases;
+    private List<InstCase> instCases;
     private Sentencia referenciaDeclaraciónVariable;
-    public InstSwitch(E condicion, List<Case> cases,int fila,int columna) {
+    public InstSwitch(E condicion, List<InstCase> instCases, int fila, int columna) {
         super(fila, columna);
         this.condicion = condicion;
-        this.cases = cases;
+        this.instCases = instCases;
     }
 
-    public List<Case> getCases() {
-        return cases;
+    public List<InstCase> getCases() {
+        return instCases;
     }
 
     public void setReferenciaDeclaraciónVariable(Sentencia referenciaDeclaraciónVariable) {
@@ -39,8 +39,8 @@ public class InstSwitch extends I{
     public String toString() {
         String aux = "{{Switch}{{Cond}" + condicion + "}";
 
-        for (Case single_case : cases) {
-            aux +=  single_case;
+        for (InstCase single_Inst_case : instCases) {
+            aux += single_Inst_case;
         }
         aux += "}";
 

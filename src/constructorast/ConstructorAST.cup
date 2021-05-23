@@ -298,18 +298,18 @@ InstWhile ::= WHILE Exp0 error LLAVE_C
 
 
 //4.5) Instrucción switch
-InstSwitch ::= SWITCH:swi PAREN_A Exp0: exp PAREN_C LLAVE_A ListaCase:lista_case LLAVE_C
-    {:RESULT = as.instSwitch(exp, lista_case, swi.getFila(), swi.getColumna());:};
+InstSwitch ::= SWITCH:swi PAREN_A Exp0: exp PAREN_C LLAVE_A ListaCase:lista_Inst_case LLAVE_C
+    {:RESULT = as.instSwitch(exp, lista_Inst_case, swi.getFila(), swi.getColumna());:};
 
-ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_case
-    {:lista_case.add(0, as.createCase(var, cuerpo, false, cas.getFila(), cas.getColumna()));
-           RESULT = lista_case; :};
+ListaCase::= CASE:cas Exp0:var LLAVE_A Start:cuerpo LLAVE_C ListaCase:lista_Inst_case
+    {:lista_Inst_case.add(0, as.createCase(var, cuerpo, false, cas.getFila(), cas.getColumna()));
+           RESULT = lista_Inst_case; :};
 
 //Default
 ListaCase::= DEFAULT: def LLAVE_A Start: cuerpo LLAVE_C
-     {: List<Case> lista_case = new ArrayList<Case>();
-    	 	lista_case.add(0, as.createCase(as.iden("default", null,def.getFila(), def.getColumna()), cuerpo,true, def.getFila(), def.getColumna()));
-    	 	RESULT = lista_case; :};
+     {: List<Case> lista_Inst_case = new ArrayList<Case>();
+    	 	lista_Inst_case.add(0, as.createCase(as.iden("default", null,def.getFila(), def.getColumna()), cuerpo,true, def.getFila(), def.getColumna()));
+    	 	RESULT = lista_Inst_case; :};
 
 
 

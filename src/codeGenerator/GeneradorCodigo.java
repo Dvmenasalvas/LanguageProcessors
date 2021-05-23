@@ -191,6 +191,7 @@ public class GeneradorCodigo {
                     codeI(ins);
                 }
                 ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+
                 if(instIf.getCuerpoElse() != null) {
                     maxAmbito++;
                     ambitoActual = maxAmbito;
@@ -225,16 +226,27 @@ public class GeneradorCodigo {
                 codigoGenerado.add("end");
                 ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
                 break;
-
-            case STRUCT:
-                InstStruct instStruct = (InstStruct) instruccion;
-                codeD((Iden) instStruct.getIdentificador());
-                codigoGenerado.add("i32.store");
+            case SWITCH:
+                InstSwitch instSwitch = (InstSwitch) instruccion;
+                instSwitch.getCases().forEach(caso -> codigoGenerado.add("block"));
+                codigoGenerado.add("block");
+                codeE(instSwitch.getCondicion());
+                StringBuilder table = new StringBuilder("br_table");
+                for (int i = 0; i < instSwitch.getCases().size(); i++) {
+                    table.append(" " + (i));
+                }
+                codigoGenerado.add(table.toString());
+                for(int i = 0; i < instSwitch.getCases().size(); i++){
+                   codigoGenerado.add("end");
+                   codeI(instSwitch.getCases().get(i));
+                   codigoGenerado.add("br " + (instSwitch.getCases().size() - i - 1));
+                }
+                codigoGenerado.add("end");
+                break;
+            case CASE:
+                ((InstCase) instruccion).getCuerpoCase().forEach(this::codeI);
                 break;
         }
-
-
-
     }
 
 
@@ -272,7 +284,7 @@ public class GeneradorCodigo {
                 InstSwitch instruccionSwitch = (InstSwitch) instruccion;
 
                 List<I> cuerpoSwitch = new ArrayList<I>();
-                for(Case ccase : instruccionSwitch.getCases()) {
+                for(InstCase ccase : instruccionSwitch.getCases()) {
                     cuerpoSwitch.addAll(ccase.getCuerpoCase());
                 }
                 generaDireccionesCuerpo(cuerpoSwitch);

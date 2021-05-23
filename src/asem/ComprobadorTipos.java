@@ -386,7 +386,7 @@ public class ComprobadorTipos {
                 InstSwitch instruccionSwitch = (InstSwitch) instruccion;
                 Tipo tipoCondicion = tipoExpresion(instruccionSwitch.getCondicion());
                 AtomicBoolean correct = new AtomicBoolean(true);
-                for(Case caso : instruccionSwitch.getCases()) {
+                for(InstCase caso : instruccionSwitch.getCases()) {
                     if(!caso.getCuerpoCase().isEmpty()) {
                         if(caso.getCuerpoCase()!=null) {
                             if(tipoCondicion != null && !caso.isDefault() &&

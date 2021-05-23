@@ -66,8 +66,8 @@ public class AS {
   public I instWhile(E cond, List<I> cuerpo, int fila, int columna) {
     return new InstWhile(cond, cuerpo, fila, columna);
   }
-  public I instSwitch(E condicion, List<Case> cases,int fila,int columna) {return new InstSwitch(condicion,cases, fila, columna);};
-  public Case createCase(E nombreCase, List<I> cuerpo_case,boolean isDefault, int fila, int columna) {return new Case(nombreCase, cuerpo_case, isDefault,fila, columna );};
+  public I instSwitch(E condicion, List<InstCase> instCases, int fila, int columna) {return new InstSwitch(condicion, instCases, fila, columna);};
+  public InstCase createCase(E nombreCase, List<I> cuerpo_case, boolean isDefault, int fila, int columna) {return new InstCase(nombreCase, cuerpo_case, isDefault,fila, columna );};
   public I instDeclFun(Tipo tipo, E nombre, List<TipoArgumento> args, List<I> cuerpo, E ret, int fila, int columna) {
     return new InstDeclFun(tipo, nombre, args, cuerpo, ret, fila, columna);
   }

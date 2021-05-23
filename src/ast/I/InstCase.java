@@ -2,11 +2,11 @@ package ast.I;
 import java.util.List;
 import ast.E.*;
 
-public class Case extends I{
+public class InstCase extends I{
     private E expresion;
     private List<I> cuerpoCase;
     private boolean isDefault;
-    public Case(E nombreCase, List<I> expresion, boolean isDefault, int fila, int columna) {
+    public InstCase(E nombreCase, List<I> expresion, boolean isDefault, int fila, int columna) {
         super(fila, columna);
         this.expresion = nombreCase;
         this.cuerpoCase = expresion;

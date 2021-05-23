@@ -1,0 +1,22 @@
+int x = 0;
+while(x < 4){
+switch (x) {
+    case 0 {
+    print(x);
+    print(11);
+    }
+    case 1{
+    print(x);
+    print(22);
+    }
+    case 2{
+    print(x);
+    print(33);
+    }
+    default{
+    print(x);
+    print(99);
+    }
+}
+x = x + 1;
+}

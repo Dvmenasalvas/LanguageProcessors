@@ -6,7 +6,6 @@ import ast.T.*;
 import ast.Sentencia;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import errors.GestionErrores;
 
@@ -135,8 +134,8 @@ public class AnalizadorSemantico {
                         }else {
                             instSwitch.setReferenciaDeclaraciónVariable(referenciaVariableSwitch);
 
-                            List<Case> casos = instSwitch.getCases();
-                            for(Case caso : casos) {
+                            List<InstCase> casos = instSwitch.getCases();
+                            for(InstCase caso : casos) {
                                 tabla.abreBloque();
                                 caso.getCuerpoCase().forEach(x->vincula(x));
                                 tabla.cierraBloque();
