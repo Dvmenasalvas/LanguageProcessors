@@ -111,6 +111,8 @@ public class GeneradorCodigo {
             case IDEN:
                 codeD((Iden) expresion);
                 codigoGenerado.add("i32.load");
+                break;
+
         }
     }
 
@@ -131,12 +133,17 @@ public class GeneradorCodigo {
                 codigoGenerado.add("i32.mul");
                 codigoGenerado.add("i32.add");
             }
-/*
+        }
         //Struct
-        } else if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.STRUCT){
+        else if(iden.getReferencia() != null){
+            if (iden.getTipoVariable().tipoTipos() == EnumeradoTipo.STRUCT){
+                codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionIdentificador(iden.valor()));
+                codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getInicioMemoriaMarco());
+                codigoGenerado.add("i32.add");
+        }
 
 
- */
+
         //Identificador (entero o boolean)
         } else {
             codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionIdentificador(iden.valor()));
@@ -184,7 +191,6 @@ public class GeneradorCodigo {
                     codeI(ins);
                 }
                 ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
-
                 if(instIf.getCuerpoElse() != null) {
                     maxAmbito++;
                     ambitoActual = maxAmbito;
@@ -218,6 +224,12 @@ public class GeneradorCodigo {
                 codigoGenerado.add("end");
                 codigoGenerado.add("end");
                 ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+                break;
+
+            case STRUCT:
+                InstStruct instStruct = (InstStruct) instruccion;
+                codeD((Iden) instStruct.getIdentificador());
+                codigoGenerado.add("i32.store");
                 break;
         }
 

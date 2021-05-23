@@ -1,0 +1,6 @@
+struct myStruct{
+    int x;
+    int y;
+    boolean t;
+};
+
