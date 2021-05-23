@@ -5,5 +5,5 @@ struct myStruct{
 };
 struct myStruct dani;
 dani.x = 5;
-dani.y = 7;
-print(dani.x + dani.y);
+dani.y = 13;
+print(dani.x);

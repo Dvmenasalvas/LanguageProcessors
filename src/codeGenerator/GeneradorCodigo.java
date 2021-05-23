@@ -96,6 +96,14 @@ public class GeneradorCodigo {
                 codeD((Iden) expresion);
                 codigoGenerado.add("i32.load");
             }
+            case PUNTO -> {
+                AccederStruct accederStruct = (AccederStruct) expresion;
+                String nombreStruct  = ((Iden) accederStruct.getStruct()).valor();
+                String campoStruct = ((Iden) accederStruct.getCampo()).valor();
+                String tipoStruct = bloques.get(ambitoActual).getVarTipo(nombreStruct);
+                codigoGenerado.add("i32.const " + bloques.get(ambitoActual).getDireccionCampoStruct(tipoStruct, nombreStruct,campoStruct));
+                codigoGenerado.add("i32.load");
+            }
         }
     }
 
@@ -470,16 +478,28 @@ public class GeneradorCodigo {
                     tamCampo = bloqueActual.getTamanoTipo(((Iden)tipoStruct.getNombre()).getNombre());
                     break;
                 case ARRAY:
-                    /*
-                    int aux1 = 0, aux2 = 0;
-                    List<Integer> aux = new ArrayList<>();
-                    aux1 = obtenerInformacionArray(declaracion);
-                    tamCampo = aux1;
-                    List<Integer> dimensionesArray = aux;
+                    //Sumamos el tamano del tipo array y almacenamos sus dimensiones y tamano del tipo base
+
+                    tamCampo = obtenerInformacionArray(declaracion);
+                    int tamTipoBase = 1;
+                    List<Integer> dimensionesArray =  new ArrayList<Integer>();;
+
+
+                    Tipo tipoBase = ((TipoArray) declaracion.getTipo()).getTipoBase();
+                    if(tipoBase instanceof TipoStruct) {
+                        tamTipoBase = this.bloqueActual.getTamanoTipo(((Iden) ((TipoStruct) tipoBase).getNombre()).getNombre());
+                        tamCampo *= tamCampo;
+                    }
+
+                    TipoArray t = (TipoArray) declaracion.getTipo();
+                    int dimension;
+                    for (E exp : t.getDimShape()) { //Mientras siga habiendo dimensiones
+                        dimension = obtenerDimensionArray(exp);
+                        dimensionesArray.add(dimension);
+                    }
+
                     this.bloqueActual.insertaDimensionesArray(idenDeclaracion, dimensionesArray);
-                    int tamanoBaseArray = aux2;
-                    this.bloqueActual.insertaTamanoTipo(idenDeclaracion, tamanoBaseArray);
-                     */
+                    this.bloqueActual.insertaTamanoTipo(idenDeclaracion, tamTipoBase);
                     break;
                 default:
                     break;

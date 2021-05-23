@@ -4,7 +4,8 @@ void imprimir(int x){
     print(x);
 }
 
-const int i = 0;
+int y;
+int i = 0;
 i = y;
 while(i < 10){
     imprimir(i);

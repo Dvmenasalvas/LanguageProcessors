@@ -1,0 +1,23 @@
+#Programa que cuenta el número de primos desde el número 1 al N
+
+const int N = 10;
+int j;
+
+int resultado = 0;
+int i = 0;
+boolean primo;
+while (i < N) {
+    j = 2 ;
+    primo = True;
+    while ((j < i) & primo) {
+        primo = primo & (i % j != 0);
+        j= j + 1;
+    }
+    if(primo == True) {
+        resultado = resultado + 1;
+    }
+    i = i + 1 ;
+}
+
+
+print(resultado);

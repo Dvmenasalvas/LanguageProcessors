@@ -1,11 +1,7 @@
 
 int[5] v1 = {1, 2, 3, 4, 5};
 
-int x5 = v1[True];
-
-
-
-
+int x5 = v1[2];
 
 struct Persona{
     int dni;

@@ -13,7 +13,7 @@ public class Distinto extends EBin {
 
     @Override
     public String wasm_opcode() {
-        return "f32.neg";
+        return "i32.ne";
     }
 
     public TipoE tipoExpresion() {return TipoE.DISTINTO;}

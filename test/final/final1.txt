@@ -1,0 +1,31 @@
+#Prueba 1
+#Fragmento de código en el que se declara un struct con varios campos, unos inicializados y otros no.
+#Posteriormente, se utiliza un switch para bien, imprimir por pantalla o acceder a los campos del
+#struct declarado previamente
+
+
+struct myStruct{
+    int nombre;
+    boolean b;
+    boolean b2 = True;
+};
+int x = 0;
+struct myStruct persona;
+
+switch (x) {
+    case 0 {
+        persona.nombre = 10;
+        persona.b = True;
+        print(persona.nombre);
+    }
+    case 1 {
+        persona.nombre = 20;
+        persona.b = False;
+        print(persona.b);
+    }
+    default{
+        persona.nombre = 123;
+        persona.b = False;
+        print(persona.nombre);
+    }
+}

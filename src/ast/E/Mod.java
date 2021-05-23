@@ -12,7 +12,7 @@ public class Mod extends EBin {
 
     @Override
     public String wasm_opcode() {
-        return "i32.rem";
+        return "i32.rem_s";
     }
 
     public TipoE tipoExpresion() {return TipoE.MOD;}

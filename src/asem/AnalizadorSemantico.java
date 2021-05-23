@@ -254,27 +254,27 @@ public class AnalizadorSemantico {
             case TIPO:
                 Tipo tipo = (Tipo) sentencia;
                 switch(tipo.tipoTipos()) {
-                    case STRUCT:
-                        TipoStruct tipoStruct = (TipoStruct) ((TipoArray) tipo).getTipoBase();
-                        //Sentencia referenciaSentencia =
-                          //      tabla.getSentenciaDeclaracion((Iden) tipo)
-                        tipoStruct = ((TipoStruct) ((TipoArray) tipo).getTipoBase());
-                        Sentencia referenciaSentencia =
-                                tabla.getSentenciaDeclaracion(((Iden) tipoStruct.getNombre()).getNombre());
-                        if(referenciaSentencia == null) {
-                            GestionErrores.errorSemantico("Struct " +
-                                    ((Iden) tipoStruct.getNombre()).getNombre() + " no declarado."
-                                    ,sentencia.getFila(),sentencia.getColumna());
-                        }else {
-                            tipoStruct.setReferenciaDeclaracion(referenciaSentencia);
-                        }
-                        break;
                     case ARRAY:
                         TipoArray tipoArray = (TipoArray) tipo;
                         vincula(tipoArray.getTipoBase());
                         if(tipoArray.getDimShape() != null)
                             tipoArray.getDimShape().forEach(x -> vincula(x));
 
+                        break;
+                    case STRUCT:
+                        TipoStruct tipoStruct;
+                        //Sentencia referenciaSentencia =
+                        //      tabla.getSentenciaDeclaracion((Iden) tipo)
+                        tipoStruct = ((TipoStruct) ((TipoArray) tipo).getTipoBase());
+                        Sentencia referenciaSentencia =
+                                tabla.getSentenciaDeclaracion(((Iden) tipoStruct.getNombre()).getNombre());
+                        if(referenciaSentencia == null) {
+                            GestionErrores.errorSemantico("Struct " +
+                                            ((Iden) tipoStruct.getNombre()).getNombre() + " no declarado."
+                                    ,sentencia.getFila(),sentencia.getColumna());
+                        }else {
+                            tipoStruct.setReferenciaDeclaracion(referenciaSentencia);
+                        }
                         break;
                     default:
                         break;

@@ -3,23 +3,23 @@ int x = 4;
 int[2][2][1] y;
 int[4] z = {1, 2, 3, 4};
 boolean cond = True | False;
-const boolean var = true;
+const boolean var = True;
 
 
 #If
-if ( condicion) {
+if (cond) {
     x = 3;
 }
 
-if (x < 5 | y > 7) {
+if (x < 5 | 10 > 7) {
     x = 6;
 } else {
     x = 5;
 }
 
 #While
-end = True;
-i = 5;
+boolean end = True;
+int i = 5;
 while (end == False) {
     i = i - 1;
     if (i == 0){
@@ -28,17 +28,19 @@ while (end == False) {
 }
 
 #Switch
+int entero = 1;
+int w;
 switch (entero){
     case 1 {
         x = 1;
-        y = 2;
+        w = 2;
     }
     case 3 {
         x = 3;
     }
     default {
         if(cond){
-            x = 4*y;
+            x = 4*w;
         }
     }
 }
@@ -63,7 +65,6 @@ void miFuncion3 (int x, int y){
 
 miFuncion3(3, 4);
 
-int[5] x = miFuncion(1, 2, 3);
 
 #Struct
 struct miStruct {
@@ -72,6 +73,5 @@ struct miStruct {
     int y;
     boolean[5][3] boolMatriz;
 };
-
 
 print(true);
