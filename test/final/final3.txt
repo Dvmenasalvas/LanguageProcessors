@@ -1,0 +1,48 @@
+#Programa 3
+#
+
+const int N = 10;
+int[10] v = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int i = 0;
+boolean aux = True;
+
+while(i < N){
+    print(v[i]);
+    if(v[i] == 2){
+        aux = False;
+    }
+    i = i+ 1;
+}
+
+print(aux);
+i = 0;
+int mod;
+
+while(i < N){
+    mod = i % 3;
+    switch(mod){
+        case 0{
+            v[i] = 3;
+        }
+        case 1 {
+            v[i] = 1;
+        }
+        case 2 {
+            v[i] = 2;
+        }
+        default{
+            v[i] = 100000;
+        }
+    }
+    i = i + 1;
+}
+
+i = 0;
+while( i < N){
+    if(v[i] > 2){
+        aux = False;
+    }
+    print(v[i]);
+    i = i + 1;
+}
+print(aux);

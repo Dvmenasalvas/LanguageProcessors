@@ -195,6 +195,7 @@ public class GeneradorCodigo {
                     codeI(ins);
                 }
                 ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+                maxAmbito--;
 
                 if(instIf.getCuerpoElse() != null) {
                     maxAmbito++;
@@ -204,6 +205,7 @@ public class GeneradorCodigo {
                         codeI(ins);
                     }
                     ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+                    maxAmbito--;
                 }
 
 
@@ -229,6 +231,7 @@ public class GeneradorCodigo {
                 codigoGenerado.add("end");
                 codigoGenerado.add("end");
                 ambitoActual = bloques.get(ambitoActual).getBloquePadre().getPosicionBloque();
+                maxAmbito--;
                 break;
             case SWITCH:
                 InstSwitch instSwitch = (InstSwitch) instruccion;

@@ -511,8 +511,14 @@ public class ComprobadorTipos {
                     switch (ebin.tipoExpresion()) {
                         case AND:
                         case OR:
-                            if (tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN &&
-                                    tipoOperando2.tipoTipos() == EnumeradoTipo.BOOLEAN) {
+                            if ((tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN &&
+                                    tipoOperando2.tipoTipos() == EnumeradoTipo.BOOLEAN) || ((
+                                    ((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == EnumeradoTipo.BOOLEAN) &&
+                                    tipoOperando2.tipoTipos() == EnumeradoTipo.BOOLEAN) ||
+                                    ((((TipoArray)tipoOperando2).getTipoBase().tipoTipos() == EnumeradoTipo.BOOLEAN) &&
+                                            tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN) ||
+                                    ((((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == EnumeradoTipo.BOOLEAN) &&
+                                            (((TipoArray)tipoOperando2).getTipoBase().tipoTipos() == EnumeradoTipo.BOOLEAN))) {
                                 return new TipoBoolean(sentencia.getFila(), sentencia.getColumna());
                             }
                             GestionErrores.errorSemantico("Error de tipos. Uno de los operandos de la operación booleana no es booleano. Operandos: "
@@ -535,9 +541,14 @@ public class ComprobadorTipos {
                             break;
                         case IGUALIGUAL:
                         case DISTINTO:
-                            if ((tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN ||
-                                    tipoOperando1.tipoTipos() == EnumeradoTipo.INT)
-                                    && tipoOperando1.tipoTipos() == tipoOperando2.tipoTipos()) {
+                            if (((tipoOperando1.tipoTipos() == EnumeradoTipo.BOOLEAN ||
+                                    tipoOperando1.tipoTipos() == EnumeradoTipo.INT) ||
+                                    (tipoOperando1.tipoTipos() == EnumeradoTipo.ARRAY &&
+                                            ((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == EnumeradoTipo.BOOLEAN) ||
+                                    (tipoOperando1.tipoTipos() == EnumeradoTipo.ARRAY &&
+                                            ((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == EnumeradoTipo.INT))
+                                    && ((tipoOperando1.tipoTipos() == tipoOperando2.tipoTipos()) ||
+                                    (((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == tipoOperando2.tipoTipos()))) {
                                 return new TipoBoolean(sentencia.getFila(), sentencia.getColumna());
                             }
                             GestionErrores.errorSemantico(
@@ -549,8 +560,14 @@ public class ComprobadorTipos {
                         case MAYOR:
                         case MENORIGUAL:
                         case MENOR:
-                            if (tipoOperando1.tipoTipos() == EnumeradoTipo.INT &&
-                                    tipoOperando2.tipoTipos() == EnumeradoTipo.INT) {
+                            if ((tipoOperando1.tipoTipos() == EnumeradoTipo.INT &&
+                                    tipoOperando2.tipoTipos() == EnumeradoTipo.INT) || ((
+                                            ((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == EnumeradoTipo.INT) &&
+                                    tipoOperando2.tipoTipos() == EnumeradoTipo.INT) ||
+                                    ((((TipoArray)tipoOperando2).getTipoBase().tipoTipos() == EnumeradoTipo.INT) &&
+                                            tipoOperando1.tipoTipos() == EnumeradoTipo.INT) ||
+                                    ((((TipoArray)tipoOperando1).getTipoBase().tipoTipos() == EnumeradoTipo.INT) &&
+                                            (((TipoArray)tipoOperando2).getTipoBase().tipoTipos() == EnumeradoTipo.INT))) {
                                 return new TipoBoolean(sentencia.getFila(), sentencia.getColumna());
                             }
                             GestionErrores.errorSemantico("Error de tipos. Los tipos para la comparación no son enteros. Operandos: "

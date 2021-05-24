@@ -4,7 +4,7 @@ const int N = 10;
 int j;
 
 int resultado = 0;
-int i = 0;
+int i = 1;
 boolean primo;
 while (i < N) {
     j = 2 ;
