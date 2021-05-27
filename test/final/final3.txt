@@ -1,5 +1,8 @@
 #Programa 3
-#
+#Dado un vector de N elementos, primero lo impreme elemento a elemento, posteriormente
+#modifica el valor de cada posición dependendiendo de qué posición es dentro del vector
+#y por último vuelve a imprimir el vector entero y comprueba si el valor de alguna posición
+#es mayor que 2 y en ese caso devuelve false.
 
 const int N = 10;
 int[10] v = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -8,9 +11,6 @@ boolean aux = True;
 
 while(i < N){
     print(v[i]);
-    if(v[i] == 2){
-        aux = False;
-    }
     i = i+ 1;
 }
 
