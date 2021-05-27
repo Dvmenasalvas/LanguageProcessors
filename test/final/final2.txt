@@ -1,11 +1,11 @@
 #Programa 2
 #Programa que cuenta el número de primos desde el número 1 al N
 
-const int N = 10;
+const int N = 500;
 int j;
 
 int resultado = 0;
-int i = 1;
+int i = 2;
 boolean primo;
 while (i < N) {
     j = 2 ;
